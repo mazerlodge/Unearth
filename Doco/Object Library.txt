@@ -1,0 +1,100 @@
+S1 - Object Library for Unearth 20180616
+
+==== Object library ====
+
+> ArgParser 
+	- argsList 			// array of arguments 
+	
+	- (id) initWithArgs: (NSArray *) args;
+	- (bool) isInArgs: (NSString *) name withAValue: (bool) bWithValue;
+	- (NSString *) getArgValue: (NSString *) name;
+	- (bool) doesArg: (NSString *) name haveValue: (NSString *) value;
+
+
+> RandomEngine
+	- currentSeed
+	- currentRaw
+	- currentRandValue
+
+	- (int) getTimeBasedSeed;
+	- (void) setSeed: (int) seedValue;
+	- (int) getSeed;
+	- (int) getCurrentRaw;
+	- (int) getCurrentRandValue;
+	- (int) getNextRand: (int) numberOfDigits;
+	- (int) getNextRandInRange: (NSRange) theRange;
+	- (int) getNextRandBetween: (int) minValueInclusive maxValueInclusive: (int) maxValue;
+
+
+> UnearthGameFactory
+	- wondersDeckInfo	// 15x named, 10x lesser, 6x greater
+	- delverDeckInfo 	// 38x generated from n original possibilities
+	- endOfAgeDeckInfo	//  5x, shuffled for game, top card used in this game run.	
+
+	+ makeGame; 		// Crates game with development test set of args	
+	+ makeGameWithArgs: argParser
+	+ makeDelverDeck;
+	+ makeRuinsDeck;
+	+ makeNamedWonders;
+	+ makeStoneBag;
+	+ makeEndOfAgeCard;
+	+ makePlayer: name withType: intType dieColor: UEDieColor 
+	
+	
+> UnearthGameEngine 
+	- delverDeck		// 38x
+	- ruinsDeck			// 25x
+	- namedWonders 		// named wonders selected for this game run.
+	- ruinsStack		// ruins selected for this game run.
+	- ruinsActive	 	// current face up ruins available for delving.
+	- endOfAgeCard  	// the end card for this game run
+	- stoneBag			// initial stones for this game run (randomized)
+	- players 			// player objects for this game run.
+
+
+> UnearthPlayer 
+	- name				// For output and identification
+	- type 				// human or ai
+	- dieColor			// one of red, green, yellow, blue
+	- delverCards		// current delver cards held by this player 
+	- delverDice 		// current held delver dice, available to roll
+	- ruinsCards 		// includes one faceDown
+	- hexMap			// arrangement of owned stones and wonders
+
+
+> DelverCard
+ 	- type 				// used to access name, text, and rule impact 
+
+ 	 	
+> RuinCard
+	- bFaceDown 		// Used to determine which player(s) can see this card
+	- color				// Purple, Blue, Green, Peach, Gray
+	- claimValue		// name from rules, delver die total to trigger card claiming. 
+	- stoneValue		// name from rules, number of stones initially placed on card.
+	- stones			// stones currently on the card
+	- delverDice		// dice currently on the card
+
+
+> HexTile
+	- tileType 			// One of Stone or Wonder
+
+
+> Wonder : HexTile
+	- id				// used to link to scoring information, rule impact.
+	- wonderType 		// One of Named, Greater, Lesser
+	- isOwned			// boolean, relevant to named wonders.
+	- pointValue		// varies per wonder instance.
+
+	
+> Stone : HexTile
+	- color 			// black, blue, red, yellow
+
+
+> DelverDie
+	- color				// indicates which player gets stones or die back when ruin claimed.
+	- size				// 4, 6, 8 (aka number of sides)  
+
+
+> PlayerHexMap
+	- hexCells			// grid of hex cells used to hold acquired hex tiles (stones and wonders).
+	

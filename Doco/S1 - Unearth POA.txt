@@ -9,5 +9,18 @@ S1 Unearth POA
 	-- Game specific components 
 		(Delvers, ruins, ruin end cards, delver cards, stones, player stone placement map, wonders)
 
-- Object library 
 
+==== Activity Log - 201806 ====
+
+06/16 (S) 
+- Created project stub and Github repository 0616  
+- Created initial object library text file 0616
+- Expanded .gitignore to omit .pdf and /bin folder 0616
+
+> Next:
+- Create core game engine class 0616
+- Modify main.m to invoke game engine class 0616
+- Add arg parser classes to project 0616
+- Add most recent random engine class to project (e.g. from Cocoa test?) 0616
+- Stub out object library classes from notes 0616
+- Start use cases document (help drive class method definition) 0616
