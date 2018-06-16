@@ -1,0 +1,13 @@
+S1 Unearth POA 
+
+- Target environment is command line Objective-C.
+	-- See CmdLineWithObjects project for stub template 
+				
+- Organization of Components, Issues, Challenges, Subsystems (CICS?)
+	-- Game foundation; e.g. board, players, core play sequence driver (aka engine)
+	-- Rules engine (e.g. tracks delver card in play modifies turn to allow re-roll)
+	-- Game specific components 
+		(Delvers, ruins, ruin end cards, delver cards, stones, player stone placement map, wonders)
+
+- Object library 
+
