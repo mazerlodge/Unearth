@@ -13,14 +13,23 @@ S1 Unearth POA
 ==== Activity Log - 201806 ====
 
 06/16 (S) 
-- Created project stub and Github repository 0616  
-- Created initial object library text file 0616
-- Expanded .gitignore to omit .pdf and /bin folder 0616
+    - Created project stub and Github repository 0616
+    - Created initial object library text file 0616
+    - Expanded .gitignore to omit .pdf and /bin folder 0616
+
+06/18 (M)
+    - Expanded main to include packaging of arguments into ArgParser
+    - Added argParser class files to project
+    - Created stub of validateArguments() function
+    - Corrected bug in string comparision of ArgParser's doesArg: haveValue: method
+
+> In-Progress:
+    - Flesh out main's validateArguments() function
 
 > Next:
-- Create core game engine class 0616
-- Modify main.m to invoke game engine class 0616
-- Add arg parser classes to project 0616
-- Add most recent random engine class to project (e.g. from Cocoa test?) 0616
-- Stub out object library classes from notes 0616
-- Start use cases document (help drive class method definition) 0616
+    - Create core game engine class 0616
+    - Modify main.m to invoke game engine class 0616
+    - Add arg parser classes to project 0616
+    - Add most recent random engine class to project (e.g. from Cocoa test?) 0616
+    - Stub out object library classes from notes 0616
+    - Start use cases document (help drive class method definition) 0616
