@@ -32,7 +32,7 @@ S1 Unearth POA
 
 
 > Next:
-    - Create core game engine class 0616
+    - Create core game engine class (see Object Library.txt) 0616
     - Modify main.m to invoke game engine class 0616
     - Flesh out main's validateArguments() function 0620
     - Stub out object library classes from notes 0616
