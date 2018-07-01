@@ -1,0 +1,7 @@
+S1 Use Cases - Unearth
+
+Goal - Define use cases for incremental development of the Unearth project.
+
+> Scratch Examples
+- Start the game engine with a '-test 1' parameter that generates required params to do a simple "power on" sequence.
+    -- Test 1 outputs shuffled deck contents

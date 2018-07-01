@@ -1,4 +1,4 @@
-S1 Unearth POA 
+S1 POA - Unearth
 
 - Target environment is command line Objective-C.
 	-- See CmdLineWithObjects project for stub template 
@@ -10,7 +10,7 @@ S1 Unearth POA
 		(Delvers, ruins, ruin end cards, delver cards, stones, player stone placement map, wonders)
 
 
-==== Activity Log - 201806 ====
+==== Activity Log - 201806 & 201807 ====
 
 06/16 (S) 
     - Created project stub and Github repository
@@ -27,19 +27,31 @@ S1 Unearth POA
     - Expanded ToDo list and removed completed items
     - Added Random Engine class files to project
 
+07/01
+    - Reorg POA next tasks
+    - Started use cases document (help drive class method definition) 0616
+    - Created stub of game factory and engine classes (see Object Library.txt) 0616
+    - Modify main.m to invoke game engine class 0616
+    - Expanded main's validateArguments() function 0620
+
 
 > In-Progress:
 
 
+    Sample Current Invocation:
+    unearth -action dotest - test 1 -debug
+
 > Next:
-    - Create core game engine class (see Object Library.txt) 0616
-    - Modify main.m to invoke game engine class 0616
-    - Flesh out main's validateArguments() function 0620
-    - Stub out object library classes from notes 0616
-    - Start use cases document (help drive class method definition) 0616
-    - Add a "-test" param that generates appropriate args 0620
+    - Move validate arguments logic into UGF class 0701
+    - Move showUsage() message generation to UGF class 0701
+    - Make UGF earlier in main() so it can replace showUsage() & validateArgs() found locally in main.m 0701
+
+    - Continue use cases document (help drive class method definition) 0616
+    - Continue stubbing out object library classes from notes 0616
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
     - Add command processor class 0620
     - Add debug logging class w/ output to file 0620
-
+    - Decide on technique for storing static string info (e.g. card data) 0701
+    - Create ArgParser.populateArgParserFromString() method, to be used by UGF.makeGame() method 0701
+    - Flesh out UnearthGameFactory.makeGame() method, req. populateArgParserFromString method 0701
 

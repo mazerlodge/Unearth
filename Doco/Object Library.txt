@@ -2,7 +2,7 @@ S1 - Object Library for Unearth 20180616
 
 ==== Object library ====
 
-> ArgParser 
+X> ArgParser
 	- argsList 			// array of arguments 
 	
 	- (id) initWithArgs: (NSArray *) args;
@@ -11,7 +11,7 @@ S1 - Object Library for Unearth 20180616
 	- (bool) doesArg: (NSString *) name haveValue: (NSString *) value;
 
 
-> RandomEngine
+X> RandomEngine
 	- currentSeed
 	- currentRaw
 	- currentRandValue
@@ -42,7 +42,7 @@ S1 - Object Library for Unearth 20180616
 	
 	
 > UnearthGameEngine 
-	- delverDeck		// 38x
+	- delverDeck		// 38x, each one of 11 possible types
 	- ruinsDeck			// 25x
 	- namedWonders 		// named wonders selected for this game run.
 	- ruinsStack		// ruins selected for this game run.
