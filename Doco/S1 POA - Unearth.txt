@@ -34,18 +34,19 @@ S1 POA - Unearth
     - Modify main.m to invoke game engine class 0616
     - Expanded main's validateArguments() function 0620
 
+07/23 (M)
+    - Make UGF earlier in main() so it can replace showUsage() & validateArgs() found locally in main.m 0701
+    - Move validate arguments logic into UGF class 0701
+    - Move showUsage() message generation to UGF class 0701
+
 
 > In-Progress:
-
 
     Sample Current Invocation:
     unearth -action dotest - test 1 -debug
 
-> Next:
-    - Move validate arguments logic into UGF class 0701
-    - Move showUsage() message generation to UGF class 0701
-    - Make UGF earlier in main() so it can replace showUsage() & validateArgs() found locally in main.m 0701
 
+> Next:
     - Continue use cases document (help drive class method definition) 0616
     - Continue stubbing out object library classes from notes 0616
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620

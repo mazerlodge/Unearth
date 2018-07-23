@@ -33,6 +33,8 @@
 
  */
 
+- (void) showUsage;
+- (bool) validateArguments: (ArgParser *) argParser;
 - (UnearthGameEngine *) makeGame;
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) ap;
 

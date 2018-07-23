@@ -11,6 +11,7 @@
 #import "UnearthGameFactory.h"
 #import "UnearthGameEngine.h"
 
+/*
 bool validateArguments(ArgParser *argParser) {
     // Return true if the params specified are valid and complete.
     
@@ -48,8 +49,13 @@ void showUsage() {
     
 }
 
+*/
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
+
+        // Instantiate UE Factory, get an instance of a game engine, and start it.
+        UnearthGameFactory *ugf = [[UnearthGameFactory alloc] init];
 
         // Copy args into an array.
         NSMutableArray *args = [[NSMutableArray alloc] initWithCapacity:argc];
@@ -60,13 +66,11 @@ int main(int argc, const char * argv[]) {
         
         // Run arg parser tests
         ArgParser *argParser = [[ArgParser alloc] initWithArgs:args];
-        if (!validateArguments(argParser)) {
-            showUsage();
+        if (![ugf validateArguments:argParser]) {
+            [ugf showUsage];
             return 255;
         }
         
-        // Instantiate UE Factory, get an instance of a game engine, and start it.
-        UnearthGameFactory *ugf = [[UnearthGameFactory alloc] init];
         UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
         [uge go];
         
