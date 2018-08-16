@@ -61,6 +61,10 @@
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
     // TODO: Create a populated ArgParser object, may require new 'argParserFromString' type method.
+    NSString *params = @"-action dotest -test 1 -debug";
+    ArgParser *ap = [[ArgParser alloc] init];
+    [ap populateArgParserFromString:params];
+    
     
     return uge;
     

@@ -39,6 +39,9 @@ S1 POA - Unearth
     - Move validate arguments logic into UGF class 0701
     - Move showUsage() message generation to UGF class 0701
 
+08/15
+    - Created ArgParser.populateArgParserFromString() method, to be used by UGF.makeGame() method 0701
+
 
 > In-Progress:
 
@@ -53,6 +56,5 @@ S1 POA - Unearth
     - Add command processor class 0620
     - Add debug logging class w/ output to file 0620
     - Decide on technique for storing static string info (e.g. card data) 0701
-    - Create ArgParser.populateArgParserFromString() method, to be used by UGF.makeGame() method 0701
     - Flesh out UnearthGameFactory.makeGame() method, req. populateArgParserFromString method 0701
 

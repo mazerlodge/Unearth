@@ -18,6 +18,17 @@
     
 }
 
+- (bool) populateArgParserFromString: (NSString *) paramString {
+    //  Populate the argParser with contents of the specified string.
+
+    bool bRval = true;
+
+    argsList = [paramString componentsSeparatedByString:@" "];
+    
+    return bRval;
+}
+
+
 - (bool) isInArgs: (NSString *) name withAValue: (bool) bWithValue {
     // Returns true if the specified arg is found, with/without value determined by second parameter.
     // Note: if an arg is supplied WITH a value and withAValue param is false, still returns true.
