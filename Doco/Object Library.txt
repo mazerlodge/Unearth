@@ -2,6 +2,11 @@ S1 - Object Library for Unearth 20180616
 
 ==== Object library ====
 
+Key:
+. = Not yet constructed.
+/ = Stubbed out, m/b just header.
+X = Methods defined, a useable class.
+
 X> ArgParser
 	- argsList 			// array of arguments 
 	
@@ -26,7 +31,7 @@ X> RandomEngine
 	- (int) getNextRandBetween: (int) minValueInclusive maxValueInclusive: (int) maxValue;
 
 
-> UnearthGameFactory
+/> UnearthGameFactory
 	- wondersDeckInfo	// 15x named, 10x lesser, 6x greater
 	- delverDeckInfo 	// 38x generated from n original possibilities
 	- endOfAgeDeckInfo	//  5x, shuffled for game, top card used in this game run.	
@@ -41,7 +46,7 @@ X> RandomEngine
 	+ makePlayer: name withType: intType dieColor: UEDieColor 
 	
 	
-> UnearthGameEngine 
+/> UnearthGameEngine
 	- delverDeck		// 38x, each one of 11 possible types
 	- ruinsDeck			// 25x
 	- namedWonders 		// named wonders selected for this game run.
@@ -52,7 +57,7 @@ X> RandomEngine
 	- players 			// player objects for this game run.
 
 
-> UnearthPlayer 
+/> UnearthPlayer
 	- name				// For output and identification
 	- type 				// human or ai
 	- dieColor			// one of red, green, yellow, blue
@@ -62,11 +67,11 @@ X> RandomEngine
 	- hexMap			// arrangement of owned stones and wonders
 
 
-> DelverCard
+/> DelverCard
  	- type 				// used to access name, text, and rule impact 
 
  	 	
-> RuinCard
+/> RuinCard
 	- bFaceDown 		// Used to determine which player(s) can see this card
 	- color				// Purple, Blue, Green, Peach, Gray
 	- claimValue		// name from rules, delver die total to trigger card claiming. 
@@ -75,26 +80,32 @@ X> RandomEngine
 	- delverDice		// dice currently on the card
 
 
-> HexTile
+/> HexTile
 	- tileType 			// One of Stone or Wonder
 
 
-> Wonder : HexTile
+/> Wonder : HexTile
 	- id				// used to link to scoring information, rule impact.
 	- wonderType 		// One of Named, Greater, Lesser
 	- isOwned			// boolean, relevant to named wonders.
 	- pointValue		// varies per wonder instance.
 
 	
-> Stone : HexTile
+/> Stone : HexTile
 	- color 			// black, blue, red, yellow
 
 
-> DelverDie
+/> DelverDie
 	- color				// indicates which player gets stones or die back when ruin claimed.
 	- size				// 4, 6, 8 (aka number of sides)  
 
 
-> PlayerHexMap
+/> PlayerHexMap
 	- hexCells			// grid of hex cells used to hold acquired hex tiles (stones and wonders).
 	
+/> PlayerHexCell
+    - position          // id or position within overall grid system, for finding neighbors
+    - hexTile           // either emty, a wonder, or a stone
+    - isWonder          // set to true to aid in casting contents to a wonder object.
+
+

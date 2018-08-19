@@ -5,3 +5,10 @@ Goal - Define use cases for incremental development of the Unearth project.
 > Scratch Examples
 - Start the game engine with a '-test 1' parameter that generates required params to do a simple "power on" sequence.
     -- Test 1 outputs shuffled deck contents
+
+> Start up tests
+    1. Generate decks, outputs them.
+    // First w/out shuffling, then after verifying all cards there, w/ shuffle
+
+    2. Collect all player questions, stores in player, outputs answers.
+    // Implies game class (UGE) has players collection.

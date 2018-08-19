@@ -7,7 +7,7 @@
 //
 
 #import "UnearthGameFactory.h"
-
+#import "UnearthPlayer.h"
 
 @implementation UnearthGameFactory
 
@@ -65,7 +65,10 @@
     ArgParser *ap = [[ArgParser alloc] init];
     [ap populateArgParserFromString:params];
     
+    // TEST to see if code can reach player type enumeration.
+    UnearthPlayerType q = UnearthPlayerHuman;
     
+
     return uge;
     
     
@@ -77,7 +80,7 @@
 
     // TODO: Define set of test params to be used with this generic method.
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
-
+    
     return uge;
     
 }

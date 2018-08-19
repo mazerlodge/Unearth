@@ -42,6 +42,10 @@ S1 POA - Unearth
 08/15
     - Created ArgParser.populateArgParserFromString() method, to be used by UGF.makeGame() method 0701
 
+08/19
+    - Expanded POA
+    - Tested ability to define and reach typedef enumerations (see UnearthPlayer.h and UGF.m)
+    - Stubbed out remaining classes
 
 > In-Progress:
 
@@ -50,7 +54,6 @@ S1 POA - Unearth
 
 
 > Next:
-    - Continue use cases document (help drive class method definition) 0616
     - Continue stubbing out object library classes from notes 0616
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
     - Add command line interface (CLI) class, see methods below 0620
@@ -60,7 +63,8 @@ S1 POA - Unearth
     - UGF build decks from plist. 0819
         1. NSMutableArray *fields = [[NSMutableArray alloc] initWithCapacity:3];
         2. [fields writeToFile:@"/tmp/DictionaryPatternsToPlist.plist" atomically:YES]
-    - Add start up tests, details below. 0819
+    - Add start up tests, details in [S1 Use Cases - Unearth.txt]. 0819
+    - Continue use cases document (help drive class method definition) 0819
 
 
 > CLI Methods
@@ -69,11 +73,5 @@ S1 POA - Unearth
     draw(player Jewel map)
     // Start with put for card output test, just stub get()
 
-> Start up tests
-    1. Generate decks, outputs them.
-    // First w/out shuffling, then after verifying all cards there, w/ shuffle
-
-    2. Collect all player questions, stores in player, outputs answers.
-    // Implies game class (UGE) has players collection.
 
 

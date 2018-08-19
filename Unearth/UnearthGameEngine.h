@@ -15,7 +15,7 @@
 }
 
 /*
- 
+ Method list from [Object Library.txt]
  > UnearthGameEngine
  - delverDeck        // 38x, each one of 11 possible types
  - ruinsDeck            // 25x
