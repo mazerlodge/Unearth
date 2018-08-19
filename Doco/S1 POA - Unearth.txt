@@ -53,8 +53,27 @@ S1 POA - Unearth
     - Continue use cases document (help drive class method definition) 0616
     - Continue stubbing out object library classes from notes 0616
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
-    - Add command processor class 0620
+    - Add command line interface (CLI) class, see methods below 0620
     - Add debug logging class w/ output to file 0620
     - Decide on technique for storing static string info (e.g. card data) 0701
     - Flesh out UnearthGameFactory.makeGame() method, req. populateArgParserFromString method 0701
+    - UGF build decks from plist. 0819
+        1. NSMutableArray *fields = [[NSMutableArray alloc] initWithCapacity:3];
+        2. [fields writeToFile:@"/tmp/DictionaryPatternsToPlist.plist" atomically:YES]
+    - Add start up tests, details below. 0819
+
+
+> CLI Methods
+    get(int|are|float, msgID)
+    put(msg)
+    draw(player Jewel map)
+    // Start with put for card output test, just stub get()
+
+> Start up tests
+    1. Generate decks, outputs them.
+    // First w/out shuffling, then after verifying all cards there, w/ shuffle
+
+    2. Collect all player questions, stores in player, outputs answers.
+    // Implies game class (UGE) has players collection.
+
 
