@@ -60,7 +60,7 @@
     // TODO: Define set of test params to be used with this generic method.
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
-    // TODO: Create a populated ArgParser object, may require new 'argParserFromString' type method.
+    // TODO: Create a populated ArgParser object, using 'argParserFromString' method.
     NSString *params = @"-action dotest -test 1 -debug";
     ArgParser *ap = [[ArgParser alloc] init];
     [ap populateArgParserFromString:params];
