@@ -71,8 +71,8 @@ int main(int argc, const char * argv[]) {
             return 255;
         }
         
-        //UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
-        UnearthGameEngine *uge = [ugf makeGame];
+        UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
+        //UnearthGameEngine *uge = [ugf makeGame];
         [uge go]; 
         
         

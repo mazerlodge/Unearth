@@ -48,6 +48,12 @@ S1 POA - Unearth
     - Tested ability to define and reach typedef enumerations (see UnearthPlayer.h and UGF.m)
     - Stubbed out remaining classes
 
+08/31
+    - added test case to read scanf() input in a limited fashion.
+    - streamlined startup to accept -action defaultstartup and select makeGame() or makeGamewithArgs() appropriately.
+    - added doTest() hook and moved existing test code to two methods
+    - added validateArguments test for doTest requiring test number be specified in -test argument
+
 > In-Progress:
 
     Sample Current Invocation:
@@ -67,7 +73,8 @@ S1 POA - Unearth
     - Continue fleshing out object library classes from notes 0819
     - Prototype test of technique for storing static string info (e.g. card data) 0819
     - Test ability to cast HexTile up and down (req. by base class used in hexMap) 0819
-
+    - Add DumpArgs method to argParser class and invoke it in UGF.validateArguments() 0831
+    - Search // TDOO: for additional tasks 0831
 
 > CLI Methods
     get(int|are|float, msgID)

@@ -18,7 +18,7 @@
 
 - (int) go {
     
-    NSLog(@"Inside of UnearthGameEngine.\n");
+    printf("Inside of UnearthGameEngine.\n");
     
     return 0;
     

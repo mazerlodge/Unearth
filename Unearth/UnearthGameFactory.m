@@ -21,9 +21,66 @@
 - (void) showUsage {
     // Display appropriate invocation options.
     
-    printf("Usage: unearth -action {dotest} -test 1 \n");
+    printf("Usage: unearth -action {dotest | defaultstart } -test n \n");
     
+}
+
+- (int) doTest: (NSInteger) testNumber {
     
+    int rval = -1;
+    
+    switch(testNumber) {
+        case 1:
+            rval = [self testScanf];
+            break;
+            
+        case 2:
+            rval = [self testEnumerationReach];
+            break;
+            
+    }
+    
+    return rval;
+    
+}
+
+- (int) testEnumerationReach {
+    
+    int rval = -1;
+    
+    // TEST to see if code can reach player type enumeration.
+    UnearthPlayerType q = UnearthPlayerHuman;
+    if (q == UnearthPlayerHuman) {
+        printf("UGF.testEnumerationReach(): Able to read Enumerations confirmed.\n");
+        rval = 0;
+    }
+    
+    return rval;
+    
+}
+
+- (int) testScanf {
+    
+    int rval = 0;
+    
+    // How to scan for integers
+    int iVal = 0;
+    printf("Did that help (1=y, 2=n)?");
+    scanf("%i",&iVal);
+    printf("You said %i\n", iVal);
+    
+    // How to scan for strings, fails with large strings.
+    // This is OK: upercalafragileistice
+    // This isn't: upercalafragileisticex
+    // This causes 'illegal instruction': upercalafragileisticexpealli
+    char inputVal;// = "NOT_SET";
+    printf("Did that help (Y/N)?");
+    scanf("%s", &inputVal);
+    NSString *inMessage = [NSString stringWithCString:&inputVal encoding:NSUTF8StringEncoding];
+    printf("You said %s\n", [inMessage UTF8String]);
+    
+    return rval;
+
 }
 
 - (bool) validateArguments: (ArgParser *) argParser {
@@ -33,22 +90,25 @@
     NSString *action = @"NOT_SET";
     
     if ([argParser isInArgs:@"-action" withAValue:true]) {
-        action = [argParser getArgValue:@"-action"];
+        action = [[argParser getArgValue:@"-action"] lowercaseString];
     }
     else {
-        NSLog(@"Error: Missing required parameter: -action.  Can not continue.\n");
+        printf("Error UGF.validateArguments(): Missing required parameter: -action.  Can not continue.\n");
         bRval = false;
     }
     
-    // If action is dotest, must also have a -test arg w/ a test number.
-    if (([action isEqualToString:@"dotest"])
-        && (![argParser isInArgs:@"-test" withAValue:true])) {
-        NSLog(@"Error: Detected -action of dotest, missing required parameter: -test testID.  Can not continue.\n");
-        bRval = false;
+    if ([argParser isInArgs:@"-debug" withAValue:false]) {
+        printf("Info UGF.validateArguments(): Debug parameter detected.\n");
+        // TODO: Add DumpArgs method to argParser class and invoke it in UGF.validateArguments()
     }
     
-    if ([argParser isInArgs:@"-debug" withAValue:false])
-        NSLog(@"Info: Debug parameter detected.\n");
+    // If action is doTest, must also have test number specified.
+    if ([action isEqualToString:@"dotest"]) {
+        if (![argParser isInArgs:@"-test" withAValue:true]) {
+            printf("Error UGF.validateArguments(): action doTest requires test number be specified.\n");
+            bRval = false;
+        }
+    }
     
     
     return bRval;
@@ -57,18 +117,13 @@
 
 - (UnearthGameEngine *) makeGame {
     
-    // TODO: Define set of test params to be used with this generic method.
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
-    // TODO: Create a populated ArgParser object, using 'argParserFromString' method.
+    // TODO: Define set of test params to be used with this generic method.
     NSString *params = @"-action dotest -test 1 -debug";
     ArgParser *ap = [[ArgParser alloc] init];
     [ap populateArgParserFromString:params];
     
-    // TEST to see if code can reach player type enumeration.
-    UnearthPlayerType q = UnearthPlayerHuman;
-    
-
     return uge;
     
     
@@ -76,10 +131,25 @@
 
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) ap {
     
-    // TODO: Evaluate ArgParser to determine details of game build.
+    UnearthGameEngine *uge;
+    
+    if ([ap doesArg:@"-action" haveValue:@"defaultstart"]) {
+        printf("Detected startup with defaultStart parameters requested.\n");
+        uge = [self makeGame];
+    }
+    else {
+        uge = [[UnearthGameEngine alloc] init];
 
-    // TODO: Define set of test params to be used with this generic method.
-    UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
+        // TODO: Evaluate ArgParser to determine details of game build.
+        // E.G. if test is specified, pass it to a runTest() method.
+        if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
+            // Get test number
+            NSInteger testNumber = [[ap getArgValue:@"-test"] integerValue];
+            [self doTest:testNumber];
+            
+        }
+            
+    }
     
     return uge;
     
