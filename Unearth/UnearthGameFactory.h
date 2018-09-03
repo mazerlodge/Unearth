@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "UnearthGameEngine.h"
 #import "ArgParser.h"
+#import "UnearthPlayer.h"
+#import "CommandLineInterface.h"
 
 @interface UnearthGameFactory : NSObject {
     

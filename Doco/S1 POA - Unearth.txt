@@ -54,6 +54,10 @@ S1 POA - Unearth
     - added doTest() hook and moved existing test code to two methods
     - added validateArguments test for doTest requiring test number be specified in -test argument
 
+09/02
+    - Stubbed in CommandLineInterface (CLI) class
+    - Added test 3 to excercise CLI class
+
 > In-Progress:
 
     Sample Current Invocation:
@@ -75,9 +79,11 @@ S1 POA - Unearth
     - Test ability to cast HexTile up and down (req. by base class used in hexMap) 0819
     - Add DumpArgs method to argParser class and invoke it in UGF.validateArguments() 0831
     - Search // TDOO: for additional tasks 0831
+    - Implement drawMap() method of CLI class 0902
+    - Replace test numbers within UGF with enumeration 0902
 
 > CLI Methods
-    get(int|are|float, msgID)
+    get(int|str|float, msgID)
     put(msg)
     draw(player Jewel map)
     // Start with put for card output test, just stub get()

@@ -7,7 +7,6 @@
 //
 
 #import "UnearthGameFactory.h"
-#import "UnearthPlayer.h"
 
 @implementation UnearthGameFactory
 
@@ -38,11 +37,16 @@
             rval = [self testEnumerationReach];
             break;
             
+        case 3:
+            rval = [self testCLI];
+            
     }
     
     return rval;
     
 }
+
+
 
 - (int) testEnumerationReach {
     
@@ -81,6 +85,33 @@
     
     return rval;
 
+}
+
+- (int) testCLI {
+    // Test command line interface class
+    
+    int rval = 0;
+    
+    CommandLineInterface *cli = [[CommandLineInterface alloc] init];
+    
+    int test42 = [cli getInt:@"Please enter the number 42 :"];
+    if (test42 != 42)
+        rval = -1;
+    
+    NSString *testFoo = [cli getStr:@"Please enter 'foo':"];
+    if ([testFoo compare:@"foo"] != NSOrderedSame)
+        rval = -10;
+        
+    float test4point2 = [cli getFloat:@"Please enter '4.2':"];
+    if ((test4point2 - 4.2) > 0.001) {
+        rval = -100;
+        printf("Expected 4.2, got %f\n", test4point2);
+    }
+    
+    NSString *testResult = [[NSString alloc] initWithFormat:@"test result = %d", rval];
+    [cli put:testResult];
+    
+    return rval;
 }
 
 - (bool) validateArguments: (ArgParser *) argParser {
