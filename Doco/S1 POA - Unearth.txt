@@ -65,7 +65,6 @@ S1 POA - Unearth
 
 
 > Next:
-    - Add command line interface (CLI) class, see methods below 0620
     - Add debug logging class w/ output to file 0620
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
     - Flesh out UnearthGameFactory.makeGame() method 0701
@@ -81,6 +80,7 @@ S1 POA - Unearth
     - Search // TDOO: for additional tasks 0831
     - Implement drawMap() method of CLI class 0902
     - Replace test numbers within UGF with enumeration 0902
+    - Add call CLI from within validate args, eg collect test number 0909
 
 > CLI Methods
     get(int|str|float, msgID)
