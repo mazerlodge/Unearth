@@ -10,7 +10,7 @@ S1 POA - Unearth
 		(Delvers, ruins, ruin end cards, delver cards, stones, player stone placement map, wonders)
 
 
-==== Activity Log - 201806 & 201807 ====
+==== Activity Log - 201806 - 201809 ====
 
 06/16 (S) 
     - Created project stub and Github repository
@@ -58,6 +58,9 @@ S1 POA - Unearth
     - Stubbed in CommandLineInterface (CLI) class
     - Added test 3 to excercise CLI class
 
+09/23
+    - Added note file with ID, text and count of delver cards.
+
 > In-Progress:
 
     Sample Current Invocation:
@@ -81,12 +84,8 @@ S1 POA - Unearth
     - Implement drawMap() method of CLI class 0902
     - Replace test numbers within UGF with enumeration 0902
     - Add call CLI from within validate args, eg collect test number 0909
+    - Create plist file from [S1 Notes - Delver Cards.txt] 0923
 
-> CLI Methods
-    get(int|str|float, msgID)
-    put(msg)
-    draw(player Jewel map)
-    // Start with put for card output test, just stub get()
 
 
 
