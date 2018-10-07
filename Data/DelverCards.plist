@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>ID, Title, Text, Count</string>
+	<string>100, Ancient Map, This turn you may reroll your Excavation roll., 5</string>
+	<string>101, Band of Delvers, You may roll 2 dice during the Excavation phase. They may go on the same or different ruins., 2</string>
+	<string>102, Restoration, Reroll all of your dice., 2</string>
+	<string>103, Ancestral Claim, The next D6 rolled this turn gets +2., 4</string>
+	<string>104, Forgotten Song, Choose a number. Reroll all dice showing that number., 3</string>
+	<string>105, Forlorn, Give -2 to any one dice alread on a Ruin., 3</string>
+	<string>106, Lost in the Ruins, Reroll any one die already on a Ruin., 4</string>
+	<string>107, Reading the Stones, Give the next die rolled this turn +1 or -1, 5</string>
+	<string>108, A New Discovery, Give +2 to any die already on a Ruin., 5</string>
+	<string>109, Expedition, You may choose where to place your Excavation roll after you roll., 5</string>
+</array>
+</plist>

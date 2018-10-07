@@ -61,6 +61,10 @@ S1 POA - Unearth
 09/23
     - Added note file with ID, text and count of delver cards.
 
+10/05
+    - Used Sklyar/DictionaryPatternToPList project to convert Delver card text to plist.
+    - Added data directory to project and put DelverCards.plist in it.
+
 > In-Progress:
 
     Sample Current Invocation:
