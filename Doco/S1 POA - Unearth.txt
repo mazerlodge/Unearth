@@ -88,7 +88,7 @@ S1 POA - Unearth
     - Implement drawMap() method of CLI class 0902
     - Replace test numbers within UGF with enumeration 0902
     - Add call CLI from within validate args, eg collect test number 0909
-    - Create plist file from [S1 Notes - Delver Cards.txt] 0923
+    - Read Delver Cards plist file (use hard coded path to get things going) 1006
 
 
 
