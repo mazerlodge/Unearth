@@ -33,7 +33,7 @@
     // Returns true if the specified arg is found, with/without value determined by second parameter.
     // Note: if an arg is supplied WITH a value and withAValue param is false, still returns true.
     
-    // TODO: Make this version case insensitive and add a version with a caseSensitive: true/false param.
+    // TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive: true/false param.
     
     bool bRval = false;
     

@@ -39,6 +39,11 @@
             
         case 3:
             rval = [self testCLI];
+            break;
+            
+        case 4:
+            rval = [self testExpandTildeInPath];
+            break;
             
     }
     
@@ -47,6 +52,39 @@
 }
 
 
+- (int) testExpandTildeInPath {
+    
+    int rval = -1;
+    
+    // TEST to see tilde in path expansion, the pedestrian way.
+    NSString *tildePath = @"~/Documents";
+    NSString *test = [tildePath stringByExpandingTildeInPath];
+    printf("UGF.testExpandTildeInPath(): %s.\n", [test UTF8String]);
+    rval = 0;
+    
+    // Maybe better?
+    NSBundle *main = [NSBundle mainBundle];
+    NSString *resourcePath = [main pathForResource:@"DelverCards" ofType:@"plist"];
+    NSLog(@"Got resource path for delver cards: %@\n", resourcePath);
+    
+    // Test getting current application
+    NSError *error;
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSURL *applicationSupport = [manager URLForDirectory:NSApplicationSupportDirectory
+                                                inDomain:NSUserDomainMask
+                                       appropriateForURL:nil
+                                                  create:false
+                                                   error:&error];
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    if (identifier != nil) {
+        NSURL *folder = [applicationSupport URLByAppendingPathComponent:identifier];
+        [manager createDirectoryAtURL:folder withIntermediateDirectories:true attributes:nil error:&error];
+        NSURL *fileURL = [folder URLByAppendingPathComponent:@"QLog.txt"];
+    }
+    
+    return rval;
+    
+}
 
 - (int) testEnumerationReach {
     
@@ -129,7 +167,7 @@
     }
     
     if ([argParser isInArgs:@"-debug" withAValue:false]) {
-        printf("Info UGF.validateArguments(): Debug parameter detected.\n");
+        printf("Info, UGF.validateArguments(): Debug parameter detected.\n");
         // TODO: Add DumpArgs method to argParser class and invoke it in UGF.validateArguments()
     }
     
@@ -150,7 +188,7 @@
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
-    // TODO: Define set of test params to be used with this generic method.
+    // TODO: Define set of default params to be used with UGF.makeGame generic method.
     NSString *params = @"-action dotest -test 1 -debug";
     ArgParser *ap = [[ArgParser alloc] init];
     [ap populateArgParserFromString:params];
@@ -171,8 +209,7 @@
     else {
         uge = [[UnearthGameEngine alloc] init];
 
-        // TODO: Evaluate ArgParser to determine details of game build.
-        // E.G. if test is specified, pass it to a runTest() method.
+        // TODO: Expand UGE.makeGameWithArgs to handle addn'l -action param values.
         if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
             // Get test number
             NSInteger testNumber = [[ap getArgValue:@"-test"] integerValue];
