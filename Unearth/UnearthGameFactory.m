@@ -169,6 +169,8 @@
     if ([argParser isInArgs:@"-debug" withAValue:false]) {
         printf("Info, UGF.validateArguments(): Debug parameter detected.\n");
         // TODO: Add DumpArgs method to argParser class and invoke it in UGF.validateArguments()
+        [argParser dumpArgs];
+        
     }
     
     // If action is doTest, must also have test number specified.

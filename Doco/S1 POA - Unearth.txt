@@ -68,6 +68,9 @@ S1 POA - Unearth
 10/13
     - Search // TDOO: for additional tasks
 
+10/21
+    - Made AP.dumpArgs method & invoked in UGF.validateArguments()
+
 
 > In-Progress:
 
@@ -76,7 +79,6 @@ S1 POA - Unearth
 
 
 > Next:
-    - Make AP.dumpArgs method & invoke it in UGF.validateArguments(), see TODO marker. 0831
     - Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param, see TODO marker. 1013
     - Add debug logging class w/ output to file 0620
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620

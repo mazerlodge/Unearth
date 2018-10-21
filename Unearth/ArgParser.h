@@ -18,15 +18,11 @@
 }
 
 - (id) initWithArgs: (NSArray *) args;
-
-//    - Create ArgParser.populateArgParserFromString() method, to be used by UGF.makeGame() method 0701
 - (bool) populateArgParserFromString: (NSString *) paramString;
-
 - (bool) isInArgs: (NSString *) name withAValue: (bool) bWithValue;
-
 - (NSString *) getArgValue: (NSString *) name;
-
 - (bool) doesArg: (NSString *) name haveValue: (NSString *) value;
+- (void) dumpArgs;
 
 
 @end

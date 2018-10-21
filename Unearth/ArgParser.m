@@ -92,6 +92,19 @@
     
 }
 
+- (void) dumpArgs {
+    // Output list of arguments.
+    
+    printf("ArgParser, dump args follows.\n");
+    
+    int argIndex =0;
+    for (NSString *aArg in argsList) {
+        printf("[%d] = %s \n", argIndex, [aArg UTF8String]);
+        argIndex++;
+    }
+    
+}
+
 
 @end
 
