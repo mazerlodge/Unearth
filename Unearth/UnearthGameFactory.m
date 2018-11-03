@@ -46,7 +46,15 @@
             break;
             
         case 5:
-            rval = [self testReadDelverCardData];
+            rval = [self testReadDelverCardDataWithFile];
+            break;
+            
+        case 6:
+            rval = [self testReadDelverCardDataWithURL];
+            break;
+            
+        case 7:
+            rval = [self testReadDelverCardDataFromLibrary];
             break;
             
     }
@@ -55,7 +63,7 @@
     
 }
 
-- (int) testReadDelverCardData {
+- (int) testReadDelverCardDataWithFile {
     
     int rval = -1;
     
@@ -64,14 +72,63 @@
     NSString *fullPath = [tildePath stringByExpandingTildeInPath];
     printf("UGF.tRDCD(): Got string %s.\n", [fullPath UTF8String]);
     
-    /*
-    Wasn't able to get syntax right for loading from URL.
-    NSString *fileURL = [[NSString alloc] initWithFormat:@"file://%@", fullPath];
-    printf("UGF.tRDCD(): Got fileURL %s.\n", [fileURL UTF8String]);
-    NSURL *urlDelverCardData = [NSURL fileURLWithPath:fileURL];
-    */
-    
     NSArray *delverCardData = [[NSArray alloc] initWithContentsOfFile:fullPath];
+    
+    if ([delverCardData count] < 1)
+        printf("\t Got zero cards in data file\n");
+    
+    for(NSString *aCardData in delverCardData)
+        printf("\tGot Card %s\n", [aCardData UTF8String]);
+    
+    rval = 0;
+    
+    return rval;
+    
+}
+
+
+- (int) testReadDelverCardDataWithURL {
+    
+    int rval = -1;
+    
+    // Tilde in path expansion, the pedestrian way.
+    NSString *tildePath = @"~/Documents/UnearthData/_DelverCards.plist";
+    NSString *fullPath = [tildePath stringByExpandingTildeInPath];
+    printf("UGF.tRDCDwURL(): Got string %s.\n", [fullPath UTF8String]);
+    
+    // Use string to populate NSURL object.
+    NSURL *urlDelverCardData = [NSURL fileURLWithPath:fullPath];
+    printf("UGF.tRDCDwURL(): Got URL absolute path %s.\n", [[urlDelverCardData absoluteString] UTF8String]);
+    
+    // Read data file into Array using NSURL object.
+    NSArray *delverCardData = [[NSArray alloc] initWithContentsOfURL:urlDelverCardData];
+    
+    if ([delverCardData count] < 1)
+        printf("\t Got zero cards in data file\n");
+    
+    for(NSString *aCardData in delverCardData)
+        printf("\tGot Card %s\n", [aCardData UTF8String]);
+    
+    rval = 0;
+    
+    return rval;
+    
+}
+
+
+- (int) testReadDelverCardDataFromLibrary {
+    
+    int rval = -1;
+    
+    // Note: including a tilde here causes the full URL to include the path to the running app
+    //         before the tilde. This is not documented, m/b a bug in XCode.
+    NSString *dataFolder = @"~UnearthData";
+    NSURL *baseURL = [NSURL fileURLWithPath:dataFolder isDirectory:true];
+    
+    NSURL *urlRelativeDelverCardData = [NSURL URLWithString:@"_DelverCards.plist" relativeToURL:baseURL];
+    printf("UGF.tRDCDfL(): Got full url from base %s.\n", [[urlRelativeDelverCardData absoluteString] UTF8String]);
+    
+    NSArray *delverCardData = [[NSArray alloc] initWithContentsOfURL:urlRelativeDelverCardData];
     
     if ([delverCardData count] < 1)
         printf("\t Got zero cards in data file\n");
