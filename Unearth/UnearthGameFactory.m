@@ -45,7 +45,41 @@
             rval = [self testExpandTildeInPath];
             break;
             
+        case 5:
+            rval = [self testReadDelverCardData];
+            break;
+            
     }
+    
+    return rval;
+    
+}
+
+- (int) testReadDelverCardData {
+    
+    int rval = -1;
+    
+    // Tilde in path expansion, the pedestrian way.
+    NSString *tildePath = @"~/Documents/UnearthData/_DelverCards.plist";
+    NSString *fullPath = [tildePath stringByExpandingTildeInPath];
+    printf("UGF.tRDCD(): Got string %s.\n", [fullPath UTF8String]);
+    
+    /*
+    Wasn't able to get syntax right for loading from URL.
+    NSString *fileURL = [[NSString alloc] initWithFormat:@"file://%@", fullPath];
+    printf("UGF.tRDCD(): Got fileURL %s.\n", [fileURL UTF8String]);
+    NSURL *urlDelverCardData = [NSURL fileURLWithPath:fileURL];
+    */
+    
+    NSArray *delverCardData = [[NSArray alloc] initWithContentsOfFile:fullPath];
+    
+    if ([delverCardData count] < 1)
+        printf("\t Got zero cards in data file\n");
+    
+    for(NSString *aCardData in delverCardData)
+        printf("\tGot Card %s\n", [aCardData UTF8String]);
+    
+    rval = 0;
     
     return rval;
     
@@ -66,6 +100,7 @@
     NSBundle *main = [NSBundle mainBundle];
     NSString *resourcePath = [main pathForResource:@"DelverCards" ofType:@"plist"];
     NSLog(@"Got resource path for delver cards: %@\n", resourcePath);
+    // Result: This returns (null), see below...
     
     // Test getting current application
     NSError *error;
@@ -80,7 +115,14 @@
         NSURL *folder = [applicationSupport URLByAppendingPathComponent:identifier];
         [manager createDirectoryAtURL:folder withIntermediateDirectories:true attributes:nil error:&error];
         NSURL *fileURL = [folder URLByAppendingPathComponent:@"QLog.txt"];
+        NSLog(@"NSURL file path = %@\n", [fileURL path]);
+        
     }
+    else {
+        NSLog(@"Attempt to get NSBundle identifer returned nil.\n");
+        
+    }
+    // Result: NSBundle not available for command line apps. Separate test project shows it works for cocoa apps.
     
     return rval;
     
