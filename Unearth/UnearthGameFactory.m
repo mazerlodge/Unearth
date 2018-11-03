@@ -179,20 +179,39 @@
                                                   create:false
                                                    error:&error];
     NSLog(@"tGASF() application Support directory %s", [[applicationSupport absoluteString] UTF8String]);
-    
-    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-    if (identifier != nil) {
-        NSURL *folder = [applicationSupport URLByAppendingPathComponent:identifier];
-        [manager createDirectoryAtURL:folder withIntermediateDirectories:true attributes:nil error:&error];
-        NSURL *fileURL = [folder URLByAppendingPathComponent:@"QLog.txt"];
-        NSLog(@"NSURL file path = %@\n", [fileURL path]);
-        
-    }
-    else {
-        NSLog(@"tGASF() Attempt to get NSBundle identifer returned nil.\n");
-        
-    }
 
+    // Get app support folder and log file names from QConfig plist.
+    NSString *appSupportFolder = [self getValueFromQConfigForKey:@"AppSupportFolder"];
+    NSString *logFilename = [self getValueFromQConfigForKey:@"LogFile"];
+    
+    // Attempt to make a folder for writing save information.
+    NSURL *folder = [applicationSupport URLByAppendingPathComponent:appSupportFolder];
+    
+    // Create the AppSupport subdirectory (if it doesn't exist).
+    [manager createDirectoryAtURL:folder withIntermediateDirectories:true attributes:nil error:&error];
+
+    NSURL *fileURL = [folder URLByAppendingPathComponent:logFilename];
+    NSLog(@"NSURL file path = %@\n", [fileURL path]);
+    
+    /*
+    NSString *configFilePath = [[NSBundle mainBundle] pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
+    NSData *someNoise = [NSData dataWithContentsOfFile:configFilePath];
+    */
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSString *timeStamp = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"Sending datestamp to file [%@]", timeStamp);
+
+    // Make a file in the support folder
+    BOOL bResult = [manager createFileAtPath:[fileURL path]
+                                    contents:[timeStamp dataUsingEncoding:NSUTF8StringEncoding]
+                                  attributes:nil];
+    if (bResult == YES)
+        NSLog(@"File created or already existed.");
+    else
+        NSLog(@"File creation returned false.");
+    
     return rval;
     
 }
@@ -291,6 +310,37 @@
     [cli put:testResult];
     
     return rval;
+}
+    
+
+- (NSString *) getValueFromQConfigForKey: (NSString *) key {
+        // Returns the value in QConfig.plist associated with the specified key.
+    
+    NSString *rval = @"NOT_SET";
+    
+    NSBundle *main = [NSBundle mainBundle];
+    if (main == nil)
+        NSLog(@"gVFQCFK() main bundle returned nil.\n");
+    else
+        NSLog(@"gVFQCFK() main bundle acquired, path = %s.\n", [[main bundlePath] UTF8String]);
+    
+    NSString *configFilePath = [main pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
+    NSLog(@"Got resource path for QConfig file: %@\n", configFilePath);
+    
+    if (configFilePath != nil) {
+        // Load QConfig, it is a dictionary.
+        NSDictionary *dictConfig = [[NSDictionary alloc] initWithContentsOfFile:configFilePath];
+        
+        // See if the requested key's value can be read.
+        NSString *dataValue = [dictConfig objectForKey:key];
+        NSLog(@"\t Got value for [%s] key of [%s]\n", [key UTF8String], [dataValue UTF8String]);
+        rval = dataValue;
+        
+    }
+    
+    
+    return rval;
+    
 }
 
 - (bool) validateArguments: (ArgParser *) argParser {

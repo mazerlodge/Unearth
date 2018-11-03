@@ -71,6 +71,14 @@ S1 POA - Unearth
 10/21
     - Made AP.dumpArgs method & invoked in UGF.validateArguments()
 
+11/02
+    - Added test cases to read delver card plist files using hard coded folder.
+
+11/03
+    - Added/modified test cases to load delver cards from NSURL instead of NSString
+    - Added test cases to read plist files from relative path of build folder.
+    - Added test cases to read from NSBundle, and modified build instructions to copy QData folder to output dir
+
 
 > In-Progress:
 
