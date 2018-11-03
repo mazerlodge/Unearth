@@ -57,6 +57,14 @@
             rval = [self testReadDelverCardDataFromLibrary];
             break;
             
+        case 8:
+            rval = [self testAccessingBundle];
+            break;
+            
+        case 9:
+            rval = [self testGettingAppSupportFolder];
+            break;
+            
     }
     
     return rval;
@@ -122,7 +130,7 @@
     
     // Note: including a tilde here causes the full URL to include the path to the running app
     //         before the tilde. This is not documented, m/b a bug in XCode.
-    NSString *dataFolder = @"~UnearthData";
+    NSString *dataFolder = @"~UnearthData/";
     NSURL *baseURL = [NSURL fileURLWithPath:dataFolder isDirectory:true];
     
     NSURL *urlRelativeDelverCardData = [NSURL URLWithString:@"_DelverCards.plist" relativeToURL:baseURL];
@@ -153,11 +161,14 @@
     printf("UGF.testExpandTildeInPath(): %s.\n", [test UTF8String]);
     rval = 0;
     
-    // Maybe better?
-    NSBundle *main = [NSBundle mainBundle];
-    NSString *resourcePath = [main pathForResource:@"DelverCards" ofType:@"plist"];
-    NSLog(@"Got resource path for delver cards: %@\n", resourcePath);
-    // Result: This returns (null), see below...
+
+    return rval;
+    
+}
+
+- (int) testGettingAppSupportFolder {
+    
+    int rval = -1;
     
     // Test getting current application
     NSError *error;
@@ -167,6 +178,8 @@
                                        appropriateForURL:nil
                                                   create:false
                                                    error:&error];
+    NSLog(@"tGASF() application Support directory %s", [[applicationSupport absoluteString] UTF8String]);
+    
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     if (identifier != nil) {
         NSURL *folder = [applicationSupport URLByAppendingPathComponent:identifier];
@@ -176,10 +189,39 @@
         
     }
     else {
-        NSLog(@"Attempt to get NSBundle identifer returned nil.\n");
+        NSLog(@"tGASF() Attempt to get NSBundle identifer returned nil.\n");
         
     }
-    // Result: NSBundle not available for command line apps. Separate test project shows it works for cocoa apps.
+
+    return rval;
+    
+}
+
+- (int) testAccessingBundle {
+    int rval = -1;
+    
+    NSBundle *main = [NSBundle mainBundle];
+    if (main == nil)
+        NSLog(@"tETIP() main bundle returned nil.\n");
+    else
+        NSLog(@"tETIP() main bundle acquired, path = %s.\n", [[main bundlePath] UTF8String]);
+        
+    NSString *configFilePath = [main pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
+    NSLog(@"Got resource path for QConfig file: %@\n", configFilePath);
+    
+    if (configFilePath != nil) {
+        // Load QConfig, it is a dictionary.  Expecting it to contain a key of 'data' with a value of 'QData'
+        NSDictionary *dictConfig = [[NSDictionary alloc] initWithContentsOfFile:configFilePath];
+     
+        for (NSString *aKey in [dictConfig allKeys])
+            NSLog(@"\t Got key [%s]", [aKey UTF8String]);
+        
+        // See if the 'data' key's value can be read.
+        NSString *dataValue = [dictConfig objectForKey:@"data"];
+        NSLog(@"\t Got value for 'data' key of [%s]\n", [dataValue UTF8String]); 
+        
+    }
+    
     
     return rval;
     
