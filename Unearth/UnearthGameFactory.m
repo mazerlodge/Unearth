@@ -12,6 +12,11 @@
 
 - (id) init {
     
+    // Assume not debugging until validateArgs() proves overwise.
+    bInDebug = true;
+    cli = [[CommandLineInterface alloc] init];
+    [self loadQConfigDictionary];
+    
     return self;
     
 }
@@ -20,13 +25,56 @@
 - (void) showUsage {
     // Display appropriate invocation options.
     
-    printf("Usage: unearth -action {dotest | defaultstart } -test n \n");
+    [cli put:@"Usage: unearth -action {dotest | defaultstart } -test n \n"];
+    
+}
+    
+- (bool) loadQConfigDictionary {
+    // Populates the QConfig dictionary object from the plist file.
+    // Note: debug messages won't appear from init b/c debug is assumed false until args validated.
+    bool bRval = false;
+    
+    NSBundle *main = [NSBundle mainBundle];
+    if (main == nil)
+        [self debugMsg:@"UGF.loadQCD() main bundle returned nil.\n"];
+    else {
+        NSString *msg = [[NSString alloc] initWithFormat:@"lQCD() main bundle acquired.\n\tPath = %s.\n",
+                                                            [[main bundlePath] UTF8String]];
+        [self debugMsg:msg];
+        
+    }
+    
+    NSString *configFilePath = [main pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
+    NSString *msg = [[NSString alloc] initWithFormat:@"Resource path for QConfig file acquired.\n\tPath = %@\n", configFilePath];
+    [self debugMsg:msg];
+    
+    if (configFilePath != nil) {
+        // Load QConfig, it is a dictionary.  Expecting it to contain a key of 'data' with a value of 'QData'
+        dictQConfig = [[NSDictionary alloc] initWithContentsOfFile:configFilePath];
+        
+        msg = @"QConfig keys follow:\n";
+        [self debugMsg:msg];
+        for (NSString *aKey in [dictQConfig allKeys]) {
+            msg = [[NSString alloc] initWithFormat:@"\tKey [%@] = [%@]\n",
+                                                    aKey, [dictQConfig valueForKey:aKey]];
+            [self debugMsg:msg];
+            
+        }
+        
+        if ([dictQConfig count] > 0)
+            bRval = true;
+    }
+
+    return bRval;
     
 }
 
 - (int) doTest: (NSInteger) testNumber {
     
     int rval = -1;
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.doTest() Running test %ld.\n", testNumber];
+    [cli put:msg];
     
     switch(testNumber) {
         case 1:
@@ -76,18 +124,20 @@
     int rval = -1;
     
     // Tilde in path expansion, the pedestrian way.
-    NSString *tildePath = @"~/Documents/UnearthData/_DelverCards.plist";
+    NSString *tildePath = @"~/Documents/UnearthData/_QDelverCards.plist";
     NSString *fullPath = [tildePath stringByExpandingTildeInPath];
-    printf("UGF.tRDCD(): Got string %s.\n", [fullPath UTF8String]);
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCD(): Got path %@.\n", fullPath];
+    [cli put:msg];
     
     NSArray *delverCardData = [[NSArray alloc] initWithContentsOfFile:fullPath];
     
     if ([delverCardData count] < 1)
-        printf("\t Got zero cards in data file\n");
+        [cli put:@"\t Got zero cards in data file\n"];
     
-    for(NSString *aCardData in delverCardData)
-        printf("\tGot Card %s\n", [aCardData UTF8String]);
-    
+    for(NSString *aCardData in delverCardData) {
+        msg = [[NSString alloc] initWithFormat:@"\tGot Card %@\n", aCardData];
+        [cli put:msg];
+    }
     rval = 0;
     
     return rval;
@@ -102,21 +152,25 @@
     // Tilde in path expansion, the pedestrian way.
     NSString *tildePath = @"~/Documents/UnearthData/_DelverCards.plist";
     NSString *fullPath = [tildePath stringByExpandingTildeInPath];
-    printf("UGF.tRDCDwURL(): Got string %s.\n", [fullPath UTF8String]);
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDwURL(): Got path %s.\n", [fullPath UTF8String]];
+    [cli put:msg];
     
     // Use string to populate NSURL object.
     NSURL *urlDelverCardData = [NSURL fileURLWithPath:fullPath];
-    printf("UGF.tRDCDwURL(): Got URL absolute path %s.\n", [[urlDelverCardData absoluteString] UTF8String]);
+    msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDwURL(): Got URL absolute path %s.\n",
+                                    [[urlDelverCardData absoluteString] UTF8String]];
+    [cli put:msg];
     
     // Read data file into Array using NSURL object.
     NSArray *delverCardData = [[NSArray alloc] initWithContentsOfURL:urlDelverCardData];
     
     if ([delverCardData count] < 1)
-        printf("\t Got zero cards in data file\n");
+    [cli put:@"\t Got zero cards in data file\n"];
     
-    for(NSString *aCardData in delverCardData)
-        printf("\tGot Card %s\n", [aCardData UTF8String]);
-    
+    for(NSString *aCardData in delverCardData) {
+        msg = [[NSString alloc] initWithFormat:@"\tGot Card %s\n", [aCardData UTF8String]];
+        [cli put:msg];
+    }
     rval = 0;
     
     return rval;
@@ -134,16 +188,19 @@
     NSURL *baseURL = [NSURL fileURLWithPath:dataFolder isDirectory:true];
     
     NSURL *urlRelativeDelverCardData = [NSURL URLWithString:@"_DelverCards.plist" relativeToURL:baseURL];
-    printf("UGF.tRDCDfL(): Got full url from base %s.\n", [[urlRelativeDelverCardData absoluteString] UTF8String]);
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.\n",
+                                            [[urlRelativeDelverCardData absoluteString] UTF8String]];
+    [cli put:msg];
     
     NSArray *delverCardData = [[NSArray alloc] initWithContentsOfURL:urlRelativeDelverCardData];
     
     if ([delverCardData count] < 1)
-        printf("\t Got zero cards in data file\n");
+        [cli put:@"\t Got zero cards in data file\n"];
     
-    for(NSString *aCardData in delverCardData)
-        printf("\tGot Card %s\n", [aCardData UTF8String]);
-    
+    for(NSString *aCardData in delverCardData) {
+        msg = [[NSString alloc] initWithFormat:@"\tGot Card %@\n", aCardData];
+        [cli put:msg];
+    }
     rval = 0;
     
     return rval;
@@ -158,7 +215,10 @@
     // TEST to see tilde in path expansion, the pedestrian way.
     NSString *tildePath = @"~/Documents";
     NSString *test = [tildePath stringByExpandingTildeInPath];
-    printf("UGF.testExpandTildeInPath(): %s.\n", [test UTF8String]);
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.testExpandTildeInPath(): %s.\n", [test UTF8String]];
+    [cli put:msg];
+    
     rval = 0;
     
 
@@ -178,7 +238,9 @@
                                        appropriateForURL:nil
                                                   create:false
                                                    error:&error];
-    NSLog(@"tGASF() application Support directory %s", [[applicationSupport absoluteString] UTF8String]);
+    NSString *msg = [[NSString alloc] initWithFormat:@"testGASF() application Support directory acquired.\n\tPath: %@\n",
+                                                        [applicationSupport absoluteString]];
+    [cli put:msg];
 
     // Get app support folder and log file names from QConfig plist.
     NSString *appSupportFolder = [self getValueFromQConfigForKey:@"AppSupportFolder"];
@@ -191,9 +253,11 @@
     [manager createDirectoryAtURL:folder withIntermediateDirectories:true attributes:nil error:&error];
 
     NSURL *fileURL = [folder URLByAppendingPathComponent:logFilename];
-    NSLog(@"NSURL file path = %@\n", [fileURL path]);
+    msg = [[NSString alloc] initWithFormat:@"NSURL file path = %@\n", [fileURL path]];
+    [cli put:msg];
     
     /*
+    Another way to get data for writing to file.
     NSString *configFilePath = [[NSBundle mainBundle] pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
     NSData *someNoise = [NSData dataWithContentsOfFile:configFilePath];
     */
@@ -201,16 +265,17 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSString *timeStamp = [dateFormatter stringFromDate:[NSDate date]];
-    NSLog(@"Sending datestamp to file [%@]", timeStamp);
+    msg = [[NSString alloc] initWithFormat:@"Sending datestamp to file [%@]\n", timeStamp];
+    [cli put:msg];
 
     // Make a file in the support folder
     BOOL bResult = [manager createFileAtPath:[fileURL path]
                                     contents:[timeStamp dataUsingEncoding:NSUTF8StringEncoding]
                                   attributes:nil];
     if (bResult == YES)
-        NSLog(@"File created or already existed.");
+        [cli put:@"File created or already existed.\n"];
     else
-        NSLog(@"File creation returned false.");
+        [cli put:@"File creation returned false.\n"];
     
     return rval;
     
@@ -221,23 +286,32 @@
     
     NSBundle *main = [NSBundle mainBundle];
     if (main == nil)
-        NSLog(@"tETIP() main bundle returned nil.\n");
-    else
-        NSLog(@"tETIP() main bundle acquired, path = %s.\n", [[main bundlePath] UTF8String]);
+        [cli put:@"tETIP() main bundle returned nil.\n"];
+    else {
+        NSString *msg = [[NSString alloc] initWithFormat:@"tETIP() main bundle acquired, path = %s.\n", [[main bundlePath] UTF8String]];
+        [cli put:msg];
+    }
         
     NSString *configFilePath = [main pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
-    NSLog(@"Got resource path for QConfig file: %@\n", configFilePath);
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"Got resource path for QConfig file: %@\n", configFilePath];
+    [cli put:msg];
     
     if (configFilePath != nil) {
         // Load QConfig, it is a dictionary.  Expecting it to contain a key of 'data' with a value of 'QData'
         NSDictionary *dictConfig = [[NSDictionary alloc] initWithContentsOfFile:configFilePath];
-     
-        for (NSString *aKey in [dictConfig allKeys])
-            NSLog(@"\t Got key [%s]", [aKey UTF8String]);
+        msg = @"QConfig key/value pairs follow:\n";
+        [cli put:msg];
+        
+        for (NSString *aKey in [dictConfig allKeys]) {
+            msg = [[NSString alloc] initWithFormat:@"\t Got key [%s]\n", [aKey UTF8String]];
+            [cli put:msg];
+        }
         
         // See if the 'data' key's value can be read.
         NSString *dataValue = [dictConfig objectForKey:@"data"];
-        NSLog(@"\t Got value for 'data' key of [%s]\n", [dataValue UTF8String]); 
+        msg = [[NSString alloc] initWithFormat:@"\t Got value for 'data' key of [%s]\n", [dataValue UTF8String]];
+        [cli put:msg];
         
     }
     
@@ -253,7 +327,7 @@
     // TEST to see if code can reach player type enumeration.
     UnearthPlayerType q = UnearthPlayerHuman;
     if (q == UnearthPlayerHuman) {
-        printf("UGF.testEnumerationReach(): Able to read Enumerations confirmed.\n");
+        [cli put:@"UGF.testEnumerationReach(): Able to read Enumerations confirmed.\n"];
         rval = 0;
     }
     
@@ -267,19 +341,13 @@
     
     // How to scan for integers
     int iVal = 0;
-    printf("Did that help (1=y, 2=n)?");
-    scanf("%i",&iVal);
-    printf("You said %i\n", iVal);
+    iVal = [cli getInt:@"Did that help (1=y, 2=n)?"];
+    NSString *msg = [[NSString alloc] initWithFormat:@"You said %i\n", iVal];
+    [cli put:msg];
     
-    // How to scan for strings, fails with large strings.
-    // This is OK: upercalafragileistice
-    // This isn't: upercalafragileisticex
-    // This causes 'illegal instruction': upercalafragileisticexpealli
-    char inputVal;// = "NOT_SET";
-    printf("Did that help (Y/N)?");
-    scanf("%s", &inputVal);
-    NSString *inMessage = [NSString stringWithCString:&inputVal encoding:NSUTF8StringEncoding];
-    printf("You said %s\n", [inMessage UTF8String]);
+    // How to scan for strings
+    NSString *inMessage = [cli getStr:@"Did that help (Y/N)?"];
+    msg = [[NSString alloc] initWithFormat:@"You said %@\n", inMessage];
     
     return rval;
 
@@ -303,10 +371,11 @@
     float test4point2 = [cli getFloat:@"Please enter '4.2':"];
     if ((test4point2 - 4.2) > 0.001) {
         rval = -100;
-        printf("Expected 4.2, got %f\n", test4point2);
+        NSString *msg = [[NSString alloc] initWithFormat:@"Expected 4.2, got %f\n", test4point2];
+        [cli put:msg];
     }
     
-    NSString *testResult = [[NSString alloc] initWithFormat:@"test result = %d", rval];
+    NSString *testResult = [[NSString alloc] initWithFormat:@"test result = %d\n", rval];
     [cli put:testResult];
     
     return rval;
@@ -318,26 +387,13 @@
     
     NSString *rval = @"NOT_SET";
     
-    NSBundle *main = [NSBundle mainBundle];
-    if (main == nil)
-        NSLog(@"gVFQCFK() main bundle returned nil.\n");
-    else
-        NSLog(@"gVFQCFK() main bundle acquired, path = %s.\n", [[main bundlePath] UTF8String]);
+    // See if the requested key's value can be read.
+    NSString *dataValue = [dictQConfig objectForKey:key];
+    NSString *msg = [[NSString alloc] initWithFormat: @"UGF.gVFQCFK() Got value for [%s] key of [%s]\n",
+                                                            [key UTF8String], [dataValue UTF8String]];
+    [self debugMsg:msg];
     
-    NSString *configFilePath = [main pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
-    NSLog(@"Got resource path for QConfig file: %@\n", configFilePath);
-    
-    if (configFilePath != nil) {
-        // Load QConfig, it is a dictionary.
-        NSDictionary *dictConfig = [[NSDictionary alloc] initWithContentsOfFile:configFilePath];
-        
-        // See if the requested key's value can be read.
-        NSString *dataValue = [dictConfig objectForKey:key];
-        NSLog(@"\t Got value for [%s] key of [%s]\n", [key UTF8String], [dataValue UTF8String]);
-        rval = dataValue;
-        
-    }
-    
+    rval = dataValue;
     
     return rval;
     
@@ -353,21 +409,21 @@
         action = [[argParser getArgValue:@"-action"] lowercaseString];
     }
     else {
-        printf("Error UGF.validateArguments(): Missing required parameter: -action.  Can not continue.\n");
+        [cli put:@"Error UGF.validateArguments(): Missing required parameter: -action.  Can not continue.\n"];
         bRval = false;
     }
     
     if ([argParser isInArgs:@"-debug" withAValue:false]) {
-        printf("Info, UGF.validateArguments(): Debug parameter detected.\n");
-        // TODO: Add DumpArgs method to argParser class and invoke it in UGF.validateArguments()
-        [argParser dumpArgs];
+        [cli put:@"UGF.validateArguments() Info, debug parameter detected.\n"];
+        bInDebug = true;
+        [argParser dumpArgsToCLI:cli];
         
     }
     
     // If action is doTest, must also have test number specified.
     if ([action isEqualToString:@"dotest"]) {
         if (![argParser isInArgs:@"-test" withAValue:true]) {
-            printf("Error UGF.validateArguments(): action doTest requires test number be specified.\n");
+            [cli put:@"Error UGF.validateArguments(): action doTest requires test number be specified.\n"];
             bRval = false;
         }
     }
@@ -381,14 +437,14 @@
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
-    // TODO: Define set of default params to be used with UGF.makeGame generic method.
-    NSString *params = @"-action dotest -test 1 -debug";
+    // TODO: Define better set of default params to be used with UGF.makeGame generic method.
+    NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"]; //@"-action dotest -test 5 -debug";
     ArgParser *ap = [[ArgParser alloc] init];
     [ap populateArgParserFromString:params];
+    uge = [self makeGameWithArgs:ap];
     
     return uge;
-    
-    
+
 }
 
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) ap {
@@ -396,7 +452,7 @@
     UnearthGameEngine *uge;
     
     if ([ap doesArg:@"-action" haveValue:@"defaultstart"]) {
-        printf("Detected startup with defaultStart parameters requested.\n");
+        [cli put:@"Detected startup with defaultStart parameters requested.\n"];
         uge = [self makeGame];
     }
     else {
@@ -416,5 +472,12 @@
     
 }
 
+- (void) debugMsg: (NSString *) msg {
+    // If debug mode is turned on output the specified message via the command line interface.
+    
+    if (bInDebug)
+        [cli put:msg];
+    
+}
 
 @end

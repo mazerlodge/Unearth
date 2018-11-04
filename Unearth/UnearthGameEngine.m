@@ -11,6 +11,7 @@
 @implementation UnearthGameEngine
 
 - (id) init {
+    cli = [[CommandLineInterface alloc] init];
     
     return self;
     
@@ -18,7 +19,7 @@
 
 - (int) go {
     
-    printf("Inside of UnearthGameEngine.\n");
+    [cli put:@"Inside of UnearthGameEngine.\n"];
     
     return 0;
     

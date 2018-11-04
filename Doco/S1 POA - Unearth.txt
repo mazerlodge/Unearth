@@ -78,19 +78,22 @@ S1 POA - Unearth
     - Added/modified test cases to load delver cards from NSURL instead of NSString
     - Added test cases to read plist files from relative path of build folder.
     - Added test cases to read from NSBundle, and modified build instructions to copy QData folder to output dir
-
+    - Added test to get app support folder (/Library/App Support...) and create Unearth folder and log file there.
+    - Added populating of dictionary member for QConfig data in UGF class and added CLI member as well.
+    - Replaced printf() calls in UGF for testscanf() function w/ CLI methods
+    - Moved default startup params to QConfig file
 
 > In-Progress:
 
     Sample Current Invocation:
     unearth -action dotest - test 1 -debug
+    -or-
+    unearth -action defaultstartup
+        Note: in this case, the startup params come from QConfig.plist, key [DefaultStartupParams] value.
 
 
 > Next:
-    - Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param, see TODO marker. 1013
-    - Add debug logging class w/ output to file 0620
-    - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
-    - Flesh out UnearthGameFactory.makeGame() method 0701
+    - Flesh out UnearthGameFactory.makeGameWithArgs() method 0701
     - UGF build decks from plist. 0819
         1. NSMutableArray *fields = [[NSMutableArray alloc] initWithCapacity:3];
         2. [fields writeToFile:@"/tmp/DictionaryPatternsToPlist.plist" atomically:YES]
@@ -105,6 +108,8 @@ S1 POA - Unearth
     - Read Delver Cards plist file (use hard coded path to get things going) 1006
     - Define set of default params to be used w/ UGF.makeGame generic method, see TODO marker. 1013
     - Expand UGE.makeGameWithArgs to handle addn'l -action param values, see TODO marker. 1013
-
+    - Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param, see TODO marker. 1013 1103
+    - Add debug logging class w/ output to file 0620 1103
+    - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620 1103
 
 

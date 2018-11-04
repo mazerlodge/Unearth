@@ -14,7 +14,11 @@
 
 @interface UnearthGameFactory : NSObject {
     
+    bool bInDebug; 
+    NSDictionary *dictQConfig;
     NSArray *delverDeckInfo;
+    CommandLineInterface *cli;
+    
     
 }
 

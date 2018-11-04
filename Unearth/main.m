@@ -11,45 +11,6 @@
 #import "UnearthGameFactory.h"
 #import "UnearthGameEngine.h"
 
-/*
-bool validateArguments(ArgParser *argParser) {
-    // Return true if the params specified are valid and complete.
-    
-    bool bRval = true;
-    NSString *action = @"NOT_SET";
-
-    if ([argParser isInArgs:@"-action" withAValue:true]) {
-        action = [argParser getArgValue:@"-action"];
-    }
-    else {
-        NSLog(@"Error: Missing required parameter: -action.  Can not continue.\n");
-        bRval = false;
-    }
-    
-    // If action is dotest, must also have a -test arg w/ a test number.
-    if (([action isEqualToString:@"dotest"])
-         && (![argParser isInArgs:@"-test" withAValue:true])) {
-        NSLog(@"Error: Detected -action of dotest, missing required parameter: -test testID.  Can not continue.\n");
-        bRval = false;
-    }
-
-    if ([argParser isInArgs:@"-debug" withAValue:false])
-        NSLog(@"Info: Debug parameter detected.\n");
-    
-    
-    return bRval;
-    
-}
-
-void showUsage() {
-    // Display appropriate invocation options.
-    
-    printf("Usage: unearth -action {dotest} -test 1 \n");
-    
-    
-}
-
-*/
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -71,8 +32,8 @@ int main(int argc, const char * argv[]) {
             return 255;
         }
         
-        UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
         //UnearthGameEngine *uge = [ugf makeGame];
+        UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
         [uge go]; 
         
         

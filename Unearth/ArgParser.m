@@ -92,14 +92,17 @@
     
 }
 
-- (void) dumpArgs {
+- (void) dumpArgsToCLI: (CommandLineInterface *) cli {
     // Output list of arguments.
     
-    printf("ArgParser, dump args follows.\n");
+    NSString *msg = @"ArgParser, dump args follows.\n";
+    [cli put:msg];
     
     int argIndex =0;
     for (NSString *aArg in argsList) {
-        printf("[%d] = %s \n", argIndex, [aArg UTF8String]);
+        msg = [[NSString alloc] initWithFormat:@"[%d] = %@ \n", argIndex, aArg];
+        [cli put:msg];
+        
         argIndex++;
     }
     

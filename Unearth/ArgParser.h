@@ -10,6 +10,7 @@
 #define ArgParser_h
 
 #import <Foundation/Foundation.h>
+#import "CommandLineInterface.h"
 
 @interface ArgParser : NSObject {
     
@@ -22,7 +23,7 @@
 - (bool) isInArgs: (NSString *) name withAValue: (bool) bWithValue;
 - (NSString *) getArgValue: (NSString *) name;
 - (bool) doesArg: (NSString *) name haveValue: (NSString *) value;
-- (void) dumpArgs;
+- (void) dumpArgsToCLI: (CommandLineInterface *) cli;
 
 
 @end

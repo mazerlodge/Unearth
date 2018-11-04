@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CommandLineInterface.h"
 
 @interface UnearthGameEngine : NSObject {
     
+    CommandLineInterface *cli;
     NSArray *delverDeck;
     
 }

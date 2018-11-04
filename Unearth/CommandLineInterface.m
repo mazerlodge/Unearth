@@ -13,14 +13,16 @@
 - (NSString * ) getStr: (NSString *) msg {
     NSString *rval = @"NOT_SET";
     
-    // How to scan for strings, fails with large strings.
+    // TODO: How to scan for strings, fails with large strings.
     // This is OK: upercalafragileistice
     // This isn't: upercalafragileisticex
-    // This causes 'illegal instruction': upercalafragileisticexpealli
-    char inputVal;// = "NOT_SET";
-    printf("%s", [msg cStringUsingEncoding:NSUTF8StringEncoding]);
-    scanf("%s", &inputVal);
-    NSString *inMessage = [NSString stringWithCString:&inputVal encoding:NSUTF8StringEncoding];
+    // Before makin ginputVal to an array, this caused 'illegal instruction': upercalafragileisticexpealli
+    //    NSString *inMessage = [NSString stringWithCString:&inputVal encoding:NSUTF8StringEncoding];
+
+    char inputVal[255] = {0};// = "NOT_SET";
+    printf("%s", [msg UTF8String]);
+    scanf("%s", inputVal);
+    NSString *inMessage = [[NSString alloc] initWithUTF8String:inputVal];
 
     rval = inMessage;
     
@@ -32,7 +34,7 @@
     
     int rval = -1;
 
-    printf("%s", [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+    printf("%s", [msg UTF8String]);
     scanf("%i",&rval);
     
     return rval;
@@ -43,7 +45,7 @@
     
     float rval = 0.0;
 
-    printf("%s", [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+    printf("%s", [msg UTF8String]);
     scanf("%f",&rval);
 
     return rval;
@@ -53,7 +55,7 @@
 
 - (void) put: (NSString *) msg {
     
-    printf("%s\n", [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+    printf("%s", [msg UTF8String]);
     
     
 }
