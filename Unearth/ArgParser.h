@@ -24,7 +24,7 @@
 - (NSString *) getArgValue: (NSString *) name;
 - (bool) doesArg: (NSString *) name haveValue: (NSString *) value;
 - (void) dumpArgsToCLI: (CommandLineInterface *) cli;
-
+- (NSString *) getArgByNumber: (NSUInteger) argNumber;
 
 @end
 

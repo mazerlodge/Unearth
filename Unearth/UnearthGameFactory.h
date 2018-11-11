@@ -14,9 +14,10 @@
 
 @interface UnearthGameFactory : NSObject {
     
-    bool bInDebug; 
+    bool bInDebug;
     NSDictionary *dictQConfig;
     NSArray *delverDeckInfo;
+    ArgParser *ap;
     CommandLineInterface *cli;
     
     
@@ -39,6 +40,7 @@
 
  */
 
+- (id) initWithArgParser: (ArgParser *) ap;
 - (void) showUsage;
 - (int) doTest: (NSInteger) testNumber;
 - (bool) validateArguments: (ArgParser *) argParser;

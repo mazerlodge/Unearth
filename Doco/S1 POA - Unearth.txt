@@ -83,6 +83,9 @@ S1 POA - Unearth
     - Replaced printf() calls in UGF for testscanf() function w/ CLI methods
     - Moved default startup params to QConfig file
 
+11/11
+    - Genericized card reading from plist into generic getDataForQConfigKey(), to be reuable across all card data files.
+
 > In-Progress:
 
     Sample Current Invocation:
@@ -93,6 +96,7 @@ S1 POA - Unearth
 
 
 > Next:
+    - Eliminate UGF.makeGame() and focus on makeGameWithArgs(), need arg parser 0 for executable path info.
     - Flesh out UnearthGameFactory.makeGameWithArgs() method 0701
     - UGF build decks from plist. 0819
         1. NSMutableArray *fields = [[NSMutableArray alloc] initWithCapacity:3];

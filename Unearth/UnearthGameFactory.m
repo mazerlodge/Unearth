@@ -12,8 +12,15 @@
 
 - (id) init {
     
+    return self;
+    
+}
+
+- (id) initWithArgParser:(ArgParser *)argParser {
+    
     // Assume not debugging until validateArgs() proves overwise.
-    bInDebug = true;
+    bInDebug = false;
+    ap = argParser;
     cli = [[CommandLineInterface alloc] init];
     [self loadQConfigDictionary];
     
@@ -177,33 +184,57 @@
     
 }
 
-
 - (int) testReadDelverCardDataFromLibrary {
     
     int rval = -1;
     
-    // Note: including a tilde here causes the full URL to include the path to the running app
-    //         before the tilde. This is not documented, m/b a bug in XCode.
-    NSString *dataFolder = @"~UnearthData/";
-    NSURL *baseURL = [NSURL fileURLWithPath:dataFolder isDirectory:true];
-    
-    NSURL *urlRelativeDelverCardData = [NSURL URLWithString:@"_DelverCards.plist" relativeToURL:baseURL];
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.\n",
-                                            [[urlRelativeDelverCardData absoluteString] UTF8String]];
-    [cli put:msg];
-    
-    NSArray *delverCardData = [[NSArray alloc] initWithContentsOfURL:urlRelativeDelverCardData];
+    NSArray *delverCardData = [self getDataForQConfigKey:@"DataFile_DelverCards"];
     
     if ([delverCardData count] < 1)
         [cli put:@"\t Got zero cards in data file\n"];
     
     for(NSString *aCardData in delverCardData) {
-        msg = [[NSString alloc] initWithFormat:@"\tGot Card %@\n", aCardData];
+        NSString *msg = [[NSString alloc] initWithFormat:@"\tGot Card %@\n", aCardData];
         [cli put:msg];
     }
     rval = 0;
     
     return rval;
+    
+}
+
+- (NSArray *) getDataForQConfigKey: (NSString *) qConfigKey {
+    // Given a QConfig key, get the associated data file (typically a plist)
+    // relative to the executable path and return it's contents as an NSArray.
+
+    
+    // Note: Including a tilde in NSURL's fileURLWithPath method causes the full URL
+    //          to include the path to the running app before the tilde.
+    //          This is not documented, m/b a bug in XCode.
+    
+
+    // Get executable path...
+    NSMutableString *workingPath = [[NSMutableString alloc] initWithString:[ap getArgByNumber:0]];
+    
+    // ... then back off the executable name...
+    NSRange lastSlashtoEndRange = [workingPath rangeOfString:@"/" options:NSBackwardsSearch];
+    lastSlashtoEndRange.length = [workingPath length] - lastSlashtoEndRange.location;
+    [workingPath deleteCharactersInRange:lastSlashtoEndRange];
+    
+    // ... and append the QData folder...
+    NSString *dataFolder = [[NSString alloc] initWithFormat:@"%@/QData", workingPath];
+    NSURL *baseURL = [NSURL fileURLWithPath:dataFolder isDirectory:true];
+    
+    // ... and the data file name (from QConfig.plist)
+    NSString *delverCardDataFilename = [self getValueFromQConfigForKey:@"DataFile_DelverCards"];
+    NSURL *urlRelativeDelverCardData = [NSURL URLWithString:delverCardDataFilename relativeToURL:baseURL];
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.\n",
+                     [[urlRelativeDelverCardData absoluteString] UTF8String]];
+    [cli put:msg];
+    
+    NSArray *data = [[NSArray alloc] initWithContentsOfURL:urlRelativeDelverCardData];
+    
+    return data;
     
 }
 
@@ -453,7 +484,12 @@
     
     if ([ap doesArg:@"-action" haveValue:@"defaultstart"]) {
         [cli put:@"Detected startup with defaultStart parameters requested.\n"];
-        uge = [self makeGame];
+        NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"]; //@"-action dotest -test 5 -debug";
+        ArgParser *ap = [[ArgParser alloc] init];
+        
+        // TODO: Need to preserve any ags already present (e.g. arg 0, executable path.
+        [ap populateArgParserFromString:params];
+
     }
     else {
         uge = [[UnearthGameEngine alloc] init];

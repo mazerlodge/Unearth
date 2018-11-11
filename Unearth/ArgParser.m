@@ -108,6 +108,17 @@
     
 }
 
+- (NSString *) getArgByNumber:(NSUInteger)argNumber {
+    // Returns the value associated with the specified arg.
+    
+    NSString *rval = @"NOT_SET";
+    
+    if ([argsList count] > argNumber)
+        rval = [argsList objectAtIndex:argNumber];
+    
+    return rval;
+    
+}
 
 @end
 

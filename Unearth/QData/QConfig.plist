@@ -10,5 +10,7 @@
 	<string>QLog.txt</string>
 	<key>DefaultStartParams</key>
 	<string>-action dotest -test 5 -debug</string>
+	<key>DataFile_DelverCards</key>
+	<string>QDelverCards.plist</string>
 </dict>
 </plist>
