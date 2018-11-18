@@ -86,6 +86,9 @@ S1 POA - Unearth
 11/11
     - Genericized card reading from plist into generic getDataForQConfigKey(), to be reuable across all card data files.
 
+11/17
+    - Deprecated UGF.makeGame() by changing name to z_makeGame() and added comment
+
 > In-Progress:
 
     Sample Current Invocation:

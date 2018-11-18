@@ -464,7 +464,8 @@
     
 }
 
-- (UnearthGameEngine *) makeGame {
+- (UnearthGameEngine *) z_makeGame {
+    // Deprecated, use makeGameWithArgs.
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
