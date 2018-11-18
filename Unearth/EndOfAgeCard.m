@@ -2,7 +2,7 @@
 //  EndOfAgeCard.m
 //  Unearth
 //
-//  Created by mazerldoge on 11/18/18.
+//  Created by mazerlodge on 11/18/18.
 //  Copyright © 2018 mazerlodge. All rights reserved.
 //
 
