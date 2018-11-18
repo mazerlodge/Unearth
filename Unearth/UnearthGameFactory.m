@@ -464,45 +464,25 @@
     
 }
 
-- (UnearthGameEngine *) z_makeGame {
-    // Deprecated, use makeGameWithArgs.
+- (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) argParser {
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
-    // TODO: Define better set of default params to be used with UGF.makeGame generic method.
-    NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"]; //@"-action dotest -test 5 -debug";
-    ArgParser *ap = [[ArgParser alloc] init];
-    [ap populateArgParserFromString:params];
-    uge = [self makeGameWithArgs:ap];
-    
-    return uge;
-
-}
-
-- (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) ap {
-    
-    UnearthGameEngine *uge;
-    
-    if ([ap doesArg:@"-action" haveValue:@"defaultstart"]) {
+    if ([argParser doesArg:@"-action" haveValue:@"defaultstart"]) {
         [cli put:@"Detected startup with defaultStart parameters requested.\n"];
-        NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"]; //@"-action dotest -test 5 -debug";
-        ArgParser *ap = [[ArgParser alloc] init];
+        NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"];
         
-        // TODO: Need to preserve any ags already present (e.g. arg 0, executable path.
-        [ap populateArgParserFromString:params];
-
+        // Need to preserve any ags already present (e.g. arg 0, executable path.
+        [ap populateArgParserFromString:params preserveZeroParam:true];
+        
     }
-    else {
-        uge = [[UnearthGameEngine alloc] init];
-
-        // TODO: Expand UGE.makeGameWithArgs to handle addn'l -action param values.
-        if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
-            // Get test number
-            NSInteger testNumber = [[ap getArgValue:@"-test"] integerValue];
-            [self doTest:testNumber];
-            
-        }
-            
+    
+    // TODO: Expand UGE.makeGameWithArgs to handle addn'l -action param values.
+    if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
+        // Get test number
+        NSInteger testNumber = [[ap getArgValue:@"-test"] integerValue];
+        [self doTest:testNumber];
+        
     }
     
     return uge;

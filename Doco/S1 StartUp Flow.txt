@@ -1,0 +1,24 @@
+S1 StartUp Flow
+
+> main.m, main()
+    // Creates argParser populated with cmdLine params, including exec path [0]
+    > ArgParser.initWithArgs: argsArray
+    < returns an argParser instance.
+
+    > UGF.initWithArgParser: argParser
+        // Sets argParser member, inits a CLI, loadsQConfigDictionary
+        // CLI is a generic init
+        // loadQConfigDictionary() reads QData/QConfig.plist into a member dictionary
+    < returns a UGF instance.
+
+    > ugf.validateArguments()
+        // checks for action, debug, and if action=dotest, a test number
+    < t/f bValid indicator.
+
+    // if not args not valid, UGF.showUsage() and exit.
+
+    > ugf.makeGameWithArgs: argParser
+    < returns game engine instance.
+
+    > uge.go()
+

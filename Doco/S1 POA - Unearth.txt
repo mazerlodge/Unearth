@@ -87,7 +87,8 @@ S1 POA - Unearth
     - Genericized card reading from plist into generic getDataForQConfigKey(), to be reuable across all card data files.
 
 11/17
-    - Deprecated UGF.makeGame() by changing name to z_makeGame() and added comment
+    - Deprecated UGF.makeGame() by changing name to z_makeGame() and added comment, b/c need arg Parse 0 for exec path
+    - Cleaned up startup flow to preserve path in zero param and swap out remaining args when action is defaultStart
 
 > In-Progress:
 
@@ -99,8 +100,7 @@ S1 POA - Unearth
 
 
 > Next:
-    - Eliminate UGF.makeGame() and focus on makeGameWithArgs(), need arg parser 0 for executable path info.
-    - Flesh out UnearthGameFactory.makeGameWithArgs() method 0701
+    - Flesh out UGF.makeGameWithArgs() method 0701
     - UGF build decks from plist. 0819
         1. NSMutableArray *fields = [[NSMutableArray alloc] initWithCapacity:3];
         2. [fields writeToFile:@"/tmp/DictionaryPatternsToPlist.plist" atomically:YES]
@@ -118,5 +118,5 @@ S1 POA - Unearth
     - Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param, see TODO marker. 1013 1103
     - Add debug logging class w/ output to file 0620 1103
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620 1103
-
+    - ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
 

@@ -19,7 +19,8 @@
 }
 
 - (id) initWithArgs: (NSArray *) args;
-- (bool) populateArgParserFromString: (NSString *) paramString;
+- (bool) populateArgParserFromString: (NSString *) paramString preserveZeroParam: (bool) bPreserveZero;
+- (bool) addArgsFromString: (NSString *) paramString;
 - (bool) isInArgs: (NSString *) name withAValue: (bool) bWithValue;
 - (NSString *) getArgValue: (NSString *) name;
 - (bool) doesArg: (NSString *) name haveValue: (NSString *) value;

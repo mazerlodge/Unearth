@@ -44,7 +44,6 @@
 - (void) showUsage;
 - (int) doTest: (NSInteger) testNumber;
 - (bool) validateArguments: (ArgParser *) argParser;
-- (UnearthGameEngine *) z_makeGame;
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) ap;
 
 

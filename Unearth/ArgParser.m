@@ -18,13 +18,37 @@
     
 }
 
-- (bool) populateArgParserFromString: (NSString *) paramString {
+- (bool) populateArgParserFromString: (NSString *) paramString preserveZeroParam: (bool) bPreserveZero {
     //  Populate the argParser with contents of the specified string.
 
     bool bRval = true;
-
-    argsList = [paramString componentsSeparatedByString:@" "];
     
+    if (bPreserveZero) {
+        NSString *zeroParam = [argsList objectAtIndex:0];
+        argsList = [[NSArray alloc] initWithObjects:zeroParam, nil];
+        argsList = [argsList arrayByAddingObjectsFromArray:[paramString componentsSeparatedByString:@" "]];
+    }
+    else {
+        argsList = [paramString componentsSeparatedByString:@" "];
+    }
+    
+    return bRval;
+}
+
+- (bool) addArgsFromString: (NSString *) paramString {
+    // Adds the contents of the specifice string as additional parameters
+    bool bRval = true;
+    
+    // Note: Using mutable array to prepare for removal of duplicates in a future version.
+    NSMutableArray *expandedArgs = [[NSMutableArray alloc] initWithArray:argsList];
+    NSArray *argsToAdd = [paramString componentsSeparatedByString:@" "];
+    for (NSString *aArg in argsToAdd) {
+        // TODO: Add check for arg (and assoc val) already in array
+        [expandedArgs addObject:aArg];
+    }
+
+    argsList = expandedArgs;
+
     return bRval;
 }
 
