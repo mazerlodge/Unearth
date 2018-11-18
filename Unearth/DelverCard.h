@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface DelverCard : NSObject {
-    NSString *stuff;
+    NSString *rawData;
     
     
 }
+
+
+- (id) initWithString: (NSString *) cardData;
 
 /*
  Method list from [Object Library.txt]

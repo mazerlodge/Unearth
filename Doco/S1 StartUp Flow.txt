@@ -18,6 +18,9 @@ S1 StartUp Flow
     // if not args not valid, UGF.showUsage() and exit.
 
     > ugf.makeGameWithArgs: argParser
+        // if action is DefaultStart, replace argParser contents, preserving paramZero
+
+
     < returns game engine instance.
 
     > uge.go()

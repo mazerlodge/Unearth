@@ -11,15 +11,18 @@
 #import "ArgParser.h"
 #import "UnearthPlayer.h"
 #import "CommandLineInterface.h"
+#import "DelverCard.h"
 
 @interface UnearthGameFactory : NSObject {
     
     bool bInDebug;
+    bool bFactoryMembersPopulated;
     NSDictionary *dictQConfig;
     NSArray *delverDeckInfo;
     ArgParser *ap;
     CommandLineInterface *cli;
     
+    NSArray *delverDeck;
     
 }
 

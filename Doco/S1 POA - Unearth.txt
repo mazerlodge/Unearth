@@ -89,8 +89,12 @@ S1 POA - Unearth
 11/17
     - Deprecated UGF.makeGame() by changing name to z_makeGame() and added comment, b/c need arg Parse 0 for exec path
     - Cleaned up startup flow to preserve path in zero param and swap out remaining args when action is defaultStart
+    - Added gameState as string in UGE and method to set it.
+    - Started stubbing in UGF.populateFactoryMembers(), added 38 cards to delverDeck (just rawData Populated)
 
 > In-Progress:
+    - NEXT: Continue stubbing in UGF.populateFactoryMembers()
+        -- Add additional deck plist files and populate decks in UGF w/ just rawData like delverDeck.
 
     Sample Current Invocation:
     unearth -action dotest - test 1 -debug
@@ -107,16 +111,14 @@ S1 POA - Unearth
     - Add start up tests, details in [S1 Use Cases - Unearth.txt] 0819
     - Continue use cases document (help drive class method definition) 0819
     - Continue fleshing out object library classes from notes 0819
-    - Prototype test of technique for storing static string info (e.g. card data) 0819
     - Test ability to cast HexTile up and down (req. by base class used in hexMap) 0819
     - Implement drawMap() method of CLI class, see TODO marker. 0902
     - Replace test numbers within UGF with enumeration 0902
     - Add call CLI from within validate args, eg collect test number 0909
-    - Read Delver Cards plist file (use hard coded path to get things going) 1006
     - Define set of default params to be used w/ UGF.makeGame generic method, see TODO marker. 1013
     - Expand UGE.makeGameWithArgs to handle addn'l -action param values, see TODO marker. 1013
     - Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param, see TODO marker. 1013 1103
     - Add debug logging class w/ output to file 0620 1103
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620 1103
-    - ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
+    - Expand ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
 

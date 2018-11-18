@@ -13,6 +13,8 @@
 - (id) init {
     cli = [[CommandLineInterface alloc] init];
     
+    gameState = @"NOT_POPULATED";
+    
     return self;
     
 }
@@ -21,7 +23,16 @@
     
     [cli put:@"Inside of UnearthGameEngine.\n"];
     
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGE state = %@\n", gameState];
+    [cli put:msg];
+    
     return 0;
+    
+}
+
+- (void) setGameState: (NSString *) newState {
+    
+    gameState = newState;
     
 }
 

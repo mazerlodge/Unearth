@@ -11,6 +11,7 @@
 
 @interface UnearthGameEngine : NSObject {
     
+    NSString *gameState;
     CommandLineInterface *cli;
     NSArray *delverDeck;
     
@@ -31,5 +32,6 @@
  */
 
 - (int) go;
+- (void) setGameState: (NSString *) newState;
 
 @end

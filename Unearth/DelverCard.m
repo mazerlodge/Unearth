@@ -10,4 +10,13 @@
 
 @implementation DelverCard
 
+
+- (id) initWithString: (NSString *) cardData; {
+    
+    rawData = cardData;
+    
+    return self;
+    
+}
+
 @end

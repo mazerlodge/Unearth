@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<string>ID, Title, Text, Count</string>
+	<string>#ID, Title, Text, Count</string>
 	<string>100, Ancient Map, This turn you may reroll your Excavation roll., 5</string>
 	<string>101, Band of Delvers, You may roll 2 dice during the Excavation phase. They may go on the same or different ruins., 2</string>
 	<string>102, Restoration, Reroll all of your dice., 2</string>

@@ -24,6 +24,7 @@
     cli = [[CommandLineInterface alloc] init];
     [self loadQConfigDictionary];
     
+
     return self;
     
 }
@@ -420,7 +421,7 @@
     
     // See if the requested key's value can be read.
     NSString *dataValue = [dictQConfig objectForKey:key];
-    NSString *msg = [[NSString alloc] initWithFormat: @"UGF.gVFQCFK() Got value for [%s] key of [%s]\n",
+    NSString *msg = [[NSString alloc] initWithFormat: @"UGF.gVfQCfK() Got value for [%s] key of [%s]\n",
                                                             [key UTF8String], [dataValue UTF8String]];
     [self debugMsg:msg];
     
@@ -468,12 +469,21 @@
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
+    // If default start was specified, get startup prams from QConfig.
     if ([argParser doesArg:@"-action" haveValue:@"defaultstart"]) {
         [cli put:@"Detected startup with defaultStart parameters requested.\n"];
         NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"];
         
         // Need to preserve any ags already present (e.g. arg 0, executable path.
         [ap populateArgParserFromString:params preserveZeroParam:true];
+        
+    }
+    
+
+    // If factory members haven't been populated, do so now.
+    bFactoryMembersPopulated = [self populateFactoryMembers];
+    if (!bFactoryMembersPopulated) {
+        [self debugMsg:@"ERROR: PopulateFactoryMembers() returned false. Can not continue"];
         
     }
     
@@ -486,6 +496,52 @@
     }
     
     return uge;
+    
+}
+
+- (bool) populateFactoryMembers {
+    // Populates decks from plist files.
+    bool bRval = true;
+
+    /*
+     Decks to build:
+     - wondersDeckInfo    // 15x named, 10x lesser, 6x greater
+     - delverDeckInfo     // 38x generated from n original possibilities
+     - endOfAgeDeckInfo    //  5x, shuffled for game, top card used in this game run.
+
+    */
+    
+    
+    delverDeck = [[NSArray alloc] init];
+    NSArray *delverCardData = [self getDataForQConfigKey:@"DataFile_DelverCards"];
+    for(NSString *aCardData in delverCardData) {
+        // Data format is in line zero: #ID, Title, Text, Count
+        // Sample data string: 100, Ancient Map, This turn you may reroll your Excavation roll., 5
+
+        // if the card data string starts with #, ignore it.
+        if ([aCardData characterAtIndex:0] != '#') {
+        
+            // parse the card data and extract how many of each card type to make
+            NSArray *cardDataParts = [aCardData componentsSeparatedByString:@","];
+            NSString *strCardInstanceCount = [cardDataParts objectAtIndex:3];
+            NSInteger cardInstanceCount = [strCardInstanceCount integerValue];
+            
+            // Make the specified number of cards, adding them to the delverDeck member.
+            for (int x=0; x<cardInstanceCount; x++) {
+                DelverCard *aCard = [[DelverCard alloc] initWithString:aCardData];
+                delverDeck = [delverDeck arrayByAddingObject:aCard];
+                
+            } // for x
+        } // if != #
+    } // for aCardData...
+    
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopFactoryMembers() Built Deck w/ %ld cards\n",
+                                                        [delverDeck count]];
+    [cli put:msg];
+
+    
+    return bRval;
     
 }
 
