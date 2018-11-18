@@ -1,0 +1,10 @@
+S1 Notes - End of Age Cards
+
+ID, Title, Text, ClaimValue, StoneValue
+200, Day of Rest, Each player draws three cards from the Delver deck, 0, 0
+201, The Gathering, -1 to all dice rolled for the rest of the game, 0, 0
+202, Festival of Reclamation, +1 to all dice rolled for the rest of the game, 0, 0
+203, City of Gold, This ruin is worth 7 points, 21, 5
+204, City of Ash, This ruin is worth -4 points, 17, 3
+
+

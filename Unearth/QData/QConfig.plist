@@ -12,5 +12,7 @@
 	<string>-action dotest -test 7 -debug</string>
 	<key>DataFile_DelverCards</key>
 	<string>QDelverCards.plist</string>
+	<key>DataFile_EndOfAgeCards</key>
+	<string>QEndOfAgeCards.plist</string>
 </dict>
 </plist>

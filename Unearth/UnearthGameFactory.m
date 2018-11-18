@@ -227,7 +227,7 @@
     NSURL *baseURL = [NSURL fileURLWithPath:dataFolder isDirectory:true];
     
     // ... and the data file name (from QConfig.plist)
-    NSString *delverCardDataFilename = [self getValueFromQConfigForKey:@"DataFile_DelverCards"];
+    NSString *delverCardDataFilename = [self getValueFromQConfigForKey:qConfigKey];
     NSURL *urlRelativeDelverCardData = [NSURL URLWithString:delverCardDataFilename relativeToURL:baseURL];
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.\n",
                      [[urlRelativeDelverCardData absoluteString] UTF8String]];
@@ -510,17 +510,29 @@
      - endOfAgeDeckInfo    //  5x, shuffled for game, top card used in this game run.
 
     */
+
+    bool deckBuildResults[4] =  {false};
+    deckBuildResults[0] = [self populateDelverDeck];
+    deckBuildResults[1] = [self populateEndOfAgeDeck];
     
+    
+    return bRval;
+    
+}
+
+- (bool) populateDelverDeck {
+    
+    bool bRval = true;
     
     delverDeck = [[NSArray alloc] init];
     NSArray *delverCardData = [self getDataForQConfigKey:@"DataFile_DelverCards"];
     for(NSString *aCardData in delverCardData) {
         // Data format is in line zero: #ID, Title, Text, Count
         // Sample data string: 100, Ancient Map, This turn you may reroll your Excavation roll., 5
-
+        
         // if the card data string starts with #, ignore it.
         if ([aCardData characterAtIndex:0] != '#') {
-        
+            
             // parse the card data and extract how many of each card type to make
             NSArray *cardDataParts = [aCardData componentsSeparatedByString:@","];
             NSString *strCardInstanceCount = [cardDataParts objectAtIndex:3];
@@ -536,10 +548,38 @@
     } // for aCardData...
     
     
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopFactoryMembers() Built Deck w/ %ld cards\n",
-                                                        [delverDeck count]];
-    [cli put:msg];
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopDelverDeck() Built Delver Deck w/ %ld cards\n",
+                     [delverDeck count]];
+    [self debugMsg:msg];
+    
+    return bRval;
+    
+}
 
+
+- (bool) populateEndOfAgeDeck {
+    
+    bool bRval = true;
+    
+    endOfAgeDeck = [[NSArray alloc] init];
+    NSArray *endOfAgeCardData = [self getDataForQConfigKey:@"DataFile_EndOfAgeCards"];
+    for(NSString *aCardData in endOfAgeCardData) {
+        // Data format is in line zero: #ID, Title, Text, ClaimValue, StoneValue
+        // Sample data string: 200, Day of Rest, Each player draws three cards from the Delver deck, 0, 0
+        
+        // if the card data string starts with #, ignore it.
+        if ([aCardData characterAtIndex:0] != '#') {
+            // End of age cards do not have multiple copies, just make one of the card specified.
+            EndOfAgeCard *aCard = [[EndOfAgeCard alloc] initWithString:aCardData];
+            endOfAgeDeck = [endOfAgeDeck arrayByAddingObject:aCard];
+
+        } // if != #
+    } // for aCardData...
+    
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopEndOfAgeDeck() Built End of Age Deck w/ %ld cards\n",
+                     [endOfAgeDeck count]];
+    [self debugMsg:msg];
     
     return bRval;
     

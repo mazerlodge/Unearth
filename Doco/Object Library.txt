@@ -79,6 +79,12 @@ X> RandomEngine
 	- stones			// stones currently on the card
 	- delverDice		// dice currently on the card
 
+/> EndOfAgeCard
+    - claimValue        // name from rules, delver die total to trigger card claiming.
+    - stoneValue        // name from rules, number of stones initially placed on card.
+    - stones            // stones currently on the card
+    - delverDice        // dice currently on the card
+
 
 /> HexTile
 	- tileType 			// One of Stone or Wonder

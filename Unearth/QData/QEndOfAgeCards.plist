@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>#ID, Title, Text, ClaimValue, StoneValue</string>
+	<string>200, Day of Rest, Each player draws three cards from the Delver deck, 0, 0</string>
+	<string>201, The Gathering, -1 to all dice rolled for the rest of the game, 0, 0</string>
+	<string>202, Festival of Reclamation, +1 to all dice rolled for the rest of the game, 0, 0</string>
+	<string>203, City of Gold, This ruin is worth 7 points, 21, 5</string>
+	<string>204, City of Ash, This ruin is worth -4 points, 17, 3</string>
+</array>
+</plist>

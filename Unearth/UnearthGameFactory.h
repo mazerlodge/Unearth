@@ -12,6 +12,8 @@
 #import "UnearthPlayer.h"
 #import "CommandLineInterface.h"
 #import "DelverCard.h"
+#import "EndOfAgeCard.h"
+
 
 @interface UnearthGameFactory : NSObject {
     
@@ -23,6 +25,7 @@
     CommandLineInterface *cli;
     
     NSArray *delverDeck;
+    NSArray *endOfAgeDeck;
     
 }
 

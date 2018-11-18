@@ -92,9 +92,17 @@ S1 POA - Unearth
     - Added gameState as string in UGE and method to set it.
     - Started stubbing in UGF.populateFactoryMembers(), added 38 cards to delverDeck (just rawData Populated)
 
+11/18
+    - Added End of Age card class stub, deck plist, and method to poplate in the factory class.
+    - Corrected bug in UGF.getDataForQConfigKey, method was disreagrding key passed in when locating data file.
+
 > In-Progress:
     - NEXT: Continue stubbing in UGF.populateFactoryMembers()
         -- Add additional deck plist files and populate decks in UGF w/ just rawData like delverDeck.
+        -- Note: Use Skylar/DictPatternstoPList to gen plist files from txt files
+            X- delverDeckInfo     // 38x generated from n original possibilities
+            X- endOfAgeDeckInfo    //  5x, shuffled for game, top card used in this game run.
+             - wondersDeckInfo    // 15x named, 10x lesser, 6x greater
 
     Sample Current Invocation:
     unearth -action dotest - test 1 -debug
