@@ -10,4 +10,12 @@
 
 @implementation Wonder
 
+- (id) initWithString:(NSString *)wonderData {
+    
+    rawData = wonderData;
+    
+    return self;
+    
+}
+
 @end

@@ -516,6 +516,7 @@
     deckBuildResults[0] = [self populateDelverDeck];
     deckBuildResults[1] = [self populateEndOfAgeDeck];
     deckBuildResults[2] = [self populateRuinDeck];
+    deckBuildResults[3] = [self populateWonderDeck];
     
     return bRval;
     
@@ -596,7 +597,6 @@
     
 }
 
-
 - (bool) populateEndOfAgeDeck {
     
     bool bRval = true;
@@ -619,6 +619,34 @@
     
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopEndOfAgeDeck() Built End of Age Deck w/ %ld cards\n",
                      [endOfAgeDeck count]];
+    [self debugMsg:msg];
+    
+    return bRval;
+    
+}
+
+- (bool) populateWonderDeck {
+    
+    bool bRval = true;
+    
+    wonderDeck = [[NSArray alloc] init];
+    NSArray *wonderCardData = [self getDataForQConfigKey:@"DataFile_WonderCards"];
+    for(NSString *aCardData in wonderCardData) {
+        // Data format is in line zero: #ID, Title, Text, ColorRule
+        // Sample data string: 300, Lesser Wonders, Lesser Wonders are worth between 2 and 4 points, ??????
+        
+        // if the card data string starts with #, ignore it.
+        if ([aCardData characterAtIndex:0] != '#') {
+            // Wonder cards do not have multiple copies, just make one of the card specified.
+            Wonder *aCard = [[Wonder alloc] initWithString:aCardData];
+            wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+            
+        } // if != #
+    } // for aCardData...
+    
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDeck() Built Wonder Deck w/ %ld cards\n",
+                     [wonderDeck count]];
     [self debugMsg:msg];
     
     return bRval;

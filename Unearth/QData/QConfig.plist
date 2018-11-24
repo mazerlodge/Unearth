@@ -14,5 +14,7 @@
 	<string>QDelverCards.plist</string>
 	<key>DataFile_EndOfAgeCards</key>
 	<string>QEndOfAgeCards.plist</string>
+	<key>DataFile_WonderCards</key>
+	<string>QWonderCards.plist</string>
 </dict>
 </plist>

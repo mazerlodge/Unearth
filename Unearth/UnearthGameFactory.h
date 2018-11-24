@@ -14,6 +14,7 @@
 #import "DelverCard.h"
 #import "EndOfAgeCard.h"
 #import "RuinCard.h"
+#import "Wonder.h"
 
 @interface UnearthGameFactory : NSObject {
     
@@ -27,6 +28,7 @@
     NSArray *delverDeck;
     NSArray *endOfAgeDeck;
     NSArray *ruinsDeck;
+    NSArray *wonderDeck;
     
 }
 

@@ -15,12 +15,16 @@ typedef enum WonderType : NSUInteger {
 } WonderType;
 
 @interface Wonder : HexTile {
-    int id;
+    int idNumber;       // used to identify rule modifications
     WonderType wonderType;
     bool isOwned;
     int pointValue;
-    
+    NSString *rawData;
+
 }
+
+- (id) initWithString: (NSString *) wonderData;
+
 
 /*
  Method list from [Object Library.txt]
