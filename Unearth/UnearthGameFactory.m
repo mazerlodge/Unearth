@@ -505,16 +505,56 @@
 
     /*
      Decks to build:
-     - wondersDeckInfo    // 15x named, 10x lesser, 6x greater
-     - delverDeckInfo     // 38x generated from n original possibilities
-     - endOfAgeDeckInfo    //  5x, shuffled for game, top card used in this game run.
-
+     - wondersDeck  // 15x named, 10x lesser, 6x greater
+     - delverDeck   // 38x generated from n original possibilities
+     - endOfAgeDeck //  5x, shuffled for game, top card used in this game run.
+     - ruinDeck     // 25x, 5x colors and 5x combos of claim and stone value.
+     
     */
 
     bool deckBuildResults[4] =  {false};
     deckBuildResults[0] = [self populateDelverDeck];
     deckBuildResults[1] = [self populateEndOfAgeDeck];
+    deckBuildResults[2] = [self populateRuinDeck];
     
+    return bRval;
+    
+}
+
+- (bool) populateRuinDeck {
+    
+    bool bRval = true;
+    
+    // for each ruin card color, make a set of cards
+    /*
+     Claim Values: 9, 11, 13, 15, 17
+     Stone Values: 2,  2,  2,  3,  3
+     Colors: 5x as defined in RuinCard header enumeration.
+     
+     */
+    
+    int allClaimValues[5] = {9, 11, 13, 15, 17};
+    int allStoneValues[5] = {2, 2, 2, 3, 3};
+    RuinCardColor allColors[5] = {RuinCardColorPeach,
+                                    RuinCardColorGreen,
+                                    RuinCardColorBlue,
+                                    RuinCardColorPurple,
+                                    RuinCardColorGray};
+    
+    ruinsDeck = [[NSArray alloc] init];
+    for (int colorIdx=0; colorIdx < 5; colorIdx++) {
+        RuinCardColor currentColor = allColors[colorIdx];
+        for (int valueIdx=0; valueIdx < 5; valueIdx++) {
+            int currentClaimValue = allClaimValues[valueIdx];
+            int currentStoneValue = allStoneValues[valueIdx];
+            RuinCard *currentCard = [[RuinCard alloc] initWithColor:currentColor
+                                                         claimValue:currentClaimValue
+                                                         stoneValue:currentStoneValue];
+            ruinsDeck = [ruinsDeck arrayByAddingObject:currentCard];
+            
+        } // for valueIdx
+        
+    } // for colorIdx
     
     return bRval;
     

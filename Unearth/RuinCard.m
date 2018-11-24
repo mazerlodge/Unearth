@@ -10,4 +10,18 @@
 
 @implementation RuinCard
 
+- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal {
+    
+    bFaceDown = true;
+    cardColor = color;
+    claimValue = claimVal;
+    stoneValue = stoneVal;
+    
+    stones = [[NSMutableArray alloc] initWithCapacity:stoneVal];
+    delverDice = [[NSMutableArray alloc] init];
+    
+    return self;
+    
+}
+
 @end

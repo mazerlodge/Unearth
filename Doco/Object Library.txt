@@ -34,7 +34,10 @@ X> RandomEngine
 /> UnearthGameFactory
 	- wondersDeckInfo	// 15x named, 10x lesser, 6x greater
 	- delverDeckInfo 	// 38x generated from n original possibilities
-	- endOfAgeDeckInfo	//  5x, shuffled for game, top card used in this game run.	
+	- endOfAgeDeckInfo	//  5x, shuffled for game, top card used in this game run.
+    - ruinDeck          // NSArray of cards
+    - delverDeck
+    - endOfAgeDeck
 
 	+ makeGame; 		// Crates game with development test set of args	
 	+ makeGameWithArgs: argParser

@@ -21,10 +21,13 @@ typedef enum RuinCardColor : NSUInteger {
     RuinCardColor cardColor;
     int claimValue;
     int stoneValue;
-    int stones;
+    NSMutableArray *stones;
     NSMutableArray *delverDice;
     
 }
+
+- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal;
+
 
 /*
  Method list from [Object Library.txt]
