@@ -9,17 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "UnearthGameEngine.h"
 #import "ArgParser.h"
+#import "RandomEngine.h"
 #import "UnearthPlayer.h"
 #import "CommandLineInterface.h"
 #import "DelverCard.h"
 #import "EndOfAgeCard.h"
 #import "RuinCard.h"
 #import "Wonder.h"
+#import "Stone.h"
 
 @interface UnearthGameFactory : NSObject {
     
     bool bInDebug;
     bool bFactoryMembersPopulated;
+    RandomEngine *re;
     NSDictionary *dictQConfig;
     NSArray *delverDeckInfo;
     ArgParser *ap;
@@ -29,6 +32,8 @@
     NSArray *endOfAgeDeck;
     NSArray *ruinsDeck;
     NSArray *wonderDeck;
+    NSArray *stoneBag;
+    
     
 }
 

@@ -17,9 +17,14 @@ typedef enum StoneColor : NSUInteger {
 
 @interface Stone : HexTile {
 
+    int idNumber; // Used to validate randomization
     StoneColor color;
     
 }
+
+- (id) initWithColor: (StoneColor) initColor idNumber: (int) initID;
+
+- (int) getStoneID;
 
 /*
  Method list from [Object Library.txt]

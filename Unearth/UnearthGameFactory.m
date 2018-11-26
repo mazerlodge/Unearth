@@ -11,7 +11,7 @@
 @implementation UnearthGameFactory
 
 - (id) init {
-    
+    re = [[RandomEngine alloc] init];
     return self;
     
 }
@@ -21,10 +21,10 @@
     // Assume not debugging until validateArgs() proves overwise.
     bInDebug = false;
     ap = argParser;
+    re = [[RandomEngine alloc] init];
     cli = [[CommandLineInterface alloc] init];
     [self loadQConfigDictionary];
     
-
     return self;
     
 }
@@ -119,6 +119,10 @@
             
         case 9:
             rval = [self testGettingAppSupportFolder];
+            break;
+            
+        case 10:
+            rval = [self testStoneBagGeneration];
             break;
             
     }
@@ -412,6 +416,29 @@
     
     return rval;
 }
+
+- (int) testStoneBagGeneration {
+    // Determine if stone ID 0 is always last stone in the bag.
+    
+    int passCount = 0;
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.initWAP() Random Seed used = %d\n", [re getSeed]];
+    [self debugMsg:msg];
+    
+    for (int x=0; x<200; x++) {
+        [self populateStoneBag];
+        Stone *lastStone = [stoneBag objectAtIndex:59];
+        if ([lastStone getStoneID] != 0)
+            passCount++;
+
+    }
+    
+    NSString *testResult = [[NSString alloc] initWithFormat:@"test result = %d\n", passCount];
+    [cli put:testResult];
+
+    return 0;
+    
+}
     
 
 - (NSString *) getValueFromQConfigForKey: (NSString *) key {
@@ -512,11 +539,56 @@
      
     */
 
-    bool deckBuildResults[4] =  {false};
-    deckBuildResults[0] = [self populateDelverDeck];
-    deckBuildResults[1] = [self populateEndOfAgeDeck];
-    deckBuildResults[2] = [self populateRuinDeck];
-    deckBuildResults[3] = [self populateWonderDeck];
+    const int buildStepCount = 5;
+    bool buildResults[buildStepCount] =  {false};
+    buildResults[0] = [self populateDelverDeck];
+    buildResults[1] = [self populateEndOfAgeDeck];
+    buildResults[2] = [self populateRuinDeck];
+    buildResults[3] = [self populateWonderDeck];
+    
+    // Make stone bag, 60x, 15x of each color (defined in Stone.h as StoneColor...)
+    buildResults[4] = [self populateStoneBag];
+    
+    for (int x=0; x<buildStepCount; x++) {
+        // if any deck build failed return false.
+        if (buildResults[x] == false)
+            bRval = false;
+    }
+    
+    return bRval;
+    
+}
+
+- (bool) populateStoneBag {
+    bool bRval = true;
+    
+    StoneColor allColors[4] = {StoneColorRed,
+                                StoneColorYellow,
+                                StoneColorBlue,
+                                StoneColorBlack};
+
+    NSMutableArray *allStones = [[NSMutableArray alloc] init];
+    int idNumber = 0;
+    for (int colorIdx=0; colorIdx < 4; colorIdx++) {
+        StoneColor currentColor = allColors[colorIdx];
+        // make 15 copies of each stone color
+        for (int x=0; x<15; x++) {
+            Stone *currentStone = [[Stone alloc] initWithColor:currentColor idNumber:idNumber];
+            [allStones addObject:currentStone];
+            idNumber++;
+        } // for x
+        
+    } // for colorIdx
+    
+    // Randomize stones
+    stoneBag = [[NSArray alloc] init];
+    for (int x = 59; x >= 0; x--) {
+        NSRange randRange = NSMakeRange(0,x);
+        int stoneIdx = [re getNextRandInRange:randRange];
+        stoneBag = [stoneBag arrayByAddingObject:[allStones objectAtIndex:stoneIdx]];
+        [allStones removeObjectAtIndex:stoneIdx];
+        
+    }
     
     return bRval;
     

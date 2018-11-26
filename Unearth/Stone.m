@@ -10,4 +10,19 @@
 
 @implementation Stone
 
+- (id) initWithColor: (StoneColor) initColor idNumber:(int) initID {
+    
+    idNumber = initID;
+    color = initColor;
+    
+    return self;
+    
+}
+
+- (int) getStoneID {
+
+    return idNumber;
+    
+}
+
 @end

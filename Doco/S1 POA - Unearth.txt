@@ -100,6 +100,9 @@ S1 POA - Unearth
     - Added method to factory class to populate ruin cards
     - Added method to factory class to populate wonder deck (and created associated plist)
 
+11/25
+    - Populated stone bag in factory and added test method (test ID=10) to verify randomization
+
 > In-Progress:
     - NEXT: Continue stubbing in UGF.populateFactoryMembers()
         -- Add additional deck plist files and populate decks in UGF w/ just rawData like delverDeck.
