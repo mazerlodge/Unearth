@@ -17,6 +17,8 @@
 #import "RuinCard.h"
 #import "Wonder.h"
 #import "Stone.h"
+#import "UnearthPlayer.h"
+#import "DelverDie.h"
 
 @interface UnearthGameFactory : NSObject {
     

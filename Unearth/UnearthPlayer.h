@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DelverDie.h"
 
 typedef enum UnearthPlayerType : NSUInteger {
     UnearthPlayerHuman = 0,
@@ -18,8 +19,11 @@ typedef enum UnearthPlayerType : NSUInteger {
     
     NSString *playerName;
     UnearthPlayerType playerType;
+    DelverDieColor dieColor;
     
 }
+
+- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name;
 
 
 /*

@@ -8,14 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import "CommandLineInterface.h"
+#import "UnearthPlayer.h"
+#import "EndOfAgeCard.h"
+#import "Stone.h"
 
 @interface UnearthGameEngine : NSObject {
     
     NSString *gameState;
     CommandLineInterface *cli;
     NSArray *delverDeck;
+    NSArray *players;
+    NSMutableArray *stoneBag;
+    EndOfAgeCard *endOfAgeCard;
     
 }
+
+- (id) initWithGameDataDictionary: (NSDictionary *) dict;
+- (int) go;
+- (void) setGameState: (NSString *) newState;
+- (bool) populateGameFromDictionary: (NSDictionary *) dict;
 
 /*
  Method list from [Object Library.txt]
@@ -31,7 +42,5 @@
  
  */
 
-- (int) go;
-- (void) setGameState: (NSString *) newState;
 
 @end

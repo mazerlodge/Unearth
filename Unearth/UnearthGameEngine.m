@@ -19,11 +19,49 @@
     
 }
 
+- (id) initWithGameDataDictionary: (NSDictionary *) dict {
+    
+    cli = [[CommandLineInterface alloc] init];
+    gameState = @"NOT_POPULATED";
+    
+    if ([self populateGameFromDictionary:dict])
+        gameState = @"POPULATED";
+    else
+        gameState = @"POPULATION_FAILED";
+    
+    return self;
+
+}
+
+- (bool) populateGameFromDictionary: (NSDictionary *) dict {
+    
+    bool bRval = true;
+    
+    // TODO: Add more dictionary parsing
+    //      (e.g. grab delver cards, ruins deck, end of age card, stone bag, active wonders)
+    
+    players = [dict objectForKey:@"PlayerArray"];
+    endOfAgeCard = [dict objectForKey:@"EndOfAgeCard"];
+    stoneBag = [dict objectForKey:@"StoneBag"];
+    
+    // TODO: Add some validation of the above, for now assume it worked
+
+    if (bRval)
+        gameState = @"POPULATED";
+    else
+        gameState = @"POPULATION_FAILED";
+    
+    return bRval;
+}
+
 - (int) go {
     
     [cli put:@"Inside of UnearthGameEngine.\n"];
     
     NSString *msg = [[NSString alloc] initWithFormat:@"UGE state = %@\n", gameState];
+    [cli put:msg];
+    
+    msg = [[NSString alloc] initWithFormat:@"Game has %ld players.\n", [players count]];
     [cli put:msg];
     
     return 0;

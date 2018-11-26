@@ -10,4 +10,12 @@
 
 @implementation UnearthPlayer
 
+- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name {
+    playerType = type;
+    playerName = name;
+    dieColor = color;
+    
+    return self;
+    
+}
 @end

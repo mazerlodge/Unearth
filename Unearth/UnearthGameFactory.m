@@ -33,7 +33,7 @@
 - (void) showUsage {
     // Display appropriate invocation options.
     
-    [cli put:@"Usage: unearth -action {dotest | defaultstart } -test n \n"];
+    [cli put:@"Usage: unearth -action {dotest | defaultstart | playgame } -test n \n"];
     
 }
     
@@ -123,6 +123,10 @@
             
         case 10:
             rval = [self testStoneBagGeneration];
+            break;
+            
+        case 11:
+            rval = [self testMakePlayerArray];
             break;
             
     }
@@ -439,6 +443,43 @@
     return 0;
     
 }
+
+- (int) testMakePlayerArray {
+    
+    int rval = 0;
+    
+    NSArray *playerArray = [self populatePlayerArray];
+    
+    NSString *msg = [[NSString alloc] initWithFormat:@"Made player array with %ld elements.\n", [playerArray count]];
+    [cli put:msg];
+    
+    return rval;
+    
+}
+
+- (NSArray *) populatePlayerArray {
+
+
+    NSArray *playerArray = [[NSArray alloc] init];
+    
+    // Ask the user how many players
+    int numberOfPlayers = [cli getInt:@"How many players?"];
+    
+    if ((numberOfPlayers < 1) || (numberOfPlayers > 4)) {
+        [cli put:@"UGF.popPlayerArray() Exiting with invalid number of players specified.\n"];
+        return playerArray;
+    }
+    
+    for (int x=0; x<numberOfPlayers; x++) {
+        NSString *msg = [[NSString alloc] initWithFormat:@"Collecting info for player  #%d.\n", x+1];
+        [cli put:msg];
+        UnearthPlayer *currentPlayer = [self makePlayer];
+        playerArray = [playerArray arrayByAddingObject:currentPlayer];
+        
+    }
+    
+    return playerArray;
+}
     
 
 - (NSString *) getValueFromQConfigForKey: (NSString *) key {
@@ -492,6 +533,24 @@
     
 }
 
+- (UnearthPlayer *) makePlayer {
+    
+    // - (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name;
+
+    int playerType = [cli getInt:@"Select player type (0=human, 1=ai)? "];
+    int dieColor = [cli getInt:@"Select die color (0=Orange, 1=Yellow, 2=Green, 3=Blue)? "];
+    NSString *name = [cli getStr:@"Enter name for player: "];
+    
+    // TODO: Validate input before building player.
+    
+    UnearthPlayer *player = [[UnearthPlayer alloc] initWithPlayerType:playerType
+                                                             dieColor:dieColor
+                                                           playerName:name];
+    
+    return player;
+
+}
+
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) argParser {
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
@@ -506,7 +565,6 @@
         
     }
     
-
     // If factory members haven't been populated, do so now.
     bFactoryMembersPopulated = [self populateFactoryMembers];
     if (!bFactoryMembersPopulated) {
@@ -514,12 +572,30 @@
         
     }
     
-    // TODO: Expand UGE.makeGameWithArgs to handle addn'l -action param values.
+    // TODO: Expand below to handle addn'l -action param values (as needed).
     if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
         // Get test number
         NSInteger testNumber = [[ap getArgValue:@"-test"] integerValue];
         [self doTest:testNumber];
         
+    }
+    
+    if ([ap doesArg:@"-action" haveValue:@"playgame"]) {
+        NSArray *players = [self populatePlayerArray];
+        
+        // Get a random end of age card
+        int endOfAgeIdx = [re getNextRandBetween:0 maxValueInclusive:4];
+        EndOfAgeCard *endOfAgeCard = [endOfAgeDeck objectAtIndex:endOfAgeIdx];
+
+        NSDictionary *gameDataDict = @{ @"PlayerArray" : players,
+                                        @"EndOfAgeCard" : endOfAgeCard,
+                                        @"StoneBag" : stoneBag
+                                        };
+
+        // TODO: add to dictionary, passing shuffled decks, random end of age card, & stonebag into game engine
+
+        [uge populateGameFromDictionary:gameDataDict];
+
     }
     
     return uge;

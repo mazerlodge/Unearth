@@ -102,6 +102,7 @@ S1 POA - Unearth
 
 11/25
     - Populated stone bag in factory and added test method (test ID=10) to verify randomization
+    - Created initial player population from CLI in factory and game engine init passing dictionary w/ game setup
 
 > In-Progress:
     - NEXT: Continue stubbing in UGF.populateFactoryMembers()
@@ -109,7 +110,7 @@ S1 POA - Unearth
         -- Note: Use Skylar/DictPatternstoPList to gen plist files from txt files
             X- delverDeckInfo     // 38x generated from n original possibilities
             X- endOfAgeDeckInfo    //  5x, shuffled for game, top card used in this game run.
-             - wondersDeckInfo    // 15x named, 10x lesser, 6x greater
+            X- wondersDeckInfo    // 15x named, 10x lesser, 6x greater
 
     Sample Current Invocation:
     unearth -action dotest - test 1 -debug
@@ -136,4 +137,6 @@ S1 POA - Unearth
     - Add debug logging class w/ output to file 0620 1103
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620 1103
     - Expand ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
+    - UGF makePlayer(), Validate input before building player. 1125
+    - UGE populateFromDictionary(), Add more dictionary parsing 1125
 
