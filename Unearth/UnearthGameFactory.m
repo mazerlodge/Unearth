@@ -473,7 +473,7 @@
     for (int x=0; x<numberOfPlayers; x++) {
         NSString *msg = [[NSString alloc] initWithFormat:@"Collecting info for player  #%d.\n", x+1];
         [cli put:msg];
-        UnearthPlayer *currentPlayer = [self makePlayer];
+        UnearthPlayer *currentPlayer = [self makePlayer: playerArray];
         playerArray = [playerArray arrayByAddingObject:currentPlayer];
         
     }
@@ -533,22 +533,88 @@
     
 }
 
-- (UnearthPlayer *) makePlayer {
+- (UnearthPlayer *) makePlayer: (NSArray *) existingPlayers {
+    // Pass in already existing players to avoid assigning die color already used
     
     // - (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name;
 
-    int playerType = [cli getInt:@"Select player type (0=human, 1=ai)? "];
-    int dieColor = [cli getInt:@"Select die color (0=Orange, 1=Yellow, 2=Green, 3=Blue)? "];
-    NSString *name = [cli getStr:@"Enter name for player: "];
+    int playerType = -1;
+    while (playerType < 0 || playerType > 1) {
+        playerType = [cli getInt:@"Select player type (0=human, 1=ai)? "];
+    }
     
-    // TODO: Validate input before building player.
+    int dieColor = -1;
+    while (dieColor < 0 || dieColor > 3 || [self isDieColorUsed:dieColor inPlayerArray:existingPlayers]) {
+        NSString *msg = [[NSString alloc] initWithFormat:@"Select die color %@?",
+                                                         [self getAvailableDieColors:existingPlayers]];
+        dieColor = [cli getInt:msg];
     
+    }
+    
+    NSString *name = @"NOT_SET";
+    while ([name compare:@"NOT_SET"] == NSOrderedSame || [self isPlayerNameUsed:name inPlayerArray:existingPlayers]) {
+        name = [cli getStr:@"Enter unused name for player: "];
+    
+    }
+        
     UnearthPlayer *player = [[UnearthPlayer alloc] initWithPlayerType:playerType
                                                              dieColor:dieColor
                                                            playerName:name];
     
     return player;
 
+}
+
+- (NSString *) getAvailableDieColors: (NSArray *) existingPlayers {
+    // Given a list of existing players get the remaining available die colors
+    
+    NSString *rval = @"(";
+    
+    NSArray *possibleColors = [[NSArray alloc] initWithObjects:@"0=Orange, ",
+                                                               @"1=Yellow, ",
+                                                               @"2=Green, ",
+                                                               @"3=Blue, ",
+                                                               nil];
+    
+    // Build string of unused colors.
+    for (int x=0; x<4; x++) {
+        if (![self isDieColorUsed:x inPlayerArray:existingPlayers])
+            rval = [rval stringByAppendingString:possibleColors[x]];
+        
+    }
+    
+    // remove trailing comma and space, then append closing parenthesis.
+    rval = [rval substringToIndex:[rval length]-2];
+    rval = [rval stringByAppendingString:@")"];
+    
+    return rval;
+}
+
+- (bool) isDieColorUsed: (int) dieColor inPlayerArray: (NSArray *) existingPlayers {
+    bool bRval = false;
+    
+    for (UnearthPlayer *aPlayer in existingPlayers)
+        if ([aPlayer dieColor] == dieColor) {
+            bRval = true;
+            break;
+        }
+    
+    return bRval;
+    
+}
+
+
+- (bool) isPlayerNameUsed: (NSString *) name inPlayerArray: (NSArray *) existingPlayers {
+    bool bRval = false;
+    
+    for (UnearthPlayer *aPlayer in existingPlayers)
+        if ([[aPlayer playerName] compare:name] == NSOrderedSame) {
+            bRval = true;
+            break;
+        }
+    
+    return bRval;
+    
 }
 
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) argParser {
@@ -608,10 +674,10 @@
 
     /*
      Decks to build:
-     - wondersDeck  // 15x named, 10x lesser, 6x greater
-     - delverDeck   // 38x generated from n original possibilities
-     - endOfAgeDeck //  5x, shuffled for game, top card used in this game run.
-     - ruinDeck     // 25x, 5x colors and 5x combos of claim and stone value.
+     x- wondersDeck  // 15x named, 10x lesser, 6x greater
+     x- delverDeck   // 38x generated from n original possibilities
+     x- endOfAgeDeck //  5x, shuffled for game, top card used in this game run.
+     x- ruinDeck     // 25x, 5x colors and 5x combos of claim and stone value.
      
     */
 

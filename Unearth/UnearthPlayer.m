@@ -18,4 +18,14 @@
     return self;
     
 }
+
+- (DelverDieColor) dieColor {
+    return dieColor;
+    
+}
+
+- (NSString *) playerName {
+    return playerName;
+    
+}
 @end

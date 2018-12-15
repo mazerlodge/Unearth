@@ -104,6 +104,9 @@ S1 POA - Unearth
     - Populated stone bag in factory and added test method (test ID=10) to verify randomization
     - Created initial player population from CLI in factory and game engine init passing dictionary w/ game setup
 
+12/15
+    - Validated input before building player in UGF and exposed player die and name in player class.
+
 > In-Progress:
     - NEXT: Continue stubbing in UGF.populateFactoryMembers()
         -- Add additional deck plist files and populate decks in UGF w/ just rawData like delverDeck.

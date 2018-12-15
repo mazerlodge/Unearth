@@ -25,6 +25,8 @@ typedef enum UnearthPlayerType : NSUInteger {
 
 - (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name;
 
+- (DelverDieColor) dieColor;
+- (NSString *) playerName;
 
 /*
  Method list from [Object Library.txt]
