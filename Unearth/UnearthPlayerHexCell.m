@@ -10,4 +10,15 @@
 
 @implementation UnearthPlayerHexCell
 
+
+- (id) initWithRow: (int) r Column: (int) c {
+    
+    row = r;
+    column = c;
+    isWonder = false;
+    
+    return self;
+    
+}
+
 @end

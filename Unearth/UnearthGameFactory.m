@@ -660,7 +660,7 @@
         int endOfAgeIdx = [re getNextRandBetween:0 maxValueInclusive:4];
         EndOfAgeCard *endOfAgeCard = [endOfAgeDeck objectAtIndex:endOfAgeIdx];
 
-        // TODO: add to gameDataDict dictionary used to pass info into game engine.
+        // TODO: Expand gameDataDict dictionary used to pass info into game engine.
         //       e.g. passing shuffled decks, random end of age card, & stonebag
         NSDictionary *gameDataDict = @{ @"PlayerArray" : players,
                                         @"EndOfAgeCard" : endOfAgeCard,

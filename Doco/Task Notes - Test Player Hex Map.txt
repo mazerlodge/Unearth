@@ -2,25 +2,34 @@ Task Notes - Test Player Hex Map
 
 Goal - In the player class a PlayerHexMap of HexCells represents the player map.  Each HexCell contains a HexTile, which may be either a Wonder or a Stone. Test the ability to store and retrieve either within the HexCell.
 
+Concept - The player hex map isn't pre-built.  First title is put at position 50,50 and additional tiles are
+            built around it by specifying where to place a tile relative to some other tile.
 
-/> PlayerHexMap
-- hexCells            // grid of hex cells used to hold acquired hex tiles (stones and wonders).
+Reference:
+Task text =     - Test Test Player Hex Map, see Task Notes - Test Player Hex Map.txt] 0819
 
-/> PlayerHexCell
-- position          // id or position within overall grid system, for finding neighbors
-- hexTile           // either emty, a wonder, or a stone
-- isWonder          // set to true to aid in casting contents to a wonder object.
-
-/> HexTile
-- tileType             // One of Stone or Wonder
+Object Model Reference:
+    > PlayerHexMap
+        - hexCells          // grid of hex cells used to hold acquired hex tiles (stones and wonders).
 
 
-/> Wonder : HexTile
-- id                // used to link to scoring information, rule impact.
-- wonderType         // One of Named, Greater, Lesser
-- isOwned            // boolean, relevant to named wonders.
-- pointValue        // varies per wonder instance.
+    > PlayerHexCell
+        - row, column       // id or position within overall grid system, for finding neighbors
+        - hexTile           // either emty, a wonder, or a stone
+        - isWonder          // set to true to aid in casting contents to a wonder object.
 
 
-/> Stone : HexTile
-- color             // black, blue, red, yellow
+    > HexTile
+        - tileType          // One of Stone or Wonder
+
+
+    > Wonder : HexTile
+        - id                // used to link to scoring information, rule impact.
+        - wonderType        // One of Named, Greater, Lesser
+        - isOwned           // boolean, relevant to named wonders.
+        - pointValue        // varies per wonder instance.
+
+
+    /> Stone : HexTile
+        - color             // black, blue, red, yellow
+

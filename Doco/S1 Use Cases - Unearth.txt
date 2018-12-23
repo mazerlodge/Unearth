@@ -6,9 +6,20 @@ Goal - Define use cases for incremental development of the Unearth project.
 - Start the game engine with a '-test 1' parameter that generates required params to do a simple "power on" sequence.
     -- Test 1 outputs shuffled deck contents
 
-> Start up tests
-    1. Generate decks, outputs them.
-    // First w/out shuffling, then after verifying all cards there, w/ shuffle
+> Tests (via -action dotest) 
+    T1. Generate unshuffled decks, output them.
+    T2. Collect all player questions, stores in player, outputs answers.
+    T3. Generate shuffled decks, output them.
 
-    2. Collect all player questions, stores in player, outputs answers.
-    // Implies game class (UGE) has players collection.
+> Unit tests
+    U1. Populate a player map with a lesser wonder surrounded with mix of colors.
+    U2. Fully populate UGE from UGF via dictionary passed into UGE.populateGameFromDictionary().
+
+> Enhancements
+    E1. Enhance ArgParser to support case insensitive args (see TODO marker).
+    E2. Enhance ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array.
+
+> Documentation
+    D1. Update Object Libary.txt with current as built information.
+    D2. Create additional Use Cases (help drive class method definition)
+
