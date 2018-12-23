@@ -1,0 +1,26 @@
+Task Notes - Test Player Hex Map
+
+Goal - In the player class a PlayerHexMap of HexCells represents the player map.  Each HexCell contains a HexTile, which may be either a Wonder or a Stone. Test the ability to store and retrieve either within the HexCell.
+
+
+/> PlayerHexMap
+- hexCells            // grid of hex cells used to hold acquired hex tiles (stones and wonders).
+
+/> PlayerHexCell
+- position          // id or position within overall grid system, for finding neighbors
+- hexTile           // either emty, a wonder, or a stone
+- isWonder          // set to true to aid in casting contents to a wonder object.
+
+/> HexTile
+- tileType             // One of Stone or Wonder
+
+
+/> Wonder : HexTile
+- id                // used to link to scoring information, rule impact.
+- wonderType         // One of Named, Greater, Lesser
+- isOwned            // boolean, relevant to named wonders.
+- pointValue        // varies per wonder instance.
+
+
+/> Stone : HexTile
+- color             // black, blue, red, yellow

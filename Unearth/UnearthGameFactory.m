@@ -33,7 +33,11 @@
 - (void) showUsage {
     // Display appropriate invocation options.
     
-    [cli put:@"Usage: unearth -action {dotest | defaultstart | playgame } -test n \n"];
+    NSString *usageMsg = [[NSString alloc] initWithFormat:@"%@%@",
+                          @"Usage: unearth -action {dotest | defaultstart | playgame }.\n",
+                          @"\t-action dotest requires param: -test n. \n"];
+    
+    [cli put:usageMsg];
     
 }
     
@@ -239,7 +243,7 @@
     NSURL *urlRelativeDelverCardData = [NSURL URLWithString:delverCardDataFilename relativeToURL:baseURL];
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.\n",
                      [[urlRelativeDelverCardData absoluteString] UTF8String]];
-    [cli put:msg];
+    [self debugMsg:msg];
     
     NSArray *data = [[NSArray alloc] initWithContentsOfURL:urlRelativeDelverCardData];
     
@@ -621,10 +625,14 @@
     
     UnearthGameEngine *uge = [[UnearthGameEngine alloc] init];
     
+    // Reference Usage: unearth -action {dotest | defaultstart | playgame }.
+    
     // If default start was specified, get startup prams from QConfig.
     if ([argParser doesArg:@"-action" haveValue:@"defaultstart"]) {
         [cli put:@"Detected startup with defaultStart parameters requested.\n"];
         NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"];
+        NSString *msg = [[NSString alloc] initWithFormat:@"Startup params set to [%@]\n", params];
+        [cli put:msg];
         
         // Need to preserve any ags already present (e.g. arg 0, executable path.
         [ap populateArgParserFromString:params preserveZeroParam:true];
@@ -638,7 +646,6 @@
         
     }
     
-    // TODO: Expand below to handle addn'l -action param values (as needed).
     if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
         // Get test number
         NSInteger testNumber = [[ap getArgValue:@"-test"] integerValue];
@@ -653,13 +660,12 @@
         int endOfAgeIdx = [re getNextRandBetween:0 maxValueInclusive:4];
         EndOfAgeCard *endOfAgeCard = [endOfAgeDeck objectAtIndex:endOfAgeIdx];
 
+        // TODO: add to gameDataDict dictionary used to pass info into game engine.
+        //       e.g. passing shuffled decks, random end of age card, & stonebag
         NSDictionary *gameDataDict = @{ @"PlayerArray" : players,
                                         @"EndOfAgeCard" : endOfAgeCard,
                                         @"StoneBag" : stoneBag
                                         };
-
-        // TODO: add to dictionary, passing shuffled decks, random end of age card, & stonebag into game engine
-
         [uge populateGameFromDictionary:gameDataDict];
 
     }

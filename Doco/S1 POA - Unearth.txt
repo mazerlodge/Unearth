@@ -107,30 +107,17 @@ S1 POA - Unearth
 12/15
     - Validated input before building player in UGF and exposed player die and name in player class.
 
+12/23
+    - Changed some startup messages to be debug messages.
+    - Expanded UGF.showUsage() message.
+    - Updated task list (below)
+    - Initated [Task Notes - Test Player Hex Map.txt]
+
+
 > In-Progress:
-    - NEXT: Continue stubbing in UGF.populateFactoryMembers()
-        -- Add additional deck plist files and populate decks in UGF w/ just rawData like delverDeck.
-        -- Note: Use Skylar/DictPatternstoPList to gen plist files from txt files
-            X- delverDeckInfo     // 38x generated from n original possibilities
-            X- endOfAgeDeckInfo    //  5x, shuffled for game, top card used in this game run.
-            X- wondersDeckInfo    // 15x named, 10x lesser, 6x greater
-
-    Sample Current Invocation:
-    unearth -action dotest - test 1 -debug
-    -or-
-    unearth -action defaultstartup
-        Note: in this case, the startup params come from QConfig.plist, key [DefaultStartupParams] value.
-
+    - Test Test Player Hex Map, see Task Notes - Test Player Hex Map.txt] 0819
 
 > Next:
-    - Flesh out UGF.makeGameWithArgs() method 0701
-    - UGF build decks from plist. 0819
-        1. NSMutableArray *fields = [[NSMutableArray alloc] initWithCapacity:3];
-        2. [fields writeToFile:@"/tmp/DictionaryPatternsToPlist.plist" atomically:YES]
-    - Add start up tests, details in [S1 Use Cases - Unearth.txt] 0819
-    - Continue use cases document (help drive class method definition) 0819
-    - Continue fleshing out object library classes from notes 0819
-    - Test ability to cast HexTile up and down (req. by base class used in hexMap) 0819
     - Implement drawMap() method of CLI class, see TODO marker. 0902
     - Replace test numbers within UGF with enumeration 0902
     - Add call CLI from within validate args, eg collect test number 0909
@@ -142,4 +129,8 @@ S1 POA - Unearth
     - Expand ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
     - UGF makePlayer(), Validate input before building player. 1125
     - UGE populateFromDictionary(), Add more dictionary parsing 1125
+    - UGF.makeGameWithArgs() add to gameDataDict dictionary used to pass info into game engine. 1223
+    - Create additional Use Cases (help drive class method definition) [S1 Use Cases - Unearth.txt] 1223
+    - Expand [Object Library.txt] with as built information 1223
+
 

@@ -3,6 +3,7 @@ S1 StartUp Flow
 > main.m, main()
     // Creates argParser populated with cmdLine params, including exec path [0]
     > ArgParser.initWithArgs: argsArray
+        // Sets member argList to specified args array
     < returns an argParser instance.
 
     > UGF.initWithArgParser: argParser
@@ -15,13 +16,12 @@ S1 StartUp Flow
         // checks for action, debug, and if action=dotest, a test number
     < t/f bValid indicator.
 
-    // if not args not valid, UGF.showUsage() and exit.
+    // if args not valid, UGF.showUsage() and exit.
 
     > ugf.makeGameWithArgs: argParser
         // if action is DefaultStart, replace argParser contents, preserving paramZero
 
-
-    < returns game engine instance.
+    < returns unearth game engine instance.
 
     > uge.go()
 
