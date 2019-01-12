@@ -132,11 +132,26 @@
         case 11:
             rval = [self testMakePlayerArray];
             break;
+			
+		case 12:
+			rval = [self testPlayerMap];
+			break;
             
     }
     
     return rval;
     
+}
+
+- (int) testPlayerMap {
+	// Test placing a loop of stones then a lesser wonder in the middle
+	
+	int rval = -1;
+	
+	[self debugMsg:@"In test playermap."];
+	
+	return rval;
+	
 }
 
 - (int) testReadDelverCardDataWithFile {
@@ -508,6 +523,19 @@
     
     bool bRval = true;
     NSString *action = @"NOT_SET";
+	
+
+	// If default start was specified, get startup prams from QConfig.
+	if ([argParser doesArg:@"-action" haveValue:@"defaultstart"]) {
+		[cli put:@"Detected startup with defaultStart parameters requested.\n"];
+		NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"];
+		NSString *msg = [[NSString alloc] initWithFormat:@"Startup params set to [%@]\n", params];
+		[cli put:msg];
+		
+		// Need to preserve any ags already present (e.g. arg 0, executable path.
+		[ap populateArgParserFromString:params preserveZeroParam:true];
+		
+	}
     
     if ([argParser isInArgs:@"-action" withAValue:true]) {
         action = [[argParser getArgValue:@"-action"] lowercaseString];
@@ -628,6 +656,7 @@
     // Reference Usage: unearth -action {dotest | defaultstart | playgame }.
     
     // If default start was specified, get startup prams from QConfig.
+	/* TODO: Moved default start detection to ugf.validateArguments(), remove this block when fully validated.
     if ([argParser doesArg:@"-action" haveValue:@"defaultstart"]) {
         [cli put:@"Detected startup with defaultStart parameters requested.\n"];
         NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"];
@@ -638,6 +667,7 @@
         [ap populateArgParserFromString:params preserveZeroParam:true];
         
     }
+	*/
     
     // If factory members haven't been populated, do so now.
     bFactoryMembersPopulated = [self populateFactoryMembers];

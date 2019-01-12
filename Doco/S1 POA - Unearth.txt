@@ -114,6 +114,11 @@ S1 POA - Unearth
     - Initated [Task Notes - Test Player Hex Map.txt]
     - Created use case U1 (testing player map) 
     - Cleaned up use cases and associated ToDo list with UCs (below)
+    
+== 2019 == 
+01/12 
+	- Moved default start detection to ugf.validateArguments() from UGF.makeGameWithArgs()
+	
 
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors

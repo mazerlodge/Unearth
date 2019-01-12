@@ -4,6 +4,32 @@ Goal - In the player class a PlayerHexMap of HexCells represents the player map.
 
 Concept - The player hex map isn't pre-built.  First title is put at position 50,50 and additional tiles are
             built around it by specifying where to place a tile relative to some other tile.
+            
+Use Case / User Scenario / Walk through 
+	Launch app with Test 12 selected. 
+	Place a red stone at the default start location (50,50) 
+	Place the following subsequent stones at the relative locations specified:
+		stone 	relpos of previous tile
+		(R)		starting stone at 50,50 
+		R		N
+		Y		SE		
+		Y		S
+		B		SW
+		B		NW
+		K		N
+		K		NE
+		
+		(Red, Yellow, Blue, blacK) 
+		  
+	Pseudocode 
+		hexCells = playerMap.gethexCells() 
+		if (hexCells.length > 1) 
+			index = cli.askUserWhichCell(hexCells) 
+		else 
+			index = 0 
+		playerMap.placeHexTile: theTile inHexCell: hexCells[index]
+			  
+	
 
 Reference:
 Task text =     - Test Test Player Hex Map, see Task Notes - Test Player Hex Map.txt] 0819
