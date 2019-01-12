@@ -19,7 +19,11 @@
 - (id) initWithArgParser:(ArgParser *)argParser {
     
     // Assume not debugging until validateArgs() proves overwise.
-    bInDebug = false;
+    bInDebug = [ap isInArgs:@"-debug" withAValue:false];
+	if (bInDebug)
+		minDebugMsgLevel = (int) [[ap getArgValue:@"-debuglevel"] integerValue];
+	else
+		minDebugMsgLevel = -1;
     ap = argParser;
     re = [[RandomEngine alloc] init];
     cli = [[CommandLineInterface alloc] init];
@@ -33,9 +37,10 @@
 - (void) showUsage {
     // Display appropriate invocation options.
     
-    NSString *usageMsg = [[NSString alloc] initWithFormat:@"%@%@",
+    NSString *usageMsg = [[NSString alloc] initWithFormat:@"%@%@%@",
                           @"Usage: unearth -action {dotest | defaultstart | playgame }.\n",
-                          @"\t-action dotest requires param: -test n. \n"];
+                          @"\t-action dotest requires param: -test n. \n",
+						  @"\tOptional Params: -debug -debuglevel (int)\n"];
     
     [cli put:usageMsg];
     
@@ -48,28 +53,28 @@
     
     NSBundle *main = [NSBundle mainBundle];
     if (main == nil)
-        [self debugMsg:@"UGF.loadQCD() main bundle returned nil.\n"];
+        [self debugMsg:@"UGF.loadQCD() main bundle returned nil." level:1];
     else {
-        NSString *msg = [[NSString alloc] initWithFormat:@"lQCD() main bundle acquired.\n\tPath = %s.\n",
+        NSString *msg = [[NSString alloc] initWithFormat:@"lQCD() main bundle acquired.\n\tPath = %s.",
                                                             [[main bundlePath] UTF8String]];
-        [self debugMsg:msg];
+        [self debugMsg:msg level:1];
         
     }
     
     NSString *configFilePath = [main pathForResource:@"QConfig" ofType:@"plist" inDirectory:@"QData"];
     NSString *msg = [[NSString alloc] initWithFormat:@"Resource path for QConfig file acquired.\n\tPath = %@\n", configFilePath];
-    [self debugMsg:msg];
+    [self debugMsg:msg level:1];
     
     if (configFilePath != nil) {
         // Load QConfig, it is a dictionary.  Expecting it to contain a key of 'data' with a value of 'QData'
         dictQConfig = [[NSDictionary alloc] initWithContentsOfFile:configFilePath];
         
         msg = @"QConfig keys follow:\n";
-        [self debugMsg:msg];
+        [self debugMsg:msg level:1];
         for (NSString *aKey in [dictQConfig allKeys]) {
             msg = [[NSString alloc] initWithFormat:@"\tKey [%@] = [%@]\n",
                                                     aKey, [dictQConfig valueForKey:aKey]];
-            [self debugMsg:msg];
+            [self debugMsg:msg level:1];
             
         }
         
@@ -148,7 +153,7 @@
 	
 	int rval = -1;
 	
-	[self debugMsg:@"In test playermap."];
+	[self debugMsg:@"In test playermap." level:1];
 	
 	return rval;
 	
@@ -256,9 +261,9 @@
     // ... and the data file name (from QConfig.plist)
     NSString *delverCardDataFilename = [self getValueFromQConfigForKey:qConfigKey];
     NSURL *urlRelativeDelverCardData = [NSURL URLWithString:delverCardDataFilename relativeToURL:baseURL];
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.\n",
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDfL(): Got full url from base %s.",
                      [[urlRelativeDelverCardData absoluteString] UTF8String]];
-    [self debugMsg:msg];
+    [self debugMsg:msg level:1];
     
     NSArray *data = [[NSArray alloc] initWithContentsOfURL:urlRelativeDelverCardData];
     
@@ -445,8 +450,8 @@
     
     int passCount = 0;
     
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.initWAP() Random Seed used = %d\n", [re getSeed]];
-    [self debugMsg:msg];
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.initWAP() Random Seed used = %d.", [re getSeed]];
+    [self debugMsg:msg level:1];
     
     for (int x=0; x<200; x++) {
         [self populateStoneBag];
@@ -508,9 +513,9 @@
     
     // See if the requested key's value can be read.
     NSString *dataValue = [dictQConfig objectForKey:key];
-    NSString *msg = [[NSString alloc] initWithFormat: @"UGF.gVfQCfK() Got value for [%s] key of [%s]\n",
+	NSString *msg = [[NSString alloc] initWithFormat: @"UGF.gVfQCfK(): Got value for [%s] key of [%s]",
                                                             [key UTF8String], [dataValue UTF8String]];
-    [self debugMsg:msg];
+    [self debugMsg:msg level:1];
     
     rval = dataValue;
     
@@ -544,11 +549,19 @@
         [cli put:@"Error UGF.validateArguments(): Missing required parameter: -action.  Can not continue.\n"];
         bRval = false;
     }
-    
-    if ([argParser isInArgs:@"-debug" withAValue:false]) {
-        [cli put:@"UGF.validateArguments() Info, debug parameter detected.\n"];
+
+	if ([argParser isInArgs:@"-debug" withAValue:false]) {
+		if ([argParser isInArgs:@"-debuglevel" withAValue:true])
+			minDebugMsgLevel = (int) [[ap getArgValue:@"-debuglevel"] integerValue];
+		else
+			minDebugMsgLevel = -1;
+
+		NSString *msg = [NSString stringWithFormat:@"UGF.validateArguments() Info, debug parameter detected, min debug message level set to %d.\n", minDebugMsgLevel];
+        [cli put:msg];
         bInDebug = true;
-        [argParser dumpArgsToCLI:cli];
+		
+		if (minDebugMsgLevel < 2)
+        	[argParser dumpArgsToCLI:cli];
         
     }
     
@@ -672,7 +685,7 @@
     // If factory members haven't been populated, do so now.
     bFactoryMembersPopulated = [self populateFactoryMembers];
     if (!bFactoryMembersPopulated) {
-        [self debugMsg:@"ERROR: PopulateFactoryMembers() returned false. Can not continue"];
+        [self debugMsg:@"ERROR: PopulateFactoryMembers() returned false. Can not continue." level:1];
         
     }
     
@@ -839,9 +852,9 @@
     } // for aCardData...
     
     
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopDelverDeck() Built Delver Deck w/ %ld cards\n",
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopDelverDeck() Built Delver Deck w/ %ld cards.",
                      [delverDeck count]];
-    [self debugMsg:msg];
+    [self debugMsg:msg level:2];
     
     return bRval;
     
@@ -867,9 +880,9 @@
     } // for aCardData...
     
     
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopEndOfAgeDeck() Built End of Age Deck w/ %ld cards\n",
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopEndOfAgeDeck() Built End of Age Deck w/ %ld cards.",
                      [endOfAgeDeck count]];
-    [self debugMsg:msg];
+    [self debugMsg:msg level:2];
     
     return bRval;
     
@@ -895,9 +908,9 @@
     } // for aCardData...
     
     
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDeck() Built Wonder Deck w/ %ld cards\n",
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDeck() Built Wonder Deck w/ %ld cards.",
                      [wonderDeck count]];
-    [self debugMsg:msg];
+    [self debugMsg:msg level:2];
     
     return bRval;
     
@@ -905,10 +918,20 @@
 
 - (void) debugMsg: (NSString *) msg {
     // If debug mode is turned on output the specified message via the command line interface.
+	
+	[self debugMsg:msg level:0];
     
-    if (bInDebug)
-        [cli put:msg];
-    
+}
+
+- (void) debugMsg: (NSString *) msg level: (int) msgLevel {
+	// If debug mode is turned on output the specified message via the command line interface.
+	
+	// Add the message level to the message
+	msg = [msg stringByAppendingFormat:@"(Severity: %d)\n", msgLevel];
+	
+	if (bInDebug && (msgLevel >= minDebugMsgLevel))
+		[cli put:msg];
+	
 }
 
 @end

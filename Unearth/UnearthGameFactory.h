@@ -23,6 +23,7 @@
 @interface UnearthGameFactory : NSObject {
     
     bool bInDebug;
+	int minDebugMsgLevel; 
     bool bFactoryMembersPopulated;
     RandomEngine *re;
     NSDictionary *dictQConfig;

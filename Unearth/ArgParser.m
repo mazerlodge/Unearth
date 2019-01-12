@@ -119,17 +119,17 @@
 - (void) dumpArgsToCLI: (CommandLineInterface *) cli {
     // Output list of arguments.
     
-    NSString *msg = @"ArgParser, dump args follows.\n";
-    [cli put:msg];
-    
+    NSString *msg = @"ArgParser, == start dump args ==\n";
     int argIndex =0;
+	
     for (NSString *aArg in argsList) {
-        msg = [[NSString alloc] initWithFormat:@"[%d] = %@ \n", argIndex, aArg];
-        [cli put:msg];
-        
+        msg = [msg stringByAppendingFormat:@"[%d] = %@ \n", argIndex, aArg];
         argIndex++;
     }
-    
+	
+	msg = [msg stringByAppendingString:@"ArgParser, == end dump args ==\n"];
+	[cli put:msg];
+
 }
 
 - (NSString *) getArgByNumber:(NSUInteger)argNumber {
