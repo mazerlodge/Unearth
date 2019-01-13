@@ -62,6 +62,6 @@
 - (int) doTest: (NSInteger) testNumber;
 - (bool) validateArguments: (ArgParser *) argParser;
 - (UnearthGameEngine *) makeGameWithArgs: (ArgParser *) ap;
-
+- (NSString *) startupAction;
 
 @end

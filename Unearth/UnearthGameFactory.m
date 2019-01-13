@@ -38,7 +38,7 @@
     // Display appropriate invocation options.
     
     NSString *usageMsg = [[NSString alloc] initWithFormat:@"%@%@%@",
-                          @"Usage: unearth -action {dotest | defaultstart | playgame }.\n",
+                          @"Usage: unearth -action {dotest | playgame | defaultstart }.\n",
                           @"\t-action dotest requires param: -test n. \n",
 						  @"\tOptional Params: -debug -debuglevel (int)\n"];
     
@@ -153,7 +153,7 @@
 	
 	int rval = -1;
 	
-	[self debugMsg:@"In test playermap." level:1];
+	[self debugMsg:@"In test playermap." level:4];
 	
 	return rval;
 	
@@ -914,6 +914,17 @@
     
     return bRval;
     
+}
+
+- (NSString *) startupAction {
+	
+	NSString *rval = @"NOT_SET";
+	
+	if ([ap isInArgs:@"-action" withAValue:true])
+		rval = [ap getArgValue:@"-action"];
+	
+	return rval;
+	
 }
 
 - (void) debugMsg: (NSString *) msg {

@@ -33,10 +33,10 @@ int main(int argc, const char * argv[]) {
         }
         
         UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
-        [uge go]; 
-        
-        
-        
-    }
+		
+		if ([[ugf startupAction] compare:@"playgame"] == NSOrderedSame)
+        	[uge go];
+
+	}
     return 0;
 }
