@@ -19,6 +19,7 @@
 #import "Stone.h"
 #import "UnearthPlayer.h"
 #import "DelverDie.h"
+#import "UnearthPlayerHexMap.h"
 
 @interface UnearthGameFactory : NSObject {
     

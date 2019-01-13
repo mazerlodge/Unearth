@@ -10,4 +10,10 @@
 
 @implementation HexTile
 
+- (int) getBaseID {
+	
+	return baseID;
+	
+}
+
 @end

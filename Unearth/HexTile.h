@@ -14,11 +14,13 @@ typedef enum HexTileType : NSUInteger {
 } HexTileType;
 
 @interface HexTile : NSObject {
-    
+	
+	int baseID; 
     HexTileType tileType;
     
 }
 
+- (int) getBaseID;
 
 /*
  Method list from [Object Library.txt]

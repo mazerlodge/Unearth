@@ -13,6 +13,8 @@
 - (id) initWithString:(NSString *)wonderData {
     
     rawData = wonderData;
+	
+	baseID = 42; // TODO: Replace this w/ parsed value from wonderData 
     
     return self;
     

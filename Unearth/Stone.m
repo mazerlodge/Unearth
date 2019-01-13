@@ -13,6 +13,8 @@
 - (id) initWithColor: (StoneColor) initColor idNumber:(int) initID {
     
     idNumber = initID;
+	baseID = initID;
+	
     color = initColor;
     
     return self;

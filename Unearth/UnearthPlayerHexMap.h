@@ -10,6 +10,7 @@
 #import "UnearthPlayerHexCell.h"
 #import "Stone.h"
 #import "Wonder.h"
+#import "CommandLineInterface.h"
 
 typedef enum HexDirection : NSUInteger {
     HexDirectionN = 0,
@@ -23,11 +24,21 @@ typedef enum HexDirection : NSUInteger {
 } HexDirection;
 
 @interface UnearthPlayerHexMap : NSObject {
-    NSArray *hexCells;
+
+	CommandLineInterface *cli;
+
+	NSArray *hexCells;
     
 }
 
 - (id) init;
+
+- (UnearthPlayerHexCell *) getOriginHexCell;
+- (bool) addStone: (Stone *) s atHexCell: (UnearthPlayerHexCell *) c;
+- (bool) addWonder: (Wonder *) w atHexCell: (UnearthPlayerHexCell *) c;
+
+- (bool) addStone: (Stone *) s touchingHexCell: (UnearthPlayerHexCell *) c onSide: (HexDirection) direction;
+- (bool) addWonder: (Wonder *) w touchingHexCell: (UnearthPlayerHexCell *) c onSide: (HexDirection) direction;
 
 /*
  Method list from [Object Library.txt]

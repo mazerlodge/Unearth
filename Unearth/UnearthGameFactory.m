@@ -155,6 +155,20 @@
 	
 	[self debugMsg:@"In test playermap." level:4];
 	
+	// Validate stone bag has stones
+	NSInteger stoneCount = [stoneBag count];
+	NSString *msg = [NSString stringWithFormat:@"Got stone bag with %ld stones.", stoneCount];
+	[self debugMsg:msg level:4];
+	
+	// pull a stone
+	Stone *theStone = [stoneBag objectAtIndex:0];
+	
+	// put it on the player map at the origin
+	UnearthPlayerHexMap *map = [[UnearthPlayerHexMap alloc] init];
+	UnearthPlayerHexCell *originCell = [map getOriginHexCell];
+	[map addStone:theStone atHexCell:originCell];
+	
+	
 	return rval;
 	
 }
