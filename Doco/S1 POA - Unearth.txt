@@ -126,6 +126,7 @@ S1 POA - Unearth
 01/26
 	- Refactored, changed name of UnearthPlayerHexMap to just HexMap
 	- Refactored, changed UnearthPlayerHexCell to just HexCell
+	- Check in test, last one didn't complete correctly.
 
 
 	
