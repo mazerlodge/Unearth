@@ -122,6 +122,12 @@ S1 POA - Unearth
 	- Refactored UGF.debugMsg() calls to include a message level.
 	- Added evaluation of startup action in main() to only start game if action was 'playgame'
 	- Added basic stub of UGF.testPlayerMap()
+
+01/26
+	- Refactored, changed name of UnearthPlayerHexMap to just HexMap
+	- Refactored, changed UnearthPlayerHexCell to just HexCell
+
+
 	
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors

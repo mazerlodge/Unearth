@@ -1,32 +1,32 @@
 //
-//  UnearthPlayerHexMap.m
+//  HexMap.m
 //  Unearth
 //
 //  Created by mazerlodge on 8/19/18.
 //  Copyright © 2018 mazerlodge. All rights reserved.
 //
 
-#import "UnearthPlayerHexMap.h"
+#import "HexMap.h"
 
-@implementation UnearthPlayerHexMap
+@implementation HexMap
 
 - (id) init {
 	
 	cli = [[CommandLineInterface alloc] init];
-    UnearthPlayerHexCell *aCell = [[UnearthPlayerHexCell alloc] initWithRow:50 Column:50];
+    HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
     hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
 
     return self;
     
 }
 
-- (UnearthPlayerHexCell *) getOriginHexCell {
+- (HexCell *) getOriginHexCell {
 	// Return the origin hex cell, it was loaded at index 0 during init.
 	return [hexCells objectAtIndex:0];
 	
 }
 
-- (bool) addStone: (Stone *) s atHexCell: (UnearthPlayerHexCell *) c {
+- (bool) addStone: (Stone *) s atHexCell: (HexCell *) c {
 	bool bRval = false;
 	
 	// TODO: Flesh out Hex Map addStone method.
@@ -37,7 +37,7 @@
 	
 }
 
-- (bool) addStone: (Stone *) s touchingHexCell: (UnearthPlayerHexCell *) c onSide: (HexDirection) direction {
+- (bool) addStone: (Stone *) s touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
     bool bRval = false;
     
     // TODO: Flesh out Hex Map addStone method.
@@ -48,7 +48,7 @@
     
 }
 
-- (bool) addWonder: (Wonder *) w atHexCell: (UnearthPlayerHexCell *) c {
+- (bool) addWonder: (Wonder *) w atHexCell: (HexCell *) c {
 	bool bRval = false;
 	
 	// TODO: Flesh out Hex Map addWonder method.
@@ -59,7 +59,7 @@
 	
 }
 
-- (bool) addWonder: (Wonder *) w touchingHexCell: (UnearthPlayerHexCell *) c onSide: (HexDirection) direction {
+- (bool) addWonder: (Wonder *) w touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
     bool bRval = false;
 
     // TODO: Flesh out Hex Map addWonder method.

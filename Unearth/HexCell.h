@@ -1,5 +1,5 @@
 //
-//  UnearthPlayerHexCell.h
+//  HexCell.h
 //  Unearth
 //
 //  Created by mazerlodge on 8/19/18.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "HexTile.h"
 
-@interface UnearthPlayerHexCell : NSObject {
+@interface HexCell : NSObject {
     int row;
     int column;
     HexTile *hexTile;

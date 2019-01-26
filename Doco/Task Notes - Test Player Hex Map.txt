@@ -1,6 +1,6 @@
 Task Notes - Test Player Hex Map
 
-Goal - In the player class a PlayerHexMap of HexCells represents the player map.  Each HexCell contains a HexTile, which may be either a Wonder or a Stone. Test the ability to store and retrieve either within the HexCell.
+Goal - In the player class a HexMap of HexCells represents the player map.  Each HexCell contains a HexTile, which may be either a Wonder or a Stone. Test the ability to store and retrieve either within the HexCell.
 
 Concept - The player hex map isn't pre-built.  First title is put at position 50,50 and additional tiles are
             built around it by specifying where to place a tile relative to some other tile.
@@ -35,7 +35,7 @@ Reference:
 Task text =     - Test Test Player Hex Map, see Task Notes - Test Player Hex Map.txt] 0819
 
 Object Model Reference:
-    > PlayerHexMap
+    > HexMap
         - hexCells          // grid of hex cells used to hold acquired hex tiles (stones and wonders).
 
 

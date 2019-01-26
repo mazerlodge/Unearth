@@ -109,7 +109,7 @@ X> RandomEngine
 	- size				// 4, 6, 8 (aka number of sides)  
 
 
-/> PlayerHexMap
+/> HexMap
 	- hexCells			// grid of hex cells used to hold acquired hex tiles (stones and wonders).
 	
 /> PlayerHexCell
