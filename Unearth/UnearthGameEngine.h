@@ -11,6 +11,7 @@
 #import "UnearthPlayer.h"
 #import "EndOfAgeCard.h"
 #import "Stone.h"
+#import "StoneBag.h"
 
 @interface UnearthGameEngine : NSObject {
     
@@ -18,7 +19,7 @@
     CommandLineInterface *cli;
     NSArray *delverDeck;
     NSArray *players;
-    NSMutableArray *stoneBag;
+    StoneBag *stoneBag;
     EndOfAgeCard *endOfAgeCard;
     
 }

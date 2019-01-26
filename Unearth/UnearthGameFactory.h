@@ -20,6 +20,7 @@
 #import "UnearthPlayer.h"
 #import "DelverDie.h"
 #import "HexMap.h"
+#import "StoneBag.h"
 
 @interface UnearthGameFactory : NSObject {
     
@@ -36,7 +37,7 @@
     NSArray *endOfAgeDeck;
     NSArray *ruinsDeck;
     NSArray *wonderDeck;
-    NSArray *stoneBag;
+    StoneBag *stoneBag;
     
     
 }

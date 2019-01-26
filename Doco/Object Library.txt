@@ -103,6 +103,9 @@ X> RandomEngine
 /> Stone : HexTile
 	- color 			// black, blue, red, yellow
 
+.> StoneBag 
+	- stones 			// array of stones 
+	- pullStone() 		// retrieves next stone from bag
 
 /> DelverDie
 	- color				// indicates which player gets stones or die back when ruin claimed.
@@ -112,7 +115,7 @@ X> RandomEngine
 /> HexMap
 	- hexCells			// grid of hex cells used to hold acquired hex tiles (stones and wonders).
 	
-/> PlayerHexCell
+/> HexCell
     - position          // id or position within overall grid system, for finding neighbors
     - hexTile           // either emty, a wonder, or a stone
     - isWonder          // set to true to aid in casting contents to a wonder object.

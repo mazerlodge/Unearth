@@ -128,7 +128,6 @@ S1 POA - Unearth
 	- Refactored, changed UnearthPlayerHexCell to just HexCell
 	- Check in test, last one didn't complete correctly.
 
-
 	
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
@@ -137,12 +136,20 @@ S1 POA - Unearth
         -- Unearth Player Hex Map, flesh out Hex Map addWonder method 1223
         -- Implement drawMap() method of CLI class, see TODO marker. 0902
 
+
 > Next: (Note: UC=Use Case)
+	HexMap.m:	// TODO: Flesh out Hex Map addStone method.
+	HexMap.m:	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
+	HexMap.m:	// TODO: Flesh out Hex Map addWonder method.
+	HexMap.m:	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
+
+	- UC U3, Wrap stone bag array in a class with pull method that depletes bag. 0126
     - UC E1, Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param 1013
     - UC E2, ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
     - UC U2, UGF.makeGameWithArgs() add to gameDataDict dictionary used to pass info to UGE and parse it in UGE. 1223
     - UC D1, Expand [Object Library.txt] with as built information 1223
     - UC D2, Create additional Use Cases (help drive class method definition) [S1 Use Cases - Unearth.txt] 1223
+
 
 > Archived/Postponed/Cancelled Tasks:
     - Replace test numbers within UGF with enumeration 0902

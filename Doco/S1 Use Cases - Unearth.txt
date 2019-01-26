@@ -14,6 +14,7 @@ Goal - Define use cases for incremental development of the Unearth project.
 > Unit tests
     U1. Populate a player map with a lesser wonder surrounded with mix of colors.
     U2. Fully populate UGE from UGF via dictionary passed into UGE.populateGameFromDictionary().
+    U3. Wrap stone bag array in a class with pull method that depletes bag. 
 
 > Enhancements
     E1. Enhance ArgParser to support case insensitive args (see TODO marker).

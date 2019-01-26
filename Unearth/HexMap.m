@@ -40,7 +40,7 @@
 - (bool) addStone: (Stone *) s touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
     bool bRval = false;
     
-    // TODO: Flesh out Hex Map addStone method.
+	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
 	NSString *msg = [NSString stringWithFormat:@"In addStone touchingHexCell with Stone %d\n", [s getStoneID]];
 	[cli put:msg];
     
@@ -62,7 +62,7 @@
 - (bool) addWonder: (Wonder *) w touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
     bool bRval = false;
 
-    // TODO: Flesh out Hex Map addWonder method.
+	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
 	NSString *msg = [NSString stringWithFormat:@"In addWonder with Wonder %d\n", [w getBaseID]];
 	[cli put:msg];
 

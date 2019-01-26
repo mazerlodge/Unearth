@@ -156,12 +156,12 @@
 	[self debugMsg:@"In test playermap." level:4];
 	
 	// Validate stone bag has stones
-	NSInteger stoneCount = [stoneBag count];
+	NSInteger stoneCount = [stoneBag getCount];
 	NSString *msg = [NSString stringWithFormat:@"Got stone bag with %ld stones.", stoneCount];
 	[self debugMsg:msg level:4];
 	
 	// pull a stone
-	Stone *theStone = [stoneBag objectAtIndex:0];
+	Stone *theStone = [stoneBag getNextStone];
 	
 	// put it on the player map at the origin
 	HexMap *map = [[HexMap alloc] init];
@@ -463,19 +463,37 @@
     // Determine if stone ID 0 is always last stone in the bag.
     
     int passCount = 0;
-    
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.initWAP() Random Seed used = %d.", [re getSeed]];
-    [self debugMsg:msg level:1];
-    
-    for (int x=0; x<200; x++) {
-        [self populateStoneBag];
-        Stone *lastStone = [stoneBag objectAtIndex:59];
-        if ([lastStone getStoneID] != 0)
-            passCount++;
 
-    }
-    
-    NSString *testResult = [[NSString alloc] initWithFormat:@"test result = %d\n", passCount];
+	NSString *msg = [[NSString alloc] initWithFormat:@"UGF.initWAP() Random Seed used = %d.", [re getSeed]];
+	[self debugMsg:msg level:1];
+
+	
+	int TEST_CYCLES = 600;
+	
+	int CyclesToHitOne = 0;
+	while (passCount == 0) {
+		CyclesToHitOne++;
+
+		for (int x=0; x<TEST_CYCLES; x++) {
+			// Change randomization seed
+			int oldSeed = [re getSeed];
+			int newSeed = [re getTimeBasedSeed];
+			if (oldSeed == newSeed)
+				newSeed += 42;
+			[re setSeed:newSeed];
+
+			[self populateStoneBag];
+			Stone *lastStone = [stoneBag peekAtLastStone];
+			if ([lastStone getStoneID] == 0)
+				passCount++;
+
+		}
+	} // while
+
+    NSString *testResult = [[NSString alloc] initWithFormat:@"Cycles to hit one=%d test result = %d of %d\n",
+							CyclesToHitOne,
+							passCount,
+							TEST_CYCLES];
     [cli put:testResult];
 
     return 0;
@@ -786,14 +804,17 @@
     } // for colorIdx
     
     // Randomize stones
-    stoneBag = [[NSArray alloc] init];
+    NSArray *randomStones = [[NSArray alloc] init];
     for (int x = 59; x >= 0; x--) {
         NSRange randRange = NSMakeRange(0,x);
         int stoneIdx = [re getNextRandInRange:randRange];
-        stoneBag = [stoneBag arrayByAddingObject:[allStones objectAtIndex:stoneIdx]];
+        randomStones = [randomStones arrayByAddingObject:[allStones objectAtIndex:stoneIdx]];
         [allStones removeObjectAtIndex:stoneIdx];
         
     }
+	
+	// Put the randomized stones in the instance member of the StoneBag class
+	stoneBag = [[StoneBag alloc] initWithStoneBag:randomStones];
     
     return bRval;
     
