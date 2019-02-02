@@ -21,6 +21,7 @@ typedef enum HexTileType : NSUInteger {
 }
 
 - (int) getBaseID;
+- (HexTileType) getTileType;
 
 /*
  Method list from [Object Library.txt]

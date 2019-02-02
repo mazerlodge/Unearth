@@ -128,9 +128,13 @@ S1 POA - Unearth
 	- Refactored, changed UnearthPlayerHexCell to just HexCell
 	- Check in test, last one didn't complete correctly.
 
-	
+02/02
+	- Added code to HexMap, HexCell, and HexTile supporting getAvailableHexCells functionality.
+	- Expanded UGF.testPlayerMap() to report available cells after adding stone at origin.
+
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
+		-- Continue UGF.testPlayerMap(), placement of stone in available cells. 
         -- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
         -- Unearth Player Hex Map, flesh out Hex Map addStone method 1223
         -- Unearth Player Hex Map, flesh out Hex Map addWonder method 1223
@@ -142,6 +146,7 @@ S1 POA - Unearth
 	HexMap.m:	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
 	HexMap.m:	// TODO: Flesh out Hex Map addWonder method.
 	HexMap.m:	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
+	HexMap.m:	// TODO: Add dedupe getAvailableHexCells() results (two occupied cells often share a neighbor).
 
 	- UC U3, Wrap stone bag array in a class with pull method that depletes bag. 0126
     - UC E1, Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param 1013

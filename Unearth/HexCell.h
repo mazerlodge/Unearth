@@ -13,10 +13,23 @@
     int row;
     int column;
     HexTile *hexTile;
-    bool isWonder;
+
 }
 
 - (id) initWithRow: (int) r Column: (int) c;
+
+- (void) setTile: (HexTile *) tile;
+
+- (bool) isWonder;
+- (bool) isOccupied;
+- (bool) isAtRow: (int) targetRow Column: (int) targetColumn;
+
+- (int) getRowPosition;
+- (int) getColumnPosition;
+
+- (NSString *) toString;
+
+
 
 /*
  Method list from [Object Library.txt]

@@ -168,6 +168,11 @@
 	HexCell *originCell = [map getOriginHexCell];
 	[map addStone:theStone atHexCell:originCell];
 	
+	// get available hex cells
+	NSArray *availCells = [map getAvailableHexCells];
+	for (HexCell *aCell in availCells)
+		[cli put:[aCell toString]];
+	
 	
 	return rval;
 	

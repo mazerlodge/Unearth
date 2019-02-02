@@ -16,4 +16,10 @@
 	
 }
 
+- (HexTileType) getTileType {
+
+	return tileType;
+	
+}
+
 @end

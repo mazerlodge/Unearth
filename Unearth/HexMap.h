@@ -34,6 +34,10 @@ typedef enum HexDirection : NSUInteger {
 - (id) init;
 
 - (HexCell *) getOriginHexCell;
+- (HexCell *) getHexCellAtRow: (int) row Column: (int) column;
+
+- (NSArray *) getAvailableHexCells;
+
 - (bool) addStone: (Stone *) s atHexCell: (HexCell *) c;
 - (bool) addWonder: (Wonder *) w atHexCell: (HexCell *) c;
 
