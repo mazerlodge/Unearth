@@ -21,10 +21,52 @@
     
 }
 
++ (NSString *) StoneColorToString: (StoneColor) color {
+	
+	NSString *rval;
+	
+	switch(color) {
+		case StoneColorRed:
+			rval = @"Red";
+			break;
+			
+		case StoneColorBlue:
+			rval = @"Blue";
+			break;
+			
+		case StoneColorBlack:
+			rval = @"Black";
+			break;
+			
+		case StoneColorYellow:
+			rval = @"Yellow";
+			break;
+			
+		default:
+			rval = @"Unknown";
+			break;
+		
+	}
+	
+	return rval;
+	
+}
+
+
 - (int) getStoneID {
 
     return idNumber;
     
+}
+
+
+- (NSString *) toString {
+	// Supports diagnostic and debug printing
+	NSString *rval = [[NSString alloc] initWithFormat:@"Stone id=%d color=%@",
+					  idNumber, [Stone StoneColorToString:color]];
+	
+	return rval;
+	
 }
 
 @end

@@ -15,7 +15,8 @@
     
     row = r;
     column = c;
-    
+	pos = [[HexCellPosition alloc] initWithRow:r Column:c];
+	
     return self;
     
 }
@@ -29,10 +30,22 @@
 	
 }
 
+- (HexCellPosition *) getPosition {
+	
+	return pos;
+	
+}
+
+
 - (void) setTile: (HexTile *) tile {
 	
 	hexTile = tile;
 	
+}
+
+- (HexTile *) getTile {
+	
+	return hexTile;
 }
 
 - (bool) isWonder {
@@ -40,7 +53,7 @@
 
 	bool bRval = false;
 	
-	if ([hexTile getTileType] == TileTypeWonder)
+	if ([hexTile getTileType] == HexTileTypeWonder)
 		bRval = true;
 	
 	return bRval;
@@ -72,8 +85,17 @@
 
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
-	NSString *rval = [[NSString alloc] initWithFormat:@"HexCell at (%d, %d) occupied (%d)\n",
-					  									row, column, [self isOccupied]];
+	
+	// If occupied, output stone identifying information
+	NSString *occupiedMessage = @"unoccupied";
+	if ([self isOccupied]) {
+		occupiedMessage = [hexTile toString];
+		
+	}
+	NSString *rval = [[NSString alloc] initWithFormat:@"HexCell at (%d, %d) occupied by (%@)",
+					  									column,
+														row,
+														occupiedMessage];
 	
 	return rval;
 	

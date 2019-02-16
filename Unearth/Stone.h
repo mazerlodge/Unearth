@@ -22,9 +22,13 @@ typedef enum StoneColor : NSUInteger {
     
 }
 
++ (NSString *) StoneColorToString: (StoneColor) color;
+
 - (id) initWithColor: (StoneColor) initColor idNumber: (int) initID;
 
 - (int) getStoneID;
+
+- (NSString *) toString;
 
 /*
  Method list from [Object Library.txt]

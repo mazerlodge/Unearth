@@ -11,17 +11,7 @@
 #import "Stone.h"
 #import "Wonder.h"
 #import "CommandLineInterface.h"
-
-typedef enum HexDirection : NSUInteger {
-    HexDirectionN = 0,
-    HexDirectionNE = 1,
-    HexDirectionE = 2,
-    HexDirectionSE = 3,
-    HexDirectionS = 4,
-    HexDirectionSW = 5,
-    HexDirectionW = 6,
-    HexDirectionNW = 7
-} HexDirection;
+#import "HexDirection.h"
 
 @interface HexMap : NSObject {
 
@@ -31,10 +21,14 @@ typedef enum HexDirection : NSUInteger {
     
 }
 
++ (NSString *) HexDirectionToString: (HexDirection) direction;
+
 - (id) init;
 
 - (HexCell *) getOriginHexCell;
 - (HexCell *) getHexCellAtRow: (int) row Column: (int) column;
+- (HexCell *) getHexCellHoldingTileBaseID: (int) baseID;
+- (HexCell *) getHexCellAtPosition: (HexCellPosition *) position;
 
 - (NSArray *) getAvailableHexCells;
 

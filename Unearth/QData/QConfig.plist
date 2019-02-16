@@ -9,7 +9,7 @@
 	<key>LogFile</key>
 	<string>QLog.txt</string>
 	<key>DefaultStartParams</key>
-	<string>-action dotest -test 12 -debug -debuglevel 3</string>
+	<string>-action dotest -test 12 -debug -debuglevel 4</string>
 	<key>DataFile_DelverCards</key>
 	<string>QDelverCards.plist</string>
 	<key>DataFile_EndOfAgeCards</key>

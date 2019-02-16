@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "HexTile.h"
+#import "HexCellPosition.h"
 
 @interface HexCell : NSObject {
-    int row;
+	HexCellPosition *pos;
+	int row;
     int column;
     HexTile *hexTile;
 
@@ -19,6 +21,7 @@
 - (id) initWithRow: (int) r Column: (int) c;
 
 - (void) setTile: (HexTile *) tile;
+- (HexTile *) getTile;
 
 - (bool) isWonder;
 - (bool) isOccupied;
@@ -26,6 +29,7 @@
 
 - (int) getRowPosition;
 - (int) getColumnPosition;
+- (HexCellPosition *) getPosition;
 
 - (NSString *) toString;
 

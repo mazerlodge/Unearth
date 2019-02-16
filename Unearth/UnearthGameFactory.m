@@ -158,7 +158,7 @@
 	// Validate stone bag has stones
 	NSInteger stoneCount = [stoneBag getCount];
 	NSString *msg = [NSString stringWithFormat:@"Got stone bag with %ld stones.", stoneCount];
-	[self debugMsg:msg level:4];
+	[self debugMsg:msg level:3];
 	
 	// pull a stone
 	Stone *theStone = [stoneBag getNextStone];
@@ -168,12 +168,28 @@
 	HexCell *originCell = [map getOriginHexCell];
 	[map addStone:theStone atHexCell:originCell];
 	
-	// get available hex cells
+	// Subtest, as long as we're here, test getting available hex cells.
 	NSArray *availCells = [map getAvailableHexCells];
 	for (HexCell *aCell in availCells)
-		[cli put:[aCell toString]];
+		[self debugMsg:[aCell toString] level:3];
 	
+	NSString *originCellMsg = [[NSString alloc] initWithFormat:@"Origin cell=%@\n", [originCell toString]];
+	[cli put:originCellMsg];
 	
+	HexDirection nextPlacement[] = {HexDirectionNE, HexDirectionE, HexDirectionSE,
+									HexDirectionSW, HexDirectionW};
+	
+	HexCell *relativeCell = originCell;
+	for (int x=0; x<5; x++) {
+		theStone = [stoneBag getNextStone];
+		[map addStone:theStone touchingHexCell:relativeCell onSide:nextPlacement[x]];
+		// Call map get cell where tile was just placed and move relativeCell there before placing next stone.
+		relativeCell = [map getHexCellHoldingTileBaseID:[theStone getStoneID]];
+	}
+	
+	NSString *finalCellMsg = [[NSString alloc] initWithFormat:@"Final cell=%@\n", [relativeCell toString]];
+	[cli put:finalCellMsg];
+
 	return rval;
 	
 }

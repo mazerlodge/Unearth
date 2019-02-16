@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 typedef enum HexTileType : NSUInteger {
-    TileTypeStone = 0,
-    TileTypeWonder = 1
+    HexTileTypeStone = 0,
+    HexTileTypeWonder = 1
 } HexTileType;
 
 @interface HexTile : NSObject {
@@ -19,9 +19,11 @@ typedef enum HexTileType : NSUInteger {
     HexTileType tileType;
     
 }
++ (NSString *) HexTileTypeToString: (HexTileType) aTileType;
 
 - (int) getBaseID;
 - (HexTileType) getTileType;
+- (NSString *) toString;
 
 /*
  Method list from [Object Library.txt]

@@ -2,7 +2,7 @@
 //  StoneBag.h
 //  Unearth
 //
-//  Created by Paul Sorenson on 1/26/19.
+//  Created by Mazerlodge on 1/26/19.
 //  Copyright © 2019 mazerlodge. All rights reserved.
 //
 

@@ -20,6 +20,45 @@
     
 }
 
++ (NSString *) HexDirectionToString: (HexDirection) direction {
+	
+	NSString *rval;
+	
+	switch(direction) {
+		case HexDirectionNE:
+			rval = @"NE";
+			break;
+			
+		case HexDirectionE:
+			rval = @"E";
+			break;
+			
+		case HexDirectionW:
+			rval = @"W";
+			break;
+			
+		case HexDirectionNW:
+			rval = @"NW";
+			break;
+			
+		case HexDirectionSE:
+			rval = @"SE";
+			break;
+			
+		case HexDirectionSW:
+			rval = @"SW";
+			break;
+			
+		default:
+			rval = @"Unknown";
+			break;
+			
+	}
+	
+	return rval;
+	
+}
+
 - (HexCell *) getOriginHexCell {
 	// Return the origin hex cell, it was loaded at index 0 during init.
 	return [hexCells objectAtIndex:0];
@@ -46,6 +85,48 @@
 	
 	return rval;
 	
+}
+
+
+- (HexCell *) getHexCellAtPosition: (HexCellPosition *) position {
+	// Return the cell with the specified position, create it if it doesn't exist.
+	HexCell *rval;
+	
+	int row = [position getRow];
+	int column = [position getColumn];
+	
+	for (HexCell *aCell in hexCells) {
+		if ([aCell isAtRow:row Column:column]) {
+			rval = aCell;
+			break;
+		}
+	}
+	
+	// if the cell wasn't found above, create it and add it to the hexCells array.
+	if (rval == nil) {
+		rval = [[HexCell alloc] initWithRow:row Column:column];
+		hexCells = [hexCells arrayByAddingObject:rval];
+		
+	}
+	
+	return rval;
+	
+}
+
+
+- (HexCell *) getHexCellHoldingTileBaseID: (int) baseID {
+	
+	HexCell *rval;
+	
+	for (HexCell *aCell in hexCells)
+		if ([aCell isOccupied]) {
+			HexTile *aTile = [aCell getTile];
+			if ([aTile getBaseID] == baseID)
+				// if the cell contains the target tile ID, return the cell (not the tile)
+				rval = aCell;
+		}
+	
+	return rval;
 }
 
 - (NSArray *) getAvailableHexCells {
@@ -113,13 +194,14 @@
 - (bool) addStone: (Stone *) stone atHexCell: (HexCell *) cell {
 	bool bRval = false;
 	
-	// TODO: Flesh out Hex Map addStone method.
-	NSString *msg = [NSString stringWithFormat:@"In addStone_atHexCell with Stone %d\n",
-					 							[stone getStoneID]];
+	NSString *msg = [NSString stringWithFormat:@"In addStone_atHexCell with Stone=(%@) at HexCell=(%@)\n",
+					 							[stone toString],
+					 							[cell toString]];
 	[cli put:msg];
 	
 	[cell setTile:stone];
 	
+	// TODO: Move add neighor cells to it's own method and call from every method that places stones.
 	// Add new neighboring cells when adding a stone (only unoccupied b/c occupied would already exist).
 	// Note: A bit obtuse, but getHexCellAtRow creates the cell if it didn't exist
 	NSArray *neighborCells = [self getNeighborCells:cell onlyUnoccupied:true];
@@ -134,9 +216,23 @@
     bool bRval = false;
     
 	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
-	NSString *msg = [NSString stringWithFormat:@"In addStone touchingHexCell with Stone %d\n", [s getStoneID]];
+	NSString *methodName = @"map.addStone_touchingHexCell_onSide()";
+	NSString *msg = [NSString stringWithFormat:@"%@ at cell (%@) with Stone %d and direction=(%@)\n",
+					 methodName,
+					 [c toString],
+					 [s getStoneID],
+					 [HexMap HexDirectionToString:direction]];
 	[cli put:msg];
-    
+	
+	HexCellPosition *basePosition = [c getPosition];
+	HexCellPosition *targetPosition = [HexCellPosition getPosAtDirection:direction
+															fromPosition:basePosition];
+	
+	HexCell *targetCell = [self getHexCellAtPosition:targetPosition];
+	[targetCell setTile:s];
+	
+	// TODO: addStone_touchingHexCell_onSide(), Call add neighors method.
+	
     return bRval;
     
 }
@@ -147,6 +243,9 @@
 	// TODO: Flesh out Hex Map addWonder method.
 	NSString *msg = [NSString stringWithFormat:@"In addWonder atHexCell with Stone %d\n", [w getBaseID]];
 	[cli put:msg];
+	
+	NSLog(@"map.addWonder_atHexCell() WARNING: Not yet implemented.");
+
 
 	return bRval;
 	
@@ -158,6 +257,9 @@
 	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
 	NSString *msg = [NSString stringWithFormat:@"In addWonder with Wonder %d\n", [w getBaseID]];
 	[cli put:msg];
+	
+	NSLog(@"map.addWonder_touchingHexCell_onSide() WARNING: Not yet implemented.");
+
 
     return bRval;
     
