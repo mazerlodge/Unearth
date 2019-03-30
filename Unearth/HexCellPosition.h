@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (int) getRow;
 - (int) getColumn;
 
+- (bool) positionEquals: (HexCellPosition *) cellPosition;
 
 
 @end

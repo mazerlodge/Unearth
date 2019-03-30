@@ -55,9 +55,18 @@
 
 - (void) put: (NSString *) msg {
     
-    printf("%s", [msg UTF8String]);
+	[self put:msg withNewline:false];
     
-    
+}
+
+- (void) put: (NSString *) msg withNewline: (bool) bAddNewLine {
+	
+	if (bAddNewLine)
+		printf("%s\n", [msg UTF8String]);
+	else
+		printf("%s", [msg UTF8String]);
+
+	
 }
 
 

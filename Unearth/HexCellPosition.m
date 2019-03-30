@@ -80,6 +80,17 @@
 	return column;
 	
 }
+- (bool) positionEquals: (HexCellPosition *) cellPosition {
+	// if x and y of this cell's position equal the x and y of the specified position return true.
+	
+	bool bRval = false;
+	
+	if ((row == [cellPosition getRow])
+		&& (column == [cellPosition getColumn]))
+		bRval = true;
+	
+	return bRval;
+}
 
 
 @end

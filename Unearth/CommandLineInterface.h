@@ -15,5 +15,6 @@
 - (float) getFloat: (NSString *) msg;
 
 - (void) put: (NSString *) msg;
+- (void) put: (NSString *) msg withNewline: (bool) bAddNewLine;
 
 @end

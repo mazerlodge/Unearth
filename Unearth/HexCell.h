@@ -12,8 +12,8 @@
 
 @interface HexCell : NSObject {
 	HexCellPosition *pos;
-	int row;
-    int column;
+	int columnX;
+	int rowY;
     HexTile *hexTile;
 
 }

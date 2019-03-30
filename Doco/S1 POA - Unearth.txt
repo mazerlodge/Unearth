@@ -149,6 +149,11 @@ S1 POA - Unearth
 	- Moved drawMap() method from CLI to HexMap, avoid circular reference
 	- Stubbed in drawMap() method with basic stats output 
 
+03/30 
+	- Added put method to CLI with 'addNewline' boolean flag parameter 
+	- Fixed bug in getNeighborCells (had an x/y reversal issue) 
+	- Added dedupe to getAvailableHexCells() results (two occupied cells often share a neighbor).
+	
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
 		X-- Continue UGF.testPlayerMap(), placement of stone in available cells.

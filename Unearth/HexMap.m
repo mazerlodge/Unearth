@@ -138,13 +138,7 @@
 		rval = hexCells;
 	}
 	else {
-		// Evaluate occupied cells, returning neighbors where a stone could be placed.
-		
-		// Ed: implies a method on hexcell of 'getMyNeighbors', but s/b in the map instead.
-		//     complicating factor; if a loop has been made, the middle is available but only for wonders.
-		//	   also,
-		// TODO: Add dedupe getAvailableHexCells() results (two occupied cells often share a neighbor).
-		[cli put:@"HexMap.getAvailableHexCells(): CONSTRUCTION ZONE! Dedupe results not yet implemented.\n"];
+		// Evaluate only occupied cells, returning neighbors where a stone could be placed.
 		for (HexCell *aCell in hexCells) {
 			if ([aCell isOccupied])
 				rval = [rval arrayByAddingObjectsFromArray:[self getNeighborCells:aCell
@@ -158,21 +152,21 @@
 } 
 
 - (NSArray *) getNeighborCells: (HexCell *) hexCell onlyUnoccupied: (bool) bOnlyUnoccupied {
-	// Return an array of the cells next to the specified cell
+	// Return an array of the cells around to the specified cell
 	
 	NSArray *rval = [[NSArray alloc] init];
 	
-	// Based on "x-in, y-down" (row and column, respectively)
-	const int NEIGHBOR_X_OFFSETS[] = {-1, 1, -2, 2, -1, 1};
-	const int NEIGHBOR_Y_OFFSETS[] = {-1, -1, 0, 0, 1, 1};
+	// Based on "x-in, y-down" (columnX and rowY, respectively)
+	const int NEIGHBOR_X_OFFSETS[] = {-1,  1, -2, 2, -1, 1};
+	const int NEIGHBOR_Y_OFFSETS[] = {-1, -1,  0, 0,  1, 1};
 	const int NEIGHBOR_SIZE = 6;
 
-	int originX = [hexCell getRowPosition];
-	int originY = [hexCell getColumnPosition];
+	int originX = [hexCell getColumnPosition];
+	int originY = [hexCell getRowPosition];
 	
 	for (int i=0; i<NEIGHBOR_SIZE; i++) {
-		int nRow = originX + NEIGHBOR_X_OFFSETS[i];
-		int nCol = originY + NEIGHBOR_Y_OFFSETS[i];
+		int nCol = originX + NEIGHBOR_X_OFFSETS[i];
+		int nRow = originY + NEIGHBOR_Y_OFFSETS[i];
 		
 		HexCell *nCell = [self getHexCellAtRow:nRow Column:nCol];
 		if (bOnlyUnoccupied) {
@@ -190,14 +184,33 @@
 	
 }
 
+- (bool) isCellInMap: (HexCell *) cell {
+
+	bool bRval = false;
+	
+	for (HexCell *aCell in hexCells) {
+		if ([[aCell getPosition] positionEquals: [cell getPosition]]) {
+			bRval = true;
+			break;
+		}
+	}
+	
+	return bRval;
+	
+}
+
 - (bool) addNeighborsToCell: (HexCell *) cell {
 	
 	bool bRval = true;
 	
-	// Note: A bit obtuse, but getHexCellAtRow_Column creates the cell if it didn't exist
 	NSArray *neighborCells = [self getNeighborCells:cell onlyUnoccupied:true];
-	for (HexCell *nCell in neighborCells)
-		[self getHexCellAtRow:[nCell getRowPosition] Column:[nCell getColumnPosition]];
+	
+	for (HexCell *nCell in neighborCells) {
+		// Note: A bit obtuse, but getHexCellAtRow_Column creates the cell if it didn't exist
+		// Only create the cell if it isn't already in the map.
+		if (![self isCellInMap:nCell])
+			[self getHexCellAtRow:[nCell getRowPosition] Column:[nCell getColumnPosition]];
+	}
 	
 	return bRval;
 	
@@ -277,11 +290,8 @@
     
 }
 
-
-- (void) drawMap {
-	
-	// TODO: Implement drawMap by composing text lines to send to CLI.
-
+- (NSString *) generateStatsMessage {
+	// Quick stats message generation
 
 	int occupiedCells = 0;
 	int emptyCells = 0;
@@ -291,15 +301,28 @@
 			occupiedCells++;
 		else
 			emptyCells++;
-
+		
 	}
-
-	// Quick stats output
+	
 	NSString *msg = [NSString stringWithFormat:@"In drawMap with %ld cells in the map (%d used, %d empty).\n",
-					 							[hexCells count],
-					 							occupiedCells,
-					 							emptyCells];
-	[cli put:msg];
+					 [hexCells count],
+					 occupiedCells,
+					 emptyCells];
+	
+	return msg;
+	
+}
+
+- (void) drawMap {
+	
+	// TODO: Implement drawMap by composing text lines to send to CLI.
+
+	[cli put:[self generateStatsMessage]];
+	
+	// Expected 19 cells, got 21, check for dupes
+	for (HexCell *aCell in hexCells)
+		[cli put:[aCell toString] withNewline:true];
+	
 
 }
 
