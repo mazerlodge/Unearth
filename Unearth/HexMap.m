@@ -144,8 +144,7 @@
 		//     complicating factor; if a loop has been made, the middle is available but only for wonders.
 		//	   also,
 		// TODO: Add dedupe getAvailableHexCells() results (two occupied cells often share a neighbor).
-		NSLog(@"HexMap.getAvailableHexCells(): CONSTRUCTION ZONE! Dedupe results not yet implemented.");
-		
+		[cli put:@"HexMap.getAvailableHexCells(): CONSTRUCTION ZONE! Dedupe results not yet implemented.\n"];
 		for (HexCell *aCell in hexCells) {
 			if ([aCell isOccupied])
 				rval = [rval arrayByAddingObjectsFromArray:[self getNeighborCells:aCell
@@ -191,22 +190,31 @@
 	
 }
 
+- (bool) addNeighborsToCell: (HexCell *) cell {
+	
+	bool bRval = true;
+	
+	// Note: A bit obtuse, but getHexCellAtRow_Column creates the cell if it didn't exist
+	NSArray *neighborCells = [self getNeighborCells:cell onlyUnoccupied:true];
+	for (HexCell *nCell in neighborCells)
+		[self getHexCellAtRow:[nCell getRowPosition] Column:[nCell getColumnPosition]];
+	
+	return bRval;
+	
+}
+
 - (bool) addStone: (Stone *) stone atHexCell: (HexCell *) cell {
 	bool bRval = false;
 	
-	NSString *msg = [NSString stringWithFormat:@"In addStone_atHexCell with Stone=(%@) at HexCell=(%@)\n",
+	NSString *msg = [NSString stringWithFormat:@"In map.addStone_atHexCell with Stone=(%@) at HexCell=(%@)\n",
 					 							[stone toString],
 					 							[cell toString]];
 	[cli put:msg];
 	
 	[cell setTile:stone];
 	
-	// TODO: Move add neighor cells to it's own method and call from every method that places stones.
 	// Add new neighboring cells when adding a stone (only unoccupied b/c occupied would already exist).
-	// Note: A bit obtuse, but getHexCellAtRow creates the cell if it didn't exist
-	NSArray *neighborCells = [self getNeighborCells:cell onlyUnoccupied:true];
-	for (HexCell *nCell in neighborCells)
-		[self getHexCellAtRow:[nCell getRowPosition] Column:[nCell getColumnPosition]];
+	[self addNeighborsToCell:cell];
 	
 	return bRval;
 	
@@ -216,7 +224,7 @@
     bool bRval = false;
     
 	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
-	NSString *methodName = @"map.addStone_touchingHexCell_onSide()";
+	NSString *methodName = @"map.addStone_touchingHexCell_onSide";
 	NSString *msg = [NSString stringWithFormat:@"%@ at cell (%@) with Stone %d and direction=(%@)\n",
 					 methodName,
 					 [c toString],
@@ -231,7 +239,8 @@
 	HexCell *targetCell = [self getHexCellAtPosition:targetPosition];
 	[targetCell setTile:s];
 	
-	// TODO: addStone_touchingHexCell_onSide(), Call add neighors method.
+	// Expand map by adding neighbors to the new cell
+	[self addNeighborsToCell:targetCell];
 	
     return bRval;
     
@@ -246,6 +255,7 @@
 	
 	NSLog(@"map.addWonder_atHexCell() WARNING: Not yet implemented.");
 
+	// Note: don't need to call addNeighborsToCell, wonders can only be added when already surrounded by occupied neighbors
 
 	return bRval;
 	
@@ -260,6 +270,7 @@
 	
 	NSLog(@"map.addWonder_touchingHexCell_onSide() WARNING: Not yet implemented.");
 
+	// Note: don't need to call addNeighborsToCell, wonders can only be added when already surrounded by occupied neighbors
 
     return bRval;
     

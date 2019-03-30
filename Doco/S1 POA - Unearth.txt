@@ -140,6 +140,10 @@ S1 POA - Unearth
 	- Added multiple toString() methods
 	- Added multiple Enum to String methods.
 	- Completed UGF.testPlayerMap()
+	
+03/29 
+	- Created addNeighborsToCell method (moved code block from addStone_atHexCell)
+	- Tested branch creation within XCode 	
 
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
@@ -152,7 +156,6 @@ S1 POA - Unearth
 
 > Next: (Note: UC=Use Case)
 	Unearth/HexMap.m:		// TODO: Add dedupe getAvailableHexCells() results (two occupied cells often share a neighbor).
-	Unearth/HexMap.m:	// TODO: Move add neighor cells to it's own method and call from every method that places stones.
 	Unearth/HexMap.m:	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
 	Unearth/HexMap.m:	// TODO: addStone_touchingHexCell_onSide(), Call add neighors method.
 	Unearth/HexMap.m:	// TODO: Flesh out Hex Map addWonder method.
