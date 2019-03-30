@@ -144,36 +144,39 @@ S1 POA - Unearth
 03/29 
 	- Created addNeighborsToCell method (moved code block from addStone_atHexCell)
 	- Tested branch creation within XCode 	
+	- Updated TODO list and cleaned up comments 
+	- Set priority, next up is drawMap() method of CLI class 
+	- Moved drawMap() method from CLI to HexMap, avoid circular reference
+	- Stubbed in drawMap() method with basic stats output 
 
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
 		X-- Continue UGF.testPlayerMap(), placement of stone in available cells.
-        -- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
-        -- Unearth Player Hex Map, flesh out Hex Map addStone method 1223
-        -- Unearth Player Hex Map, flesh out Hex Map addWonder method 1223
-        -- Implement drawMap() method of CLI class, see TODO marker. 0902
+		X-- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
+		X-- Hex Map, flesh out Hex Map addStone method 1223
+		.-- Implement drawMap() method of HexMap class, see TODO marker. 0902
+		.-- Hex Map, flesh out Hex Map addWonder method 1223
 
 
 > Next: (Note: UC=Use Case)
-	Unearth/HexMap.m:		// TODO: Add dedupe getAvailableHexCells() results (two occupied cells often share a neighbor).
-	Unearth/HexMap.m:	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
-	Unearth/HexMap.m:	// TODO: addStone_touchingHexCell_onSide(), Call add neighors method.
-	Unearth/HexMap.m:	// TODO: Flesh out Hex Map addWonder method.
-	Unearth/HexMap.m:	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
+	CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.
 
-	Unearth/ArgParser.m: // TODO: Add check for arg (and assoc val) already in array
-	Unearth/ArgParser.m: // TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive: true/false param.
+	HexMap.m:    // TODO: Implement drawMap.
+	HexMap.m:		// TODO: Add dedupe getAvailableHexCells() results (two occupied cells often share a neighbor).
+	HexMap.m:	// TODO: Flesh out Hex Map addWonder method.
+	HexMap.m:	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
 
-	Unearth/CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.
-	Unearth/CommandLineInterface.m:    // TODO: Implement drawMap.
+	UnearthGameFactory.m:	/* TODO: Moved default start detection to ugf.validateArguments(), remove this block when fully validated.
+	UnearthGameFactory.m:        // TODO: Expand gameDataDict dictionary used to pass info into game engine.
+	UnearthGameEngine.m:    // TODO: Add more dictionary parsing
+	UnearthGameEngine.m:    // TODO: Add some validation of the above, for now assume it worked
 
-	Unearth/UnearthGameFactory.m: /* TODO: Moved default start detection to ugf.validateArguments(), remove this block when fully validated.
-	Unearth/UnearthGameFactory.m: // TODO: Expand gameDataDict dictionary used to pass info into game engine.
+	Wonder.m:	baseID = 42; // TODO: Replace this w/ parsed value from wonderData 
 
-	Unearth/UnearthGameEngine.m:    // TODO: Add more dictionary parsing
-	Unearth/UnearthGameEngine.m:    // TODO: Add some validation of the above, for now assume it worked
+	ArgParser.m:        // TODO: Add check for arg (and assoc val) already in array
+	ArgParser.m:    // TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive: true/false param.
 
-	Unearth/Wonder.m:	baseID = 42; // TODO: Replace this w/ parsed value from wonderData
+
 
 	- Refactor away references to HexCell row and column, use position object instead. 0216
 

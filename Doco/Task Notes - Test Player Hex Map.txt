@@ -14,7 +14,7 @@ POA Concept - The player hex map isn't pre-built.  First title is put at positio
             
 Use Case / User Scenario / Walk through 
 	Launch app with Test 12 selected. 
-	Place a red stone at the default start location (50,50) 
+	Place a random stone at the default start location (50,50) 
 	Place the following subsequent stones at the relative locations specified:
 		stone 	relpos of previous tile
 		(R)		starting stone at 50,50 

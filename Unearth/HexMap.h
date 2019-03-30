@@ -38,6 +38,8 @@
 - (bool) addStone: (Stone *) s touchingHexCell: (HexCell *) c onSide: (HexDirection) direction;
 - (bool) addWonder: (Wonder *) w touchingHexCell: (HexCell *) c onSide: (HexDirection) direction;
 
+- (void) drawMap;
+
 /*
  Method list from [Object Library.txt]
  > HexMap

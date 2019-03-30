@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UnearthPlayer.h"
 
 @interface CommandLineInterface : NSObject
 
@@ -16,6 +15,5 @@
 - (float) getFloat: (NSString *) msg;
 
 - (void) put: (NSString *) msg;
-- (void) drawMap: (UnearthPlayer *) player;
 
 @end

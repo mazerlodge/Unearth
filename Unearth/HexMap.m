@@ -221,9 +221,10 @@
 }
 
 - (bool) addStone: (Stone *) s touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
-    bool bRval = false;
+	// Add the specified stone in the cell touching the specified cell on the side specified.
+	
+	bool bRval = false;
     
-	// TODO: Flesh out Hex Map addStone w/ 'touching' param method.
 	NSString *methodName = @"map.addStone_touchingHexCell_onSide";
 	NSString *msg = [NSString stringWithFormat:@"%@ at cell (%@) with Stone %d and direction=(%@)\n",
 					 methodName,
@@ -249,10 +250,10 @@
 - (bool) addWonder: (Wonder *) w atHexCell: (HexCell *) c {
 	bool bRval = false;
 	
-	// TODO: Flesh out Hex Map addWonder method.
 	NSString *msg = [NSString stringWithFormat:@"In addWonder atHexCell with Stone %d\n", [w getBaseID]];
 	[cli put:msg];
 	
+	// TODO: Flesh out Hex Map addWonder method.
 	NSLog(@"map.addWonder_atHexCell() WARNING: Not yet implemented.");
 
 	// Note: don't need to call addNeighborsToCell, wonders can only be added when already surrounded by occupied neighbors
@@ -264,16 +265,42 @@
 - (bool) addWonder: (Wonder *) w touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
     bool bRval = false;
 
-	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
 	NSString *msg = [NSString stringWithFormat:@"In addWonder with Wonder %d\n", [w getBaseID]];
 	[cli put:msg];
 	
+	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
 	NSLog(@"map.addWonder_touchingHexCell_onSide() WARNING: Not yet implemented.");
 
 	// Note: don't need to call addNeighborsToCell, wonders can only be added when already surrounded by occupied neighbors
 
     return bRval;
     
+}
+
+
+- (void) drawMap {
+	
+	// TODO: Implement drawMap by composing text lines to send to CLI.
+
+
+	int occupiedCells = 0;
+	int emptyCells = 0;
+	
+	for (HexCell *aCell in hexCells) {
+		if ([aCell isOccupied])
+			occupiedCells++;
+		else
+			emptyCells++;
+
+	}
+
+	// Quick stats output
+	NSString *msg = [NSString stringWithFormat:@"In drawMap with %ld cells in the map (%d used, %d empty).\n",
+					 							[hexCells count],
+					 							occupiedCells,
+					 							emptyCells];
+	[cli put:msg];
+
 }
 
 @end

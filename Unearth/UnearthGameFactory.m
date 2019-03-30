@@ -189,6 +189,8 @@
 	
 	NSString *finalCellMsg = [[NSString alloc] initWithFormat:@"Final cell=%@\n", [relativeCell toString]];
 	[cli put:finalCellMsg];
+	
+	[map drawMap];
 
 	return rval;
 	

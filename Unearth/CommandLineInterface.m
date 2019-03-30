@@ -60,10 +60,5 @@
     
 }
 
-- (void) drawMap: (UnearthPlayer *) player {
-    
-    // TODO: Implement drawMap.
-}
-
 
 @end
