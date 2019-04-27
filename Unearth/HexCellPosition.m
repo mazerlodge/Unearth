@@ -92,5 +92,14 @@
 	return bRval;
 }
 
+- (NSString *) toString {
+	
+	NSString *rval = [[NSString alloc] initWithFormat:@"(%d, %d)",
+					  column,
+					  row];
+	
+	return rval;
+
+}
 
 @end

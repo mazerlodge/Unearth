@@ -20,6 +20,17 @@
     
 }
 
+
+- (id) initWithCLI: (CommandLineInterface *) commandLineInterface {
+	
+	cli = commandLineInterface;
+	HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
+	hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
+	
+	return self;
+	
+}
+
 + (NSString *) HexDirectionToString: (HexDirection) direction {
 	
 	NSString *rval;
@@ -199,6 +210,22 @@
 	
 }
 
+- (bool) isPositionValid: (HexCellPosition *) position {
+	// Cell columns are odd in odd rows, even in even rows.
+	// Return false if this rule isn't followed for the specified position.
+	bool bRval = false;
+
+	int xCol = [position getColumn];
+	int yRow = [position getRow];
+	
+	if (xCol % 2 == yRow % 2)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
+
 - (bool) addNeighborsToCell: (HexCell *) cell {
 	
 	bool bRval = true;
@@ -222,7 +249,7 @@
 	NSString *msg = [NSString stringWithFormat:@"In map.addStone_atHexCell with Stone=(%@) at HexCell=(%@)\n",
 					 							[stone toString],
 					 							[cell toString]];
-	[cli put:msg];
+	[cli debugMsg:msg level:4];
 	
 	[cell setTile:stone];
 	
@@ -244,8 +271,8 @@
 					 [c toString],
 					 [s getStoneID],
 					 [HexMap HexDirectionToString:direction]];
-	[cli put:msg];
-	
+	[cli debugMsg:msg level:4];
+
 	HexCellPosition *basePosition = [c getPosition];
 	HexCellPosition *targetPosition = [HexCellPosition getPosAtDirection:direction
 															fromPosition:basePosition];
@@ -290,11 +317,14 @@
     
 }
 
-- (NSString *) generateStatsMessage {
-	// Quick stats message generation
-
-	int occupiedCells = 0;
-	int emptyCells = 0;
+- (void) updateStats {
+	
+	occupiedCells = 0;
+	emptyCells = 0;
+	minRow = 999;
+	maxRow = -1;
+	minCol = 999;
+	maxCol = -1;
 	
 	for (HexCell *aCell in hexCells) {
 		if ([aCell isOccupied])
@@ -302,13 +332,29 @@
 		else
 			emptyCells++;
 		
+		minRow = ([aCell getRowPosition] < minRow) ? [aCell getRowPosition] : minRow;
+		maxRow = ([aCell getRowPosition] > maxRow) ? [aCell getRowPosition] : maxRow;
+		minCol = ([aCell getColumnPosition] < minCol) ? [aCell getColumnPosition] : minCol;
+		maxCol = ([aCell getColumnPosition] > maxCol) ? [aCell getColumnPosition] : maxCol;
+		
 	}
+}
+
+- (NSString *) generateStatsMessage {
+	// Quick stats message generation
+	[self updateStats];
 	
 	NSString *msg = [NSString stringWithFormat:@"In drawMap with %ld cells in the map (%d used, %d empty).\n",
 					 [hexCells count],
 					 occupiedCells,
 					 emptyCells];
-	
+
+	msg = [msg stringByAppendingFormat:@"min/max used columnsX & rowsY are Xm=%d, Xmax=%d, Ym=%d, Ymax=%d.\n",
+					 minCol,
+					 maxCol,
+					 minRow,
+					 maxRow];
+
 	return msg;
 	
 }
@@ -316,14 +362,64 @@
 - (void) drawMap {
 	
 	// TODO: Implement drawMap by composing text lines to send to CLI.
-	[cli put:@"In HexMap.drawMap()\n"];
+	[cli debugMsg:@"QIn HexMap.drawMap()" level:5];
 	[cli put:[self generateStatsMessage]];
-	
-	// Expected 19 cells, got 21, check for dupes
+
+	// Display cells as text
 	for (HexCell *aCell in hexCells)
-		[cli put:[aCell toString] withNewline:true];
+		[cli debugMsg:[aCell toString] level:4];
 	
+	// output the cell's positions in order by position.
+	for (int y=minRow; y<=maxRow; y++) {
+		NSString *currentRow = @"";
+		for (int x=minCol; x<=maxCol; x++) {
+			
+			// Only proceed if the position is valid
+			HexCellPosition *cellPos = [[HexCellPosition alloc] initWithRow:y Column:x];
+			if ([self isPositionValid:cellPos]) {
+				// just because a position is b/n min & max doesn't mean it exists in array
+				// but getting it will add it.
+				HexCell *currentCell = [self getHexCellAtRow:y Column:x];
+				
+				// add this cell to the current row
+				currentRow = [currentRow stringByAppendingFormat:@" %@ ",
+							  [[currentCell getPosition] toString]];
+			
+			} // if cellPos valid
+			
+		} // x
+		
+		[cli put:currentRow withNewline:true];
+	} // y
+
+	[self drawACell:hexCells[0]];
 
 }
+
+- (void) drawACell: (HexCell *) cell {
+	
+	/*
+	 The borders of the cell to draw are dependent on the following rules:
+	 Always print NW, NE, and W
+	 Last row prints SW, SE
+	 First column prints SW
+	 Last Column but not Last Row prints SE
+	 
+	*/
+	
+	
+	NSString *r1 = @"  / \\  ";
+	NSString *r2 = @" /   \\ ";
+	NSString *r3 = [[NSString alloc] initWithFormat:@"| %d  |", [cell getColumnPosition]];
+	NSString *r4 = [[NSString alloc] initWithFormat:@"| %d  |", [cell getRowPosition]];
+	NSString *r5 = @" \\   / ";
+	NSString *r6 = @"  \\ /  ";
+	
+	NSArray *rArray = [[NSArray alloc] initWithObjects:r1, r2, r3, r4, r5, r6, nil];
+	for (NSString *r in rArray)
+		[cli put:r withNewline:true];
+	
+}
+
 
 @end

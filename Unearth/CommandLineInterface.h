@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CommandLineInterface : NSObject
+@interface CommandLineInterface : NSObject {
+	bool bInDebug;
+	int minDebugMsgLevel;
+
+}
+
+- (id) initWithDebugOn: (bool) bDebugOn minDebugMsgLevel: (int) debugLevel;
 
 - (NSString *) getStr: (NSString *) msg;
 - (int) getInt: (NSString *) msg;
@@ -16,5 +22,8 @@
 
 - (void) put: (NSString *) msg;
 - (void) put: (NSString *) msg withNewline: (bool) bAddNewLine;
+
+- (void) debugMsg: (NSString *) msg;
+- (void) debugMsg: (NSString *) msg level: (int) msgLevel;
 
 @end

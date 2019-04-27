@@ -15,8 +15,14 @@
 
 @interface HexMap : NSObject {
 
-	CommandLineInterface *cli;
+	int occupiedCells;
+	int emptyCells;
+	int minRow;
+	int maxRow;
+	int minCol;
+	int maxCol;
 
+	CommandLineInterface *cli;
 	NSArray *hexCells;
     
 }
@@ -24,6 +30,7 @@
 + (NSString *) HexDirectionToString: (HexDirection) direction;
 
 - (id) init;
+- (id) initWithCLI: (CommandLineInterface *) commandLineInterface;
 
 - (HexCell *) getOriginHexCell;
 - (HexCell *) getHexCellAtRow: (int) row Column: (int) column;
@@ -31,6 +38,8 @@
 - (HexCell *) getHexCellAtPosition: (HexCellPosition *) position;
 
 - (NSArray *) getAvailableHexCells;
+
+- (bool) isPositionValid: (HexCellPosition *) position;
 
 - (bool) addStone: (Stone *) s atHexCell: (HexCell *) c;
 - (bool) addWonder: (Wonder *) w atHexCell: (HexCell *) c;

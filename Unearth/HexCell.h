@@ -12,13 +12,12 @@
 
 @interface HexCell : NSObject {
 	HexCellPosition *pos;
-	int columnX;
-	int rowY;
     HexTile *hexTile;
 
 }
 
 - (id) initWithRow: (int) r Column: (int) c;
+- (id) initWithPosition: (HexCellPosition *) position;
 
 - (void) setTile: (HexTile *) tile;
 - (HexTile *) getTile;

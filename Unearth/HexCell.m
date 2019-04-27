@@ -10,11 +10,15 @@
 
 @implementation HexCell
 
+- (id) initWithPosition: (HexCellPosition *) position {
+	
+	pos = position;
+	
+	return self;
+}
 
 - (id) initWithRow: (int) r Column: (int) c {
-    
-    rowY = r;
-    columnX = c;
+	
 	pos = [[HexCellPosition alloc] initWithRow:r Column:c];
 	
     return self;
@@ -22,11 +26,11 @@
 }
 
 - (int) getRowPosition {
-	return rowY;
+	return [pos getRow];
 	
 }
 - (int) getColumnPosition {
-	return columnX;
+	return [pos getColumn];
 	
 }
 
@@ -75,8 +79,8 @@
 	// Return true if this cell is at the specified position.
 	bool bRval = false;
 	
-	if ((rowY == targetRow)
-		&& (columnX == targetColumn))
+	if (([pos getRow] == targetRow)
+		&& ([pos getColumn] == targetColumn))
 		bRval = true;
 	
 	return bRval;
@@ -92,9 +96,8 @@
 		occupiedMessage = [hexTile toString];
 		
 	}
-	NSString *rval = [[NSString alloc] initWithFormat:@"HexCell at (%d, %d) occupied by (%@)",
-					  									columnX,
-														rowY,
+	NSString *rval = [[NSString alloc] initWithFormat:@"HexCell at %@ occupied by (%@)",
+					  									[pos toString],
 														occupiedMessage];
 	
 	return rval;

@@ -10,6 +10,23 @@
 
 @implementation CommandLineInterface
 
+- (id) init {
+	bInDebug = false;
+	minDebugMsgLevel = -1;
+	
+	return self;
+	
+}
+
+- (id) initWithDebugOn: (bool) bDebugOn minDebugMsgLevel: (int) debugLevel {
+	
+	bInDebug = bDebugOn;
+	minDebugMsgLevel = debugLevel;
+	
+	return self;
+	
+}
+
 - (NSString * ) getStr: (NSString *) msg {
     NSString *rval = @"NOT_SET";
     
@@ -69,5 +86,21 @@
 	
 }
 
+- (void) debugMsg: (NSString *) msg {
+	// If debug mode is turned on output the specified message via the command line interface.
+	
+	[self debugMsg:msg level:0];
+	
+}
 
+- (void) debugMsg: (NSString *) msg level: (int) msgLevel {
+	// If debug mode is turned on output the specified message via the command line interface.
+	
+	// Add the message level to the message
+	msg = [msg stringByAppendingFormat:@"(Severity: %d)\n", msgLevel];
+	
+	if (bInDebug && (msgLevel >= minDebugMsgLevel))
+		[self put:msg];
+	
+}
 @end
