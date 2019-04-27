@@ -158,10 +158,10 @@ S1 POA - Unearth
 	- Typo fix in CommandLineInterface.m comment text.
     - Removed commented out code block in UGF.makeGameWithArgs(), code moved to validateArguments().
     - Updated Doco/Startup Flow.txt to reflect current codebase. 
-    - Update HexCell.getRowPosition() & .getColumnPosition() to pull from pos member var.
-    - Add constructors and toString handler to focus on use of position instead of rowY and columnX 
-    - Add minRow and minCol detection to HexMap.generateStatsMessage() 
-    - Add public debug message methods to CLI and move method out of UGF.
+    - Updated HexCell.getRowPosition() & .getColumnPosition() to pull from pos member var.
+    - Addded constructors and toString handler to focus on use of position instead of rowY and columnX 
+    - Added minRow and minCol detection to HexMap.generateStatsMessage() 
+    - Added public debug message methods to CLI and move method out of UGF.
     - Updated CLI's debug settings after reading default startup parameters.
     - Added cell printing as text in grid order 
     - Added a static cell output with borders 
