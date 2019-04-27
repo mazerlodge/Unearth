@@ -153,13 +153,18 @@ S1 POA - Unearth
 	- Added put method to CLI with 'addNewline' boolean flag parameter 
 	- Fixed bug in getNeighborCells (had an x/y reversal issue) 
 	- Added dedupe to getAvailableHexCells() results (two occupied cells often share a neighbor).
-	
+
+04/27
+	- Typo fix in CommandLineInterface.m comment text.
+    - Removed commented out code block in UGF.makeGameWithArgs(), code moved to validateArguments().
+    - Updated Doco/Startup Flow.txt to reflect current codebase. 
+
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
 		X-- Continue UGF.testPlayerMap(), placement of stone in available cells.
 		X-- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
 		X-- Hex Map, flesh out Hex Map addStone method 1223
-		.-- Implement drawMap() method of HexMap class, see TODO marker. 0902
+		/-- Implement drawMap() method of HexMap class, see TODO marker. 0902
 		.-- Hex Map, flesh out Hex Map addWonder method 1223
 
 

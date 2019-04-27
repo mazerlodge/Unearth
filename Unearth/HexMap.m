@@ -316,7 +316,7 @@
 - (void) drawMap {
 	
 	// TODO: Implement drawMap by composing text lines to send to CLI.
-
+	[cli put:@"In HexMap.drawMap()\n"];
 	[cli put:[self generateStatsMessage]];
 	
 	// Expected 19 cells, got 21, check for dupes

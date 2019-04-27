@@ -7,21 +7,33 @@ S1 StartUp Flow
     < returns an argParser instance.
 
     > UGF.initWithArgParser: argParser
-        // Sets argParser member, inits a CLI, loadsQConfigDictionary
-        // CLI is a generic init
+        // Detects bDebug and sets debug level
+        // Sets argParser, randomEngine, and CLI members
+        // self call to loadQConfigDictionary
         // loadQConfigDictionary() reads QData/QConfig.plist into a member dictionary
     < returns a UGF instance.
 
     > ugf.validateArguments()
         // checks for action, debug, and if action=dotest, a test number
+        // also sets debug indicator and debug level in UGF member variables
     < t/f bValid indicator.
-
     // if args not valid, UGF.showUsage() and exit.
 
     > ugf.makeGameWithArgs: argParser
         // if action is DefaultStart, replace argParser contents, preserving paramZero
+        // self call to populateFactoryMembers(), builds decks and stoneBag 
+        // if action is "dotest", self call to doTest() specifying test number. 
+        // if action is "playgame", 
+            // populate players via self call to populatePlayerArray(), using cli input from user.
+            // set random endOfAge card for this game 
+            // build gameDataDictionary holding players, endOfAge card, and stoneBag 
+            // calls UGE.populateGameFromDictionary() passing above gameDataDictionary  
 
+    // Note: at this point if action was "dotest", UGE is just init'd, no content.
     < returns unearth game engine instance.
 
-    > uge.go()
+    // if UGF.startupAction() method = 'playgame' 
+        > uge.go()
 
+    return 0;
+    

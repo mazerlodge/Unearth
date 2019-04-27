@@ -16,7 +16,7 @@
     // TODO: How to scan for strings, fails with large strings.
     // This is OK: upercalafragileistice
     // This isn't: upercalafragileisticex
-    // Before makin ginputVal to an array, this caused 'illegal instruction': upercalafragileisticexpealli
+    // Before making inputVal to an array, this caused 'illegal instruction': upercalafragileisticexpealli
     //    NSString *inMessage = [NSString stringWithCString:&inputVal encoding:NSUTF8StringEncoding];
 
     char inputVal[255] = {0};// = "NOT_SET";

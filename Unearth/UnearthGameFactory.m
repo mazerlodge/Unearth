@@ -723,20 +723,6 @@
     
     // Reference Usage: unearth -action {dotest | defaultstart | playgame }.
     
-    // If default start was specified, get startup prams from QConfig.
-	/* TODO: Moved default start detection to ugf.validateArguments(), remove this block when fully validated.
-    if ([argParser doesArg:@"-action" haveValue:@"defaultstart"]) {
-        [cli put:@"Detected startup with defaultStart parameters requested.\n"];
-        NSString *params = [self getValueFromQConfigForKey:@"DefaultStartParams"];
-        NSString *msg = [[NSString alloc] initWithFormat:@"Startup params set to [%@]\n", params];
-        [cli put:msg];
-        
-        // Need to preserve any ags already present (e.g. arg 0, executable path.
-        [ap populateArgParserFromString:params preserveZeroParam:true];
-        
-    }
-	*/
-    
     // If factory members haven't been populated, do so now.
     bFactoryMembersPopulated = [self populateFactoryMembers];
     if (!bFactoryMembersPopulated) {
