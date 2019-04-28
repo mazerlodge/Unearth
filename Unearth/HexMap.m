@@ -225,6 +225,85 @@
 	
 }
 
+- (bool) isRelativeRowEven: (HexCellPosition *) position {
+	// if the specified cell position's row is even relative to the min row in the map, return true
+	bool bRval = false;
+	
+	// Update stats to make sure min and max are current.
+	[self updateStats];
+	
+	int relativeRow = minRow - 1 - [position getRow];
+	if (relativeRow % 2 == 0)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
+- (bool) isInLastRow: (HexCellPosition *) position {
+	// if the specified cell position's row is in the last row relative to the max row in the map, return true
+	bool bRval = false;
+	
+	// Update stats to make sure min and max are current.
+	[self updateStats];
+	
+	if ([position getRow] == maxRow)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
+- (bool) isInFirstColumn: (HexCellPosition *) position {
+	// if the specified cell position's column is in the first column relative to the min col in the map, return true
+	bool bRval = false;
+	
+	// Update stats to make sure min and max are current.
+	[self updateStats];
+	
+	if ([position getColumn] == minCol)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
+- (bool) isInLastColumn: (HexCellPosition *) position {
+	// if the specified cell position's column is in the last column relative to the max col in the map, return true
+	bool bRval = false;
+	
+	// Update stats to make sure min and max are current.
+	[self updateStats];
+	
+	if ([position getColumn] == maxCol)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
+- (bool) isInLastCellInRow: (HexCellPosition *) position {
+	// if the specified cell position's column is in the last column in its row, return true
+	bool bRval = false;
+
+	int currentCellColumn = [position getColumn];
+	int currentCellRow = [position getRow];
+	int maxColumnInRow = -1;
+	
+	// check each cell to see if it is in this row and is get maxColumn for this row.
+	for (HexCell *aCell in hexCells) {
+		if (([aCell getRowPosition] == currentCellRow)
+			&& ([aCell getColumnPosition] > maxColumnInRow))
+			maxColumnInRow = [aCell getColumnPosition];
+		
+	}
+	
+	if (currentCellColumn == maxColumnInRow)
+		bRval = true;
+	
+	return bRval;
+	
+}
 
 - (bool) addNeighborsToCell: (HexCell *) cell {
 	
@@ -362,16 +441,35 @@
 - (void) drawMap {
 	
 	// TODO: Implement drawMap by composing text lines to send to CLI.
-	[cli debugMsg:@"QIn HexMap.drawMap()" level:5];
+	[cli debugMsg:@"In HexMap.drawMap()" level:5];
 	[cli put:[self generateStatsMessage]];
 
 	// Display cells as text
 	for (HexCell *aCell in hexCells)
 		[cli debugMsg:[aCell toString] level:4];
 	
+	// before rendering cells, touch every cell, min to max, to make sure they are in the array
+	for (int y=minRow; y<=maxRow; y++) {
+		for (int x=minCol; x<=maxCol; x++) {
+			HexCellPosition *cellPos = [[HexCellPosition alloc] initWithRow:y Column:x];
+			if ([self isPositionValid:cellPos]) {
+				// don't need to keep it, just asking for it will generate it if it didn't exist.
+				[self getHexCellAtRow:y Column:x];
+			}
+		}
+	}
+	
 	// output the cell's positions in order by position.
+	[self updateStats];
 	for (int y=minRow; y<=maxRow; y++) {
 		NSString *currentRow = @"";
+		r1 = @"";
+		r2 = @"";
+		r3 = @"";
+		r4 = @"";
+		r5 = @"";
+		r6 = @"";
+
 		for (int x=minCol; x<=maxCol; x++) {
 			
 			// Only proceed if the position is valid
@@ -380,6 +478,7 @@
 				// just because a position is b/n min & max doesn't mean it exists in array
 				// but getting it will add it.
 				HexCell *currentCell = [self getHexCellAtRow:y Column:x];
+				[self drawACell:currentCell];
 				
 				// add this cell to the current row
 				currentRow = [currentRow stringByAppendingFormat:@" %@ ",
@@ -389,11 +488,17 @@
 			
 		} // x
 		
-		[cli put:currentRow withNewline:true];
+		NSArray *rArray = [[NSArray alloc] initWithObjects:r1, r2, r3, r4, r5, r6, nil];
+		for (NSString *r in rArray)
+			[cli put:r withNewline:true];
+
+		// Diag output, remove when above tests out ok.
+		//[cli put:currentRow withNewline:true];
+		
 	} // y
 
 	[self drawACell:hexCells[0]];
-
+	
 }
 
 - (void) drawACell: (HexCell *) cell {
@@ -401,24 +506,129 @@
 	/*
 	 The borders of the cell to draw are dependent on the following rules:
 	 Always print NW, NE, and W
+	 	If the relative row is even and working first relative column, add space before printing NW, NE, and W
 	 Last row prints SW, SE
 	 First column prints SW
+	 Last Column prints E
+	 Last Column but not Last Row prints SE
+
+	 */
+	
+	bool bInEvenRelativeRow = [self isRelativeRowEven:[cell getPosition]];
+	bool bInLastRow = [self isInLastRow:[cell getPosition]];
+	bool bInFirstColumn = [self isInFirstColumn:[cell getPosition]];
+	bool bInLastColumn = [self isInLastColumn:[cell getPosition]];
+	bool bInLastCellInRow = [self isInLastCellInRow:[cell getPosition]];
+	
+	// The nw1 segment (upper part of NW border) always starts with at least two spaces.
+	// THe nw2 segment (lower part of NW border) is always one space before the border.
+	NSString *nw1 = @"  ";
+	NSString *nw2 = @" /";
+	if (bInFirstColumn) {
+		// nw1 segment has only 2 spaces before border line in first column
+		nw1 = [nw1 stringByAppendingString:@"/"];
+	}
+	else {
+		// in non-first columns the nw1 segment has three spaces before border
+		nw1 = [nw1 stringByAppendingString:@" /"];
+	}
+	
+	// The ne1 segment (upper part of NE border) always has one space before it.
+	// The ne2 segment (lower part of NE border) always has three spaces before it.
+	NSString *ne1 = @" \\";
+	NSString *ne2 = @"   \\";
+
+	// The w1 & w2 segments (upper and lower parts of W border, respectively)
+	//   have no leading spaces unless they are in an even relative row.
+	NSString *w1 = @"|";
+	NSString *w2 = @"|";
+	
+	// The e1 & e2 segments are only added for last column or last in row segments
+	NSString *e1 = @"";
+	NSString *e2 = @"";
+	if (bInLastColumn || bInLastCellInRow) {
+		e1 = @"|";
+		e2 = @"|";
+	}
+	
+	// The sw1 seg always has 1 space
+	NSString *sw1 = @" \\";
+	
+	// The sw2 has 2 spaces in leftmost column, 3 in all others.
+	NSString *sw2 = @"  ";
+	if (bInFirstColumn)
+		sw2 = [sw2 stringByAppendingString:@"\\"];
+	else
+		sw2 = [sw2 stringByAppendingString:@" \\"];
+	
+	// The se1 (upper) and se2 (lower) segments have 3 and 1 leading spaces, respectively.
+	NSString *se1 = @"   /";
+	NSString *se2 = @" /";
+	
+	// Even Relative Row Spaces = errs3, errs2, or errs1
+	NSString *errs3 = @"   ";
+	NSString *errs2 = @"  ";
+	NSString *errs1 = @" ";
+	
+	// The contents of the cell
+	NSString *body1 = [[NSString alloc] initWithFormat:@" %d  ", [cell getColumnPosition]];
+	NSString *body2 = [[NSString alloc] initWithFormat:@"  %d ", [cell getRowPosition]];
+	
+	if (bInEvenRelativeRow) {
+		// add appropriate leading spaces to the row
+		// r1 & r2 are always the NW and NE segments
+		r1 = [r1 stringByAppendingFormat:@"%@", errs3];
+		r2 = [r2 stringByAppendingFormat:@"%@", errs1];
+		r3 = [r3 stringByAppendingFormat:@"%@", errs3];
+		r4 = [r4 stringByAppendingFormat:@"%@", errs3];
+		
+		if (bInLastRow) {
+			r5 = [r5 stringByAppendingFormat:@"%@", errs3];
+			r6 = [r6 stringByAppendingFormat:@"%@", errs2];
+
+		}
+
+	} // bInEvenRelativeRow
+
+	
+	// r1 & r2 are always the NW and NE segments
+	r1 = [r1 stringByAppendingFormat:@"%@%@", nw1, ne1];
+	r2 = [r2 stringByAppendingFormat:@"%@%@", nw2, ne2];
+	r3 = [r3 stringByAppendingFormat:@"%@%@%@", w1, body1, e1];
+	r4 = [r4 stringByAppendingFormat:@"%@%@%@", w2, body2, e2];
+	
+	if (bInLastRow) {
+		r5 = [r5 stringByAppendingFormat:@"%@%@", sw1, se1];
+		r6 = [r6 stringByAppendingFormat:@"%@%@", sw2, se2];
+		
+	}
+	else {
+		// not in last row, if in last column add SE
+		if (bInLastColumn) {
+			r5 = [r5 stringByAppendingFormat:@"%@", se1];
+			r6 = [r6 stringByAppendingFormat:@"%@", se2];
+			
+		}
+		
+		if (bInFirstColumn) {
+			// add SW alone when in first column
+			r5 = [r5 stringByAppendingFormat:@"%@", sw1];
+			r6 = [r6 stringByAppendingFormat:@"%@", sw2];
+		}
+	}
+	
+	/*
+	 The borders of the cell to draw are dependent on the following rules:
+	 Always print NW, NE, and W
+	 If the relative row is even and working first relative column, add space before printing NW, NE, and W
+	 Last row prints SW, SE
+	 First column prints SW
+	 Last Column prints E
 	 Last Column but not Last Row prints SE
 	 
-	*/
+	 */
 	
-	
-	NSString *r1 = @"  / \\  ";
-	NSString *r2 = @" /   \\ ";
-	NSString *r3 = [[NSString alloc] initWithFormat:@"| %d  |", [cell getColumnPosition]];
-	NSString *r4 = [[NSString alloc] initWithFormat:@"| %d  |", [cell getRowPosition]];
-	NSString *r5 = @" \\   / ";
-	NSString *r6 = @"  \\ /  ";
-	
-	NSArray *rArray = [[NSArray alloc] initWithObjects:r1, r2, r3, r4, r5, r6, nil];
-	for (NSString *r in rArray)
-		[cli put:r withNewline:true];
-	
+
 }
 
 

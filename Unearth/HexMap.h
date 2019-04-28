@@ -22,6 +22,14 @@
 	int minCol;
 	int maxCol;
 
+	// Strings used to print cells.
+	NSString *r1;
+	NSString *r2;
+	NSString *r3;
+	NSString *r4;
+	NSString *r5;
+	NSString *r6;
+
 	CommandLineInterface *cli;
 	NSArray *hexCells;
     
