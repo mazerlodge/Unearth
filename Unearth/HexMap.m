@@ -601,10 +601,12 @@
 	// Even Relative Row Spaces = errs3, errs2, or errs1
 	NSString *errs3 = @"   ";
 	NSString *errs2 = @"  ";
-	NSString *errs1 = @" ";
 	
 	// The contents of the cell
-	NSString *body1 = [[NSString alloc] initWithFormat:@" %d  ", [cell getColumnPosition]];
+	NSString *occupiedMarker = @" ";
+	if ([cell isOccupied])
+		occupiedMarker = @"*";
+	NSString *body1 = [[NSString alloc] initWithFormat:@" %d%@ ", [cell getColumnPosition], occupiedMarker];
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %d ", [cell getRowPosition]];
 	
 	if (bInEvenRelativeRow) {
@@ -643,35 +645,7 @@
 		r6 = [r6 stringByAppendingFormat:@"%@%@", sw2, se2];
 		
 	}
-	/*
-	else {
-		// not in last row, if in last column add SE
-		if (bInLastColumn) {
-			r5 = [r5 stringByAppendingFormat:@"%@", se1];
-			r6 = [r6 stringByAppendingFormat:@"%@", se2];
-			
-		}
-		
-		if (bInFirstCellInRow) {
-			// add SW alone when in first column in a row
-			r5 = [r5 stringByAppendingFormat:@"%@", sw1];
-			r6 = [r6 stringByAppendingFormat:@"%@", sw2];
-		}
-	}
-	 */
 	
-	/*
-	 The borders of the cell to draw are dependent on the following rules:
-	 Always print NW, NE, and W
-	 If the relative row is even and working first relative column, add space before printing NW, NE, and W
-	 Last row prints SW, SE
-	 First column prints SW
-	 Last Column prints E
-	 Last Column but not Last Row prints SE
-	 
-	 */
-	
-
 }
 
 

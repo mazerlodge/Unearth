@@ -170,7 +170,8 @@ S1 POA - Unearth
 
 04/28
     - Corrected rendering of map with locations in each cell (just after midnight).
-
+    - Added printing of occupied marker (as asterisk).
+    
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
 		X-- Continue UGF.testPlayerMap(), placement of stone in available cells.
