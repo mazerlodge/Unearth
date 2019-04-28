@@ -165,13 +165,19 @@ S1 POA - Unearth
     - Updated CLI's debug settings after reading default startup parameters.
     - Added cell printing as text in grid order 
     - Added a static cell output with borders 
+    - First attempt at dynamic rendering, WIP. 
+    - Interlaced bottom of first row w/ top of second row, & repeated down grid.
+
+04/28
+    - Corrected rendering of map with locations in each cell (just after midnight).
 
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
 		X-- Continue UGF.testPlayerMap(), placement of stone in available cells.
 		X-- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
 		X-- Hex Map, flesh out Hex Map addStone method 1223
-		/-- Implement drawMap() method of HexMap class, see TODO marker. 0902
+		X-- Implement basis of drawMap() method of HexMap class
+            NEXT: add annotation for cells that are occupied.
 		.-- Hex Map, flesh out Hex Map addWonder method 1223
 
 

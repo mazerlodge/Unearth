@@ -282,6 +282,30 @@
 	
 }
 
+- (bool) isInFirstCellInRow: (HexCellPosition *) position {
+	// if the specified cell position's column is in the first column in its row, return true
+	bool bRval = false;
+	
+	int currentCellColumn = [position getColumn];
+	int currentCellRow = [position getRow];
+	int minColumnInRow = 999;
+	
+	// check each cell to see if it is in this row and is get minColumn for this row.
+	for (HexCell *aCell in hexCells) {
+		if (([aCell getRowPosition] == currentCellRow)
+			&& ([aCell getColumnPosition] < minColumnInRow))
+			minColumnInRow = [aCell getColumnPosition];
+		
+	}
+	
+	if (currentCellColumn == minColumnInRow)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
+
 - (bool) isInLastCellInRow: (HexCellPosition *) position {
 	// if the specified cell position's column is in the last column in its row, return true
 	bool bRval = false;
@@ -488,7 +512,15 @@
 			
 		} // x
 		
-		NSArray *rArray = [[NSArray alloc] initWithObjects:r1, r2, r3, r4, r5, r6, nil];
+		NSArray *rArray = [[NSArray alloc] initWithObjects:r1, r2, r3, r4, nil];
+		
+		// if in last row output row 5 and 6 (bottoms, SW and SE segments).
+		if (y == maxRow) {
+			rArray = [rArray arrayByAddingObject:r5];
+			rArray = [rArray arrayByAddingObject:r6];
+
+		}
+		
 		for (NSString *r in rArray)
 			[cli put:r withNewline:true];
 
@@ -519,9 +551,10 @@
 	bool bInFirstColumn = [self isInFirstColumn:[cell getPosition]];
 	bool bInLastColumn = [self isInLastColumn:[cell getPosition]];
 	bool bInLastCellInRow = [self isInLastCellInRow:[cell getPosition]];
+	bool bInFirstCellInRow = [self isInFirstCellInRow:[cell getPosition]];
 	
 	// The nw1 segment (upper part of NW border) always starts with at least two spaces.
-	// THe nw2 segment (lower part of NW border) is always one space before the border.
+	// THe nw2 segment (lower part of NW border) always has one space before the border.
 	NSString *nw1 = @"  ";
 	NSString *nw2 = @" /";
 	if (bInFirstColumn) {
@@ -556,7 +589,7 @@
 	
 	// The sw2 has 2 spaces in leftmost column, 3 in all others.
 	NSString *sw2 = @"  ";
-	if (bInFirstColumn)
+	if (bInFirstCellInRow)
 		sw2 = [sw2 stringByAppendingString:@"\\"];
 	else
 		sw2 = [sw2 stringByAppendingString:@" \\"];
@@ -575,12 +608,13 @@
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %d ", [cell getRowPosition]];
 	
 	if (bInEvenRelativeRow) {
-		// add appropriate leading spaces to the row
-		// r1 & r2 are always the NW and NE segments
-		r1 = [r1 stringByAppendingFormat:@"%@", errs3];
-		r2 = [r2 stringByAppendingFormat:@"%@", errs1];
-		r3 = [r3 stringByAppendingFormat:@"%@", errs3];
-		r4 = [r4 stringByAppendingFormat:@"%@", errs3];
+		// add SW to top two rows if in first column of the row (when only printing tops)
+		if (bInFirstCellInRow) {
+			r1 = [r1 stringByAppendingFormat:@"%@", sw1];
+			r2 = [r2 stringByAppendingFormat:@"%@", sw2];
+			r3 = [r3 stringByAppendingFormat:@"%@", errs3];
+			r4 = [r4 stringByAppendingFormat:@"%@", errs3];
+		}
 		
 		if (bInLastRow) {
 			r5 = [r5 stringByAppendingFormat:@"%@", errs3];
@@ -597,11 +631,19 @@
 	r3 = [r3 stringByAppendingFormat:@"%@%@%@", w1, body1, e1];
 	r4 = [r4 stringByAppendingFormat:@"%@%@%@", w2, body2, e2];
 	
+	// if in even row and last cell in row, tack on a SW segment set.
+	if (bInEvenRelativeRow && bInLastCellInRow) {
+		// add se segment
+		r1 = [r1 stringByAppendingFormat:@"%@", se1];
+		r2 = [r2 stringByAppendingFormat:@"%@", se2];
+	}
+	
 	if (bInLastRow) {
 		r5 = [r5 stringByAppendingFormat:@"%@%@", sw1, se1];
 		r6 = [r6 stringByAppendingFormat:@"%@%@", sw2, se2];
 		
 	}
+	/*
 	else {
 		// not in last row, if in last column add SE
 		if (bInLastColumn) {
@@ -610,12 +652,13 @@
 			
 		}
 		
-		if (bInFirstColumn) {
-			// add SW alone when in first column
+		if (bInFirstCellInRow) {
+			// add SW alone when in first column in a row
 			r5 = [r5 stringByAppendingFormat:@"%@", sw1];
 			r6 = [r6 stringByAppendingFormat:@"%@", sw2];
 		}
 	}
+	 */
 	
 	/*
 	 The borders of the cell to draw are dependent on the following rules:
