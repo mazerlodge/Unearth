@@ -1,0 +1,30 @@
+Detected startup with defaultStart parameters requested.
+Startup params set to [-action dotest -test 12 -debug -debuglevel 5]
+UGF.validateArguments() Info, debug parameter detected, min debug message level set to 5.
+UGF.doTest() Running test 12.
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 19 cells in the map (6 used, 13 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52.
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| 48  | 50  | 52  | 54  | 56  |
+|  48 |  48 |  48 |  48 |  48 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   | 49  | 51* | 53* | 55  |
+   |  49 |  49 |  49 |  49 |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| 48  | 50* | 52  | 54* | 56  |
+|  50 |  50 |  50 |  50 |  50 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   | 49  | 51* | 53* | 55  |
+   |  51 |  51 |  51 |  51 |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| 48  | 50  | 52  | 54  | 56  |
+|  52 |  52 |  52 |  52 |  52 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+Program ended with exit code: 0
