@@ -53,6 +53,37 @@
 }
 
 
+- (NSString *) getStoneColorAsShortString {
+	
+	NSString *rval = @"!?!";
+	
+	switch(color) {
+		case StoneColorRed:
+			rval = @"Red";
+			break;
+			
+		case StoneColorBlue:
+			rval = @"Blu";
+			break;
+			
+		case StoneColorBlack:
+			rval = @"Blk";
+			break;
+			
+		case StoneColorYellow:
+			rval = @"Yel";
+			break;
+			
+		default:
+			rval = @"???";
+			break;
+	}
+	
+	return rval;
+
+}
+
+
 - (int) getStoneID {
 
     return idNumber;

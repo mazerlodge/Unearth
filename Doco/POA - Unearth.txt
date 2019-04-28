@@ -171,6 +171,9 @@ S1 POA - Unearth
 04/28
     - Corrected rendering of map with locations in each cell (just after midnight).
     - Added printing of occupied marker (as asterisk).
+    - Added Stone.getStoneColorAsShortString() method.
+    - Replaced printing cell position with stone color and ID. 
+    - Added sample output to Doco folder. 
     
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
@@ -178,9 +181,8 @@ S1 POA - Unearth
 		X-- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
 		X-- Hex Map, flesh out Hex Map addStone method 1223
 		X-- Implement basis of drawMap() method of HexMap class
-            NEXT: add annotation for cells that are occupied.
 		.-- Hex Map, flesh out Hex Map addWonder method 1223
-
+        .-- Add printing of wonder information in HexMap.drawCell() method. 
 
 > Next: (Note: UC=Use Case)
 	CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.

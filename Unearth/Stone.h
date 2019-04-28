@@ -28,6 +28,8 @@ typedef enum StoneColor : NSUInteger {
 
 - (int) getStoneID;
 
+- (NSString *) getStoneColorAsShortString;
+
 - (NSString *) toString;
 
 /*

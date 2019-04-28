@@ -452,7 +452,7 @@
 					 occupiedCells,
 					 emptyCells];
 
-	msg = [msg stringByAppendingFormat:@"min/max used columnsX & rowsY are Xm=%d, Xmax=%d, Ym=%d, Ymax=%d.\n",
+	msg = [msg stringByAppendingFormat:@"min/max used columnsX & rowsY are Xm=%d, Xmax=%d, Ym=%d, Ymax=%d.",
 					 minCol,
 					 maxCol,
 					 minRow,
@@ -466,12 +466,8 @@
 	
 	// TODO: Implement drawMap by composing text lines to send to CLI.
 	[cli debugMsg:@"In HexMap.drawMap()" level:5];
-	[cli put:[self generateStatsMessage]];
-
-	// Display cells as text
-	for (HexCell *aCell in hexCells)
-		[cli debugMsg:[aCell toString] level:4];
 	
+	[self updateStats];
 	// before rendering cells, touch every cell, min to max, to make sure they are in the array
 	for (int y=minRow; y<=maxRow; y++) {
 		for (int x=minCol; x<=maxCol; x++) {
@@ -482,6 +478,13 @@
 			}
 		}
 	}
+
+	[cli debugMsg:[self generateStatsMessage] level:5];
+
+	// Debug display cells as text
+	for (HexCell *aCell in hexCells)
+		[cli debugMsg:[aCell toString] level:4];
+	
 	
 	// output the cell's positions in order by position.
 	[self updateStats];
@@ -603,11 +606,20 @@
 	NSString *errs2 = @"  ";
 	
 	// The contents of the cell
-	NSString *occupiedMarker = @" ";
-	if ([cell isOccupied])
-		occupiedMarker = @"*";
-	NSString *body1 = [[NSString alloc] initWithFormat:@" %d%@ ", [cell getColumnPosition], occupiedMarker];
-	NSString *body2 = [[NSString alloc] initWithFormat:@"  %d ", [cell getRowPosition]];
+	NSString *occupiedMarker = @"   ";
+	NSString *stoneID = @"  ";
+	if ([cell isOccupied]) {
+		if([[cell getTile] getTileType] == HexTileTypeStone) {
+			Stone *s = (Stone *)[cell getTile];
+			occupiedMarker = [s getStoneColorAsShortString];
+			stoneID = [[NSString alloc] initWithFormat:@"%2d", [s getStoneID]];
+		}
+		
+		// TODO: Add code to display wonder tiles
+		
+	}
+	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
+	NSString *body2 = [[NSString alloc] initWithFormat:@"  %@ ", stoneID];
 	
 	if (bInEvenRelativeRow) {
 		// add SW to top two rows if in first column of the row (when only printing tops)
