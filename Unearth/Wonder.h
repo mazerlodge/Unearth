@@ -23,8 +23,13 @@ typedef enum WonderType : NSUInteger {
 
 }
 
-- (id) initWithString: (NSString *) wonderData;
++ (WonderType) wonderTypeFromWonderName: (NSString *) wonderName;
 
+- (id) initWithString: (NSString *) wonderData;
+- (int) getWonderID;
+
+- (WonderType) wonderType;
+- (NSString *) getWonderTypeAsShortString;
 
 /*
  Method list from [Object Library.txt]

@@ -197,6 +197,19 @@
 	NSString *finalCellMsg = [[NSString alloc] initWithFormat:@"Final cell=%@\n", [relativeCell toString]];
 	[cli debugMsg:finalCellMsg level:4];
 	
+	// Put a lesser wonder in the middle of the 'loop' just created.
+	Wonder *aTestLesserWonder;
+	for (Wonder *aW in wonderDeck) {
+		if ([aW wonderType] == WonderTypeLesser) {
+			NSLog(@"Got a lesser wonder of %@", [aW toString]);
+			aTestLesserWonder = aW;
+			break;
+		}
+	}
+	
+	// Add the lesser wonder to the east of the origin cell
+	[map addWonder:aTestLesserWonder touchingHexCell:originCell onSide:HexDirectionE];
+	
 	[map drawMap];
 
 	return rval;

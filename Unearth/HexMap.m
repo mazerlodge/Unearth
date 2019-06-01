@@ -393,13 +393,13 @@
 - (bool) addWonder: (Wonder *) w atHexCell: (HexCell *) c {
 	bool bRval = false;
 	
-	NSString *msg = [NSString stringWithFormat:@"In addWonder atHexCell with Stone %d\n", [w getBaseID]];
-	[cli put:msg];
-	
-	// TODO: Flesh out Hex Map addWonder method.
 	NSLog(@"map.addWonder_atHexCell() WARNING: Not yet implemented.");
-
-	// Note: don't need to call addNeighborsToCell, wonders can only be added when already surrounded by occupied neighbors
+	NSString *msg = [NSString stringWithFormat:@"In map.addWonder_atHexCell with Wonder=(%@) at HexCell=(%@)\n",
+					 [w toString],
+					 [c toString]];
+	[cli debugMsg:msg level:4];
+	
+	[c setTile:w];
 
 	return bRval;
 	
@@ -408,13 +408,20 @@
 - (bool) addWonder: (Wonder *) w touchingHexCell: (HexCell *) c onSide: (HexDirection) direction {
     bool bRval = false;
 
-	NSString *msg = [NSString stringWithFormat:@"In addWonder with Wonder %d\n", [w getBaseID]];
-	[cli put:msg];
-	
-	// TODO: Flesh out Hex Map addWonder w/ 'touching' param method.
-	NSLog(@"map.addWonder_touchingHexCell_onSide() WARNING: Not yet implemented.");
-
 	// Note: don't need to call addNeighborsToCell, wonders can only be added when already surrounded by occupied neighbors
+	NSString *methodName = @"map.addWonder_touchingHexCell_onSide";
+	NSString *msg = [NSString stringWithFormat:@"%@ at cell (%@) with Wonder %d and direction=(%@)\n",
+					 methodName,
+					 [c toString],
+					 [w getBaseID],
+					 [HexMap HexDirectionToString:direction]];
+	[cli debugMsg:msg level:4];
+	
+	HexCellPosition *basePosition = [c getPosition];
+	HexCellPosition *targetPosition = [HexCellPosition getPosAtDirection:direction
+															fromPosition:basePosition];
+	HexCell *targetCell = [self getHexCellAtPosition:targetPosition];
+	[targetCell setTile:w];
 
     return bRval;
     
@@ -614,8 +621,12 @@
 			occupiedMarker = [s getStoneColorAsShortString];
 			stoneID = [[NSString alloc] initWithFormat:@"%2d", [s getStoneID]];
 		}
-		
-		// TODO: Add code to display wonder tiles
+		else {
+			Wonder *w = (Wonder *)[cell getTile];
+			occupiedMarker = [w getWonderTypeAsShortString];
+			stoneID = [[NSString alloc] initWithFormat:@"%2d", [w getWonderID]];
+
+		}
 		
 	}
 	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
