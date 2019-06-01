@@ -399,6 +399,8 @@
 					 [c toString]];
 	[cli debugMsg:msg level:4];
 	
+	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
+
 	[c setTile:w];
 
 	return bRval;
@@ -421,6 +423,9 @@
 	HexCellPosition *targetPosition = [HexCellPosition getPosAtDirection:direction
 															fromPosition:basePosition];
 	HexCell *targetCell = [self getHexCellAtPosition:targetPosition];
+	
+	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
+	
 	[targetCell setTile:w];
 
     return bRval;

@@ -23,15 +23,63 @@
 	return rval;
 }
 
-- (id) initWithString:(NSString *)wonderData {
++ (WonderType) wonderTypeFromRawData: (NSString *) rawData {
+
+	WonderType rval = WonderTypeNamed;
+	
+	NSString *wonderName = [Wonder wonderNameFromRawData:rawData];
+	
+	
+	if ([wonderName compare:@"Greater Wonders"] == NSOrderedSame)
+		rval = WonderTypeGreater;
+	
+	if ([wonderName compare:@"Lesser Wonders"] == NSOrderedSame)
+		rval = WonderTypeLesser;
+	
+	return rval;
+}
+
++ (NSString *) wonderNameFromRawData: (NSString *) rawData {
+	
+	NSCharacterSet *cs = [NSCharacterSet whitespaceCharacterSet];
+	NSArray *data = [rawData componentsSeparatedByString:@","];
+
+	NSString *rval = [(NSString *)[data objectAtIndex:1] stringByTrimmingCharactersInSet:cs];
+
+	return rval;
+}
+
++ (NSString *) wonderTypeToString: (WonderType) wonderType {
+	
+	NSString *rval = @"NOT_SET";
+	
+	switch(wonderType) {
+		case WonderTypeNamed:
+			rval = @"Named Wonder";
+			break;
+			
+		case WonderTypeGreater:
+			rval = @"Greater Wonder";
+			break;
+			
+		case WonderTypeLesser:
+			rval = @"Lesser Wonder";
+			break;
+	}
+	
+	return rval;
+			
+}
+
+- (id) initWithString:(NSString *)wonderData newID: (int) newID cardValue: (int) cardValue{
     
-	[self populateWonderFromString:wonderData];
+	[self populateWonderFromString:wonderData newID: newID cardValue: (int) cardValue];
     
     return self;
     
 }
 
-- (bool) populateWonderFromString: (NSString *) wonderData {
+- (bool) populateWonderFromString: (NSString *) wonderData newID: (int) newID cardValue: (int) cardValue {
 	
 	bool bRval = true;
 	
@@ -42,17 +90,12 @@
 	
 	rawData = wonderData;
 	baseID = (int)[(NSString *)[data objectAtIndex:0] integerValue];
-
-	NSCharacterSet *cs = [NSCharacterSet whitespaceCharacterSet];
-	NSString *wtn = [(NSString *)[data objectAtIndex:1] stringByTrimmingCharactersInSet:cs];
-	wonderType = [Wonder wonderTypeFromWonderName:wtn];
+	wonderType = [Wonder wonderTypeFromRawData:wonderData];
 	tileType = HexTileTypeWonder;
-	
-	
-	// TODO: Need to set point value & id for lesser/greater, may have to change flow for lesser and greater wonders
-	// Ed: Idea, just expand this if card is lesser/greater, loop through and make tiles to stack on wonder card
-	idNumber = 42;
-	pointValue = -1;
+	descriptiveText = (NSString *)[data objectAtIndex:2];
+	requiredPattern = (NSString *)[data objectAtIndex:3];
+	idNumber = newID;
+	pointValue = cardValue;
 	
 	return bRval;
 	
@@ -94,6 +137,16 @@
 	return idNumber;
 	
 }
+
+- (NSString *) toString {
+	// Supports diagnostic and debug printing
+	NSString *rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ value=%d\ndescriptive text=%@",
+					  idNumber, [Wonder wonderTypeToString:wonderType], pointValue, descriptiveText];
+	
+	return rval;
+	
+}
+
 
 
 @end

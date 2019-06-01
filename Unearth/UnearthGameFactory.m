@@ -201,11 +201,14 @@
 	Wonder *aTestLesserWonder;
 	for (Wonder *aW in wonderDeck) {
 		if ([aW wonderType] == WonderTypeLesser) {
-			NSLog(@"Got a lesser wonder of %@", [aW toString]);
 			aTestLesserWonder = aW;
 			break;
 		}
 	}
+	
+	NSString *wMsg = [[NSString alloc] initWithFormat:@"Lesser Wonder Selected=%@\n", [aTestLesserWonder toString]];
+	[cli debugMsg:wMsg level:5];
+
 	
 	// Add the lesser wonder to the east of the origin cell
 	[map addWonder:aTestLesserWonder touchingHexCell:originCell onSide:HexDirectionE];
@@ -826,7 +829,7 @@
                                 StoneColorBlack};
 
     NSMutableArray *allStones = [[NSMutableArray alloc] init];
-    int idNumber = 0;
+    int idNumber = MIN_STONE_ID;
     for (int colorIdx=0; colorIdx < 4; colorIdx++) {
         StoneColor currentColor = allColors[colorIdx];
         // make 15 copies of each stone color
@@ -961,7 +964,14 @@
 - (bool) populateWonderDeck {
     
     bool bRval = true;
-    
+	int nextID = MIN_WONDER_ID;
+	
+	// CONSTANTS for Greater and Lesser Wonders
+	int LESSER_WONDER__COUNTS[] = {2, 6, 2};
+	int LESSER_WONDER__VALUES[] = {2, 3, 4};
+	int GREATER_WONDER__COUNTS[] = {1, 4, 1};
+	int GREATER_WONDER__VALUES[] = {6, 7, 8};
+	
     wonderDeck = [[NSArray alloc] init];
     NSArray *wonderCardData = [self getDataForQConfigKey:@"DataFile_WonderCards"];
     for(NSString *aCardData in wonderCardData) {
@@ -970,9 +980,46 @@
         
         // if the card data string starts with #, ignore it.
         if ([aCardData characterAtIndex:0] != '#') {
-            // Wonder cards do not have multiple copies, just make one of the card specified.
-            Wonder *aCard = [[Wonder alloc] initWithString:aCardData];
-            wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+			WonderType currentWonderType = [Wonder wonderTypeFromRawData:aCardData];
+			Wonder *aCard;
+
+			switch (currentWonderType) {
+				case WonderTypeNamed:
+					// Named Wonder cards do not have multiple copies, just make one of the card specified.
+					aCard = [[Wonder alloc] initWithString:aCardData newID:nextID cardValue: -1];
+					wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+					nextID++;
+					break;
+
+				case WonderTypeLesser:
+					for (int i=0; i<3; i++) {
+						int currentValue = LESSER_WONDER__VALUES[i];
+						for (int c=0; c<LESSER_WONDER__COUNTS[i]; c++) {
+							aCard = [[Wonder alloc] initWithString:aCardData
+															 newID:nextID
+														 cardValue:currentValue];
+							wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+							nextID++;
+
+						}
+					}
+					break;
+					
+				case WonderTypeGreater:
+					for (int i=0; i<3; i++) {
+						int currentValue = GREATER_WONDER__VALUES[i];
+						for (int c=0; c<GREATER_WONDER__COUNTS[i]; c++) {
+							aCard = [[Wonder alloc] initWithString:aCardData
+															 newID:nextID
+														 cardValue:currentValue];
+							wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+							nextID++;
+							
+						}
+					}
+					break;
+
+			} // switch
             
         } // if != #
     } // for aCardData...

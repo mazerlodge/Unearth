@@ -19,17 +19,22 @@ typedef enum WonderType : NSUInteger {
     WonderType wonderType;
     bool isOwned;
     int pointValue;
+	NSString *descriptiveText;
+	NSString *requiredPattern;
     NSString *rawData;
 
 }
 
 + (WonderType) wonderTypeFromWonderName: (NSString *) wonderName;
++ (WonderType) wonderTypeFromRawData: (NSString *) rawData;
++ (NSString *) wonderNameFromRawData: (NSString *) rawData;
++ (NSString *) wonderTypeToString: (WonderType) wonderType;
 
-- (id) initWithString: (NSString *) wonderData;
+- (id) initWithString: (NSString *) wonderData newID: (int) newID cardValue: (int) cardValue;
 - (int) getWonderID;
-
 - (WonderType) wonderType;
 - (NSString *) getWonderTypeAsShortString;
+- (NSString *) toString;
 
 /*
  Method list from [Object Library.txt]

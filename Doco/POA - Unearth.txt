@@ -180,6 +180,10 @@ S1 POA - Unearth
     - Added code to parse wonder member vars from raw data 
     - Added code to convert WonderType to/from strings 
     - Added code to Map to display wonder tiles
+    - Added printing of wonder information in HexMap.drawCell() method. 
+    - Expanded wonder deck to include distinct entries for each lesser and greater wonder. 
+    - Expanded Wonder.populateWonderFromString() to set point value & id for lesser/greater, 
+    - Added #define constants for min stone and wonder IDs 
 
 > In-Progress:
     - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
@@ -187,9 +191,8 @@ S1 POA - Unearth
 		X-- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
 		X-- Hex Map, flesh out Hex Map addStone method 1223
 		X-- Implement basis of drawMap() method of HexMap class
-		/-- Hex Map, flesh out Hex Map addWonder method 1223
-        .-- Add printing of wonder information in HexMap.drawCell() method. 
-        .-- WonderpopulateWonderFromString() Need to set point value & id for lesser/greater, may have to change flow. 0601
+		X-- Hex Map, flesh out Hex Map addWonder method 1223
+        .-- HexMap.addWonder...() methods, Valiate the 'loop' meets the criteria for the wonder being placed.
 
 > Next: (Note: UC=Use Case)
 	CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.

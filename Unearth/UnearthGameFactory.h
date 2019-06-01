@@ -6,6 +6,9 @@
 //  Copyright © 2018 mazerlodge. All rights reserved.
 //
 
+#ifndef UnearthGameFactory_h
+#define UnearthGameFactory_h
+
 #import <Foundation/Foundation.h>
 #import "UnearthGameEngine.h"
 #import "ArgParser.h"
@@ -21,6 +24,10 @@
 #import "DelverDie.h"
 #import "HexMap.h"
 #import "StoneBag.h"
+
+// CONSTANTS for Stone ID starting numbers
+#define MIN_STONE_ID 10
+#define MIN_WONDER_ID 71
 
 @interface UnearthGameFactory : NSObject {
     
@@ -67,3 +74,5 @@
 - (NSString *) startupAction;
 
 @end
+
+#endif /* UnearthGameFactory_h */
