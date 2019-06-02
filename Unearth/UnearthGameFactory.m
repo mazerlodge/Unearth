@@ -148,11 +148,53 @@
 		case 12:
 			rval = [self testPlayerMap];
 			break;
+			
+		case 13:
+			rval = [self testUnsortedDecks];
+			break;
             
     }
     
     return rval;
     
+}
+
+- (int) testUnsortedDecks {
+	int rval = -1;
+	
+	/*
+	 Decks to test:
+	 .- wondersDeck  // 15x named, 10x lesser, 6x greater
+	 .- delverDeck   // 38x generated from n original possibilities
+	 x- endOfAgeDeck //  5x, shuffled for game, top card used in this game run.
+	 .- ruinDeck     // 25x, 5x colors and 5x combos of claim and stone value.
+	 
+	 */
+
+	NSString *msg = @"\n\n---------- End of Age Cards -------------\n";
+	[cli debugMsg:msg level:5];
+
+	for (EndOfAgeCard *ac in endOfAgeDeck) {
+		msg = [NSString stringWithFormat:@"%@\n",[ac toString]];
+		[cli debugMsg:msg level:5];
+	}
+
+	msg = @"\n\n---------- Wonders  -------------\n";
+	[cli debugMsg:msg level:5];
+
+	
+	for (Wonder *aw in wonderDeck) {
+		msg = [NSString stringWithFormat:@"%@\n",[aw toString]];
+		[cli debugMsg:msg level:5];
+	}
+	
+	msg = @"\n\n---------- Delver Deck -------------\n";
+	[cli debugMsg:msg level:5];
+
+	msg = @"\n\n---------- Ruins Deck -------------\n";
+	[cli debugMsg:msg level:5];
+
+	return rval;
 }
 
 - (int) testPlayerMap {
@@ -986,7 +1028,7 @@
 			switch (currentWonderType) {
 				case WonderTypeNamed:
 					// Named Wonder cards do not have multiple copies, just make one of the card specified.
-					aCard = [[Wonder alloc] initWithString:aCardData newID:nextID cardValue: -1];
+					aCard = [[Wonder alloc] initWithString:aCardData newID:nextID pointValue: -1];
 					wonderDeck = [wonderDeck arrayByAddingObject:aCard];
 					nextID++;
 					break;
@@ -997,7 +1039,7 @@
 						for (int c=0; c<LESSER_WONDER__COUNTS[i]; c++) {
 							aCard = [[Wonder alloc] initWithString:aCardData
 															 newID:nextID
-														 cardValue:currentValue];
+														 pointValue:currentValue];
 							wonderDeck = [wonderDeck arrayByAddingObject:aCard];
 							nextID++;
 
@@ -1011,7 +1053,7 @@
 						for (int c=0; c<GREATER_WONDER__COUNTS[i]; c++) {
 							aCard = [[Wonder alloc] initWithString:aCardData
 															 newID:nextID
-														 cardValue:currentValue];
+														 pointValue:currentValue];
 							wonderDeck = [wonderDeck arrayByAddingObject:aCard];
 							nextID++;
 							

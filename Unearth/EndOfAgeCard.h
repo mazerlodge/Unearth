@@ -13,15 +13,20 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EndOfAgeCard : NSObject  {
     
     NSString *rawData;
-    
+	
+	int idNumber;
     int claimValue;
     int stoneValue;
     int stones;
     NSMutableArray *delverDice;
+	NSString *title;
+	NSString *descriptiveText;
     
 }
 
 - (id) initWithString: (NSString *) cardData;
+- (NSString *) toString;
+
 
 /*
  Method list from [Object Library.txt]

@@ -30,7 +30,7 @@ typedef enum WonderType : NSUInteger {
 + (NSString *) wonderNameFromRawData: (NSString *) rawData;
 + (NSString *) wonderTypeToString: (WonderType) wonderType;
 
-- (id) initWithString: (NSString *) wonderData newID: (int) newID cardValue: (int) cardValue;
+- (id) initWithString: (NSString *) wonderData newID: (int) newID pointValue: (int) value;
 - (int) getWonderID;
 - (WonderType) wonderType;
 - (NSString *) getWonderTypeAsShortString;

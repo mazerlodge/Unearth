@@ -476,7 +476,6 @@
 
 - (void) drawMap {
 	
-	// TODO: Implement drawMap by composing text lines to send to CLI.
 	[cli debugMsg:@"In HexMap.drawMap()" level:5];
 	
 	[self updateStats];

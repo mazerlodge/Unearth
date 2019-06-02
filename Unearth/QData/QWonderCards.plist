@@ -2,23 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<string>#ID, Title, Text, ColorRule</string>
-	<string>300, Lesser Wonders, Lesser Wonders are worth between 2 and 4 points, ??????</string>
-	<string>301, Greater Wonders, Greater Wonders are worth between 6 and 8 points, 111111</string>
-	<string>302, College of the Overseers, When you roll your D8 you may give it +1. This wonder is worth 2 points., BBB???</string>
-	<string>303, Temple of Prosperity, At the end of the game score 1 point for every yellow Stone you have., YYYY??</string>
-	<string>304, The Harmonious Columns, You may give any die you roll -1. This Wonder is worth 2 points., RRR???</string>
-	<string>305, The Shattered Edifice, You may reroll your rolls of 4 and 5. This Wonder is worth 2 points., LLL???</string>
-	<string>306, The Blackened Cenotaph, Draw a random Ruin from the Ruins that were removed from the game and add it to your hidden scoring., 112233</string>
-	<string>307, The Eternal Flame, When a Ruin that you have no dice on is claimed you may draw a Delver Card. This Wonder is worth 1 point., YYY???</string>
-	<string>308, Tomb of the Last Age, At the end of the game score 1 point for each color of Ruin you have., LRBY??</string>
-	<string>309, Fountain of Reflection, At the end of the game score 2 points for each Stone of the type you have the least of., LRBY??</string>
-	<string>310, Underground Library, When you draw Stones from the bag you may draw two and choose one to keep. This Wonder is wroth 2 points., ??????</string>
-	<string>311, Palace of Relics, This wonder is worth 6 points., 111222</string>
-	<string>312, Temple of Flames, At the end of the game score 1 point for every red Stone you have., RRRR??</string>
-	<string>313, Temple of Fate, At the end of the game score 1 point for every black Stone you have., LLLL??</string>
-	<string>314, The Crumbling Memorial, Look at the Ruin sthat were removed from the game and choose one to add to your hidden scoring., 111111</string>
-	<string>315, Temple of Clarity, At the end of the game score 1 point for every blue Stone you have., BBBB??</string>
-	<string>316, The Sanctuary of the Builders, If your roll on a Ruin matches a number already on that Ruin you may give your die +1 or -1. This Wonder is worth 2 points., ??????</string>
+	<string>#ID, Title, Text, ColorRule,Value</string>
+	<string>300, Lesser Wonders, Lesser Wonders are worth between 2 and 4 points, ??????,-1</string>
+	<string>301, Greater Wonders, Greater Wonders are worth between 6 and 8 points, 111111,-1</string>
+	<string>302, College of the Overseers, When you roll your D8 you may give it +1. This wonder is worth 2 points., BBB???,2</string>
+	<string>303, Temple of Prosperity, At the end of the game score 1 point for every yellow Stone you have., YYYY??,0</string>
+	<string>304, The Harmonious Columns, You may give any die you roll -1. This Wonder is worth 2 points., RRR???,2</string>
+	<string>305, The Shattered Edifice, You may reroll your rolls of 4 and 5. This Wonder is worth 2 points., LLL???,2</string>
+	<string>306, The Blackened Cenotaph, Draw a random Ruin from the Ruins that were removed from the game and add it to your hidden scoring., 112233,0</string>
+	<string>307, The Eternal Flame, When a Ruin that you have no dice on is claimed you may draw a Delver Card. This Wonder is worth 1 point., YYY???,1</string>
+	<string>308, Tomb of the Last Age, At the end of the game score 1 point for each color of Ruin you have., LRBY??,0</string>
+	<string>309, Fountain of Reflection, At the end of the game score 2 points for each Stone of the type you have the least of., LRBY??,0</string>
+	<string>310, Underground Library, When you draw Stones from the bag you may draw two and choose one to keep. This Wonder is wroth 2 points., ??????,2</string>
+	<string>311, Palace of Relics, This wonder is worth 6 points., 111222,6</string>
+	<string>312, Temple of Flames, At the end of the game score 1 point for every red Stone you have., RRRR??,0</string>
+	<string>313, Temple of Fate, At the end of the game score 1 point for every black Stone you have., LLLL??,0</string>
+	<string>314, The Crumbling Memorial, Look at the Ruin sthat were removed from the game and choose one to add to your hidden scoring., 111111,0</string>
+	<string>315, Temple of Clarity, At the end of the game score 1 point for every blue Stone you have., BBBB??,0</string>
+	<string>316, The Sanctuary of the Builders, If your roll on a Ruin matches a number already on that Ruin you may give your die +1 or -1. This Wonder is worth 2 points., ??????,2</string>
 </array>
 </plist>

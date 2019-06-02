@@ -71,19 +71,19 @@
 			
 }
 
-- (id) initWithString:(NSString *)wonderData newID: (int) newID cardValue: (int) cardValue{
+- (id) initWithString:(NSString *)wonderData newID: (int) newID pointValue: (int) value{
     
-	[self populateWonderFromString:wonderData newID: newID cardValue: (int) cardValue];
+	[self populateWonderFromString:wonderData newID: newID pointValue:value];
     
     return self;
     
 }
 
-- (bool) populateWonderFromString: (NSString *) wonderData newID: (int) newID cardValue: (int) cardValue {
-	
+- (bool) populateWonderFromString: (NSString *) wonderData newID: (int) newID pointValue: (int) value {
+	// Note: If cardValue passed in is -1, the value is determined from the 4th segment of the wonderData.
 	bool bRval = true;
 	
-	// Sample string: 300, Lesser Wonders, Lesser Wonders are worth between 2 and 4 points, ??????
+	// Sample string: 300, Lesser Wonders, Lesser Wonders are worth between 2 and 4 points, ??????, -1
 	
 	// Parse the string on commas
 	NSArray *data = [wonderData componentsSeparatedByString:@","];
@@ -95,8 +95,12 @@
 	descriptiveText = (NSString *)[data objectAtIndex:2];
 	requiredPattern = (NSString *)[data objectAtIndex:3];
 	idNumber = newID;
-	pointValue = cardValue;
 	
+	if (value == -1)
+		pointValue = (int)[(NSString *)[data objectAtIndex:4] integerValue];
+	else
+		pointValue = value;
+
 	return bRval;
 	
 }
@@ -140,13 +144,16 @@
 
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
-	NSString *rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ value=%d\ndescriptive text=%@",
-					  idNumber, [Wonder wonderTypeToString:wonderType], pointValue, descriptiveText];
+	
+	NSString *pointValueMsg = [[NSString alloc] initWithFormat:@"%d", pointValue];
+	if (pointValue == 0)
+		pointValueMsg = @"Determined at end of game";
+	
+	NSString *rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ value=%@\ndescriptive text=%@",
+					  idNumber, [Wonder wonderTypeToString:wonderType], pointValueMsg, descriptiveText];
 	
 	return rval;
 	
 }
-
-
 
 @end
