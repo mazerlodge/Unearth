@@ -150,7 +150,7 @@
 			break;
 			
 		case 13:
-			rval = [self testUnsortedDecks];
+			rval = [self testUnshuffledDecks];
 			break;
             
     }
@@ -159,7 +159,7 @@
     
 }
 
-- (int) testUnsortedDecks {
+- (int) testUnshuffledDecks {
 	int rval = -1;
 	
 	/*
@@ -190,9 +190,19 @@
 	
 	msg = @"\n\n---------- Delver Deck -------------\n";
 	[cli debugMsg:msg level:5];
+	
+	for (DelverCard *dc in delverDeck) {
+		msg = [NSString stringWithFormat:@"%@\n",[dc toString]];
+		[cli debugMsg:msg level:5];
+	}
 
 	msg = @"\n\n---------- Ruins Deck -------------\n";
 	[cli debugMsg:msg level:5];
+
+	for (RuinCard *rc in ruinsDeck) {
+		msg = [NSString stringWithFormat:@"%@\n",[rc toString]];
+		[cli debugMsg:msg level:5];
+	}
 
 	return rval;
 }

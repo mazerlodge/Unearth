@@ -26,8 +26,10 @@ typedef enum RuinCardColor : NSUInteger {
     
 }
 
-- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal;
++ (NSString *) RuinCardColorToString: (RuinCardColor) color;
 
+- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal;
+- (NSString *) toString;
 
 /*
  Method list from [Object Library.txt]

@@ -10,12 +10,17 @@
 
 @interface DelverCard : NSObject {
     NSString *rawData;
-    
+	
+	int baseID;
+	NSString *title;
+	NSString *descriptiveText;
+	
     
 }
 
 
 - (id) initWithString: (NSString *) cardData;
+- (NSString *) toString;
 
 /*
  Method list from [Object Library.txt]
