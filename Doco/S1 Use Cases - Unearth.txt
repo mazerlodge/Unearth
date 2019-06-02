@@ -3,24 +3,35 @@ S1 Use Cases - Unearth
 Goal - Define use cases for incremental development of the Unearth project.
 
 > Scratch Examples
-- Start the game engine with a '-test 1' parameter that generates required params to do a simple "power on" sequence.
-    -- Test 1 outputs shuffled deck contents
+	x S0. Start the game engine with a '-test 1' parameter that generates required 
+			params to do a simple "power on" sequence.
+			Status: Done. 
+			Use startup arg "-action defaultstart", reads QConfig.plist for entry "DefaultStartParams"
 
 > Tests (via -action dotest) 
-    T1. Generate unshuffled decks, output them.
-    T2. Collect all player questions, stores in player, outputs answers.
-    T3. Generate shuffled decks, output them.
+	x T1. Generate unshuffled decks, output them.
+			Status: Done.
+			Run with test ID = 13. 
+	x T2. Collect all player questions, stores in player, outputs answers.
+			Status: Done. 
+			Run with test ID = 11. 
+	x T4. Populate a player map with a lesser wonder surrounded with mix of colors.
+			Status: Done. 
+			Run with test ID = 12. 
+	. T3. Generate shuffled decks, output them.
 
 > Unit tests
-    U1. Populate a player map with a lesser wonder surrounded with mix of colors.
-    U2. Fully populate UGE from UGF via dictionary passed into UGE.populateGameFromDictionary().
-    U3. Wrap stone bag array in a class with pull method that depletes bag. 
+	x U1. (renamed to T4) 			
+	x U3. Wrap stone bag array in a class with pull method that depletes bag. 
+			Status: Done
+			Stone bag is a class that includes a getNextStone() method. 
+	. U2. Fully populate UGE from UGF via dictionary passed into UGE.populateGameFromDictionary().
 
 > Enhancements
-    E1. Enhance ArgParser to support case insensitive args (see TODO marker).
-    E2. Enhance ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array.
+	. E1. Enhance ArgParser to support case insensitive args (see TODO marker).
+	. E2. Enhance ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array.
 
 > Documentation
-    D1. Update Object Libary.txt with current as built information.
-    D2. Create additional Use Cases (help drive class method definition)
+	. D1. Update Object Libary.txt with current as built information.
+	. D2. Create additional Use Cases (help drive class method definition)
 

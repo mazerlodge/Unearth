@@ -186,29 +186,29 @@ S1 POA - Unearth
     - Added #define constants for min stone and wonder IDs 
 
 > In-Progress:
-    - UC U1. Populate a player map with a lesser wonder surrounded with a mix of colors
-		X-- Continue UGF.testPlayerMap(), placement of stone in available cells.
-		X-- Test Player Hex Map, see [Task Notes - Test Player Hex Map.txt] 0819
-		X-- Hex Map, flesh out Hex Map addStone method 1223
-		X-- Implement basis of drawMap() method of HexMap class
-		X-- Hex Map, flesh out Hex Map addWonder method 1223
-        .-- HexMap.addWonder...() methods, Valiate the 'loop' meets the criteria for the wonder being placed.
+
 
 > Next: (Note: UC=Use Case)
 
-    CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.
+    See [S1 Use Cases - Unearth.txt] 0601
 
     UnearthGameFactory.m:	// TODO: This may need to get it's CLI from the one set up in the factory (UGF).
-    UnearthGameFactory.m:   // TODO: Expand gameDataDict dictionary used to pass info into game engine.
+    UnearthGameFactory.m:        // TODO: Expand gameDataDict dictionary used to pass info into game engine.
 
     UnearthGameEngine.m:    // TODO: Add more dictionary parsing
     UnearthGameEngine.m:    // TODO: Add some validation of the above, for now assume it worked
 
-    HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed. (2 methods)
+    HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed. (2x)
 
-    ArgParser.m:        // TODO: Add check for arg (and assoc val) already in array
-    ArgParser.m:        // TODO: Make AP.isInArgs method case insensitive and add a version with a
-                                   caseSensitive: true/false param.
+    RuinCard.m:	// TODO: Add Delver Dice to output string.
+
+    EndOfAgeCard.m:	// TODO: Add Delver Dice to output string.
+
+    ArgParser.m:    // TODO: Add check for arg (and assoc val) already in array
+    ArgParser.m:    // TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive:                           true/false param.
+
+    CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.
+
 
 
 	- Refactor away references to HexCell row and column, use position object instead. 0216
