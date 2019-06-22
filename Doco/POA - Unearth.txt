@@ -185,6 +185,9 @@ S1 POA - Unearth
     - Expanded Wonder.populateWonderFromString() to set point value & id for lesser/greater, 
     - Added #define constants for min stone and wonder IDs 
 
+06/22 
+    - Expanded and reorg'd use cases file and POA 'Next' section 
+    
 > In-Progress:
 
 
@@ -192,6 +195,11 @@ S1 POA - Unearth
 
     See [S1 Use Cases - Unearth.txt] 0601
 
+    Administrivia; List make Game with args, what is already passed, what is needed. 0622
+
+
+
+> Raw TODO markers:
     UnearthGameFactory.m:	// TODO: This may need to get it's CLI from the one set up in the factory (UGF).
     UnearthGameFactory.m:        // TODO: Expand gameDataDict dictionary used to pass info into game engine.
 
@@ -208,17 +216,6 @@ S1 POA - Unearth
     ArgParser.m:    // TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive:                           true/false param.
 
     CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.
-
-
-
-	- Refactor away references to HexCell row and column, use position object instead. 0216
-
-	- UC U3, Wrap stone bag array in a class with pull method that depletes bag. 0126
-    - UC E1, Make AP.isInArgs method case insensitive & add a ver w/ a caseSensitive: T/F param 1013
-    - UC E2, ArgParser.addArgsFromString(), Add check for arg (and assoc val) already in array 1117
-    - UC U2, UGF.makeGameWithArgs() add to gameDataDict dictionary used to pass info to UGE and parse it in UGE. 1223
-    - UC D1, Expand [Object Library.txt] with as built information 1223
-    - UC D2, Create additional Use Cases (help drive class method definition) [S1 Use Cases - Unearth.txt] 1223
 
 
 > Archived/Postponed/Cancelled Tasks:
