@@ -29,6 +29,9 @@
 - (void) setGameState: (NSString *) newState;
 - (bool) populateGameFromDictionary: (NSDictionary *) dict;
 
+- (NSString *) gameState;
+
+
 /*
  Method list from [Object Library.txt]
  > UnearthGameEngine

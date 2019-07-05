@@ -33,6 +33,8 @@ int main(int argc, const char * argv[]) {
         }
         
         UnearthGameEngine *uge = [ugf makeGameWithArgs:argParser];
+		if ([[uge gameState] compare:@"ERROR"] == NSOrderedSame)
+			return -1;
 		
 		if ([[ugf startupAction] compare:@"playgame"] == NSOrderedSame)
         	[uge go];

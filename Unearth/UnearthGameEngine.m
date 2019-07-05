@@ -74,5 +74,9 @@
     
 }
 
+- (NSString *) gameState {
+	return gameState;
+	
+}
 
 @end

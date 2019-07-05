@@ -28,6 +28,8 @@ typedef enum UnearthPlayerType : NSUInteger {
 - (DelverDieColor) dieColor;
 - (NSString *) playerName;
 
+- (NSString *) toString;
+
 /*
  Method list from [Object Library.txt]
  > UnearthPlayer

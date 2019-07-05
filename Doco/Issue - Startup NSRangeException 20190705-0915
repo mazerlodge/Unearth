@@ -1,0 +1,85 @@
+Issue - Startup NSRangeException 20190705-0915
+
+Goal - resolve start up issue. 
+
+Reference
+-----------
+TheoVI:bin mazerlodge$ ./unearth -action playgame
+How many players?2
+Collecting info for player  #1.
+Select player type (0=human, 1=ai)? 0
+Select die color (0=Orange, 1=Yellow, 2=Green, 3=Blue)?3
+Enter unused name for player: Paul
+Collecting info for player  #2.
+Select player type (0=human, 1=ai)? 1
+Select die color (0=Orange, 1=Yellow, 2=Green)?1
+Enter unused name for player: mac
+2019-07-05 09:13:32.654 unearth[32428:5291247] *** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[__NSArray0 objectAtIndex:]: index 0 beyond bounds for empty NSArray'
+*** First throw call stack:
+(
+	0   CoreFoundation                      0x00007fff4e1f0cfd __exceptionPreprocess + 256
+	1   libobjc.A.dylib                     0x00007fff7889aa17 objc_exception_throw + 48
+	2   CoreFoundation                      0x00007fff4e2173e9 __CFArrayCopyDescription + 0
+	3   unearth                             0x000000010792d9f9 -[UnearthGameFactory makeGameWithArgs:] + 585
+	4   unearth                             0x0000000107937b1e main + 430
+	5   libdyld.dylib                       0x00007fff7a0683d5 start + 1
+	6   ???                                 0x0000000000000003 0x0 + 3
+)
+libc++abi.dylib: terminating with uncaught exception of type NSException
+Abort trap: 6
+TheoVI:bin mazerlodge$ 
+
+
+Diagnostics
+-------------
+Issue traced to ugf.isPlayerNameUsed_inPlayerArray() method.
+Note test 11 passes. Issue m/b after player array is built (e.g. during pass to game object) 
+Appears to be in ugf.makeGameWithArgs() during get of End of Age Card. 
+Traced issue to card files not being loaded when ran from command line. 
+Ran tests 5, 6, 7, 8 
+Found no sym link to QData folder inside bin folder, causing cards to not be loaded.
+
+
+Reverse Call stack notes
+-------------------------
+[self isPlayerNameUsed:name inPlayerArray:existingPlayers]
+  |
+  +--> makePlayer() 
+        | 
+		+--> populatePlayerArray()
+
+
+Final Run through showing issue and issue resolved
+-------------------------------------------------------
+## Run showing error detected and game terminated.
+TheoVI:bin mazerlodge$ ./unearth -action playgame
+ERROR: PopulateFactoryMembers() returned false. Can not continue.
+
+## Fixing the error by adding sym link inside bin folder pointing to QData folder
+TheoVI:bin mazerlodge$ ls ../Unearth/QData/
+QConfig.plist		QData			QDelverCards.plist	QEndOfAgeCards.plist	QWonderCards.plist
+TheoVI:bin mazerlodge$ ln -s ../Unearth/QData QData
+
+## Run showing issue resolved.
+TheoVI:bin mazerlodge$ ./unearth -action playgame
+How many players?2
+Collecting info for player  #1.
+Select player type (0=human, 1=ai)? 0
+Select die color (0=Orange, 1=Yellow, 2=Green, 3=Blue)?1
+Enter unused name for player: paul
+Collecting info for player  #2.
+Select player type (0=human, 1=ai)? 1
+Select die color (0=Orange, 2=Green, 3=Blue)?2
+Enter unused name for player: mac
+Inside of UnearthGameEngine.
+UGE state = POPULATED
+Game has 2 players.
+TheoVI:bin mazerlodge$ 
+
+
+Resolution
+------------
+Added sym link to QData folder inside bin folder
+Added code to each populate...Deck() method to return false if 0 cards in deck.
+Added code to terminate game if cards are not popualted. 
+

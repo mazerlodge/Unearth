@@ -28,4 +28,17 @@
     return playerName;
     
 }
+
+- (NSString *) toString {
+	// Supports diagnostic and debug printing
+	
+	NSString *rval = [[NSString alloc] initWithFormat:@"UnearthPlayer name=%@ type=%lu dieColor=%lu",
+					  playerName,
+					  playerType,
+					  dieColor];
+	
+	return rval;
+	
+
+}
 @end

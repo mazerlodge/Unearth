@@ -188,12 +188,18 @@ S1 POA - Unearth
 06/22 
     - Expanded and reorg'd use cases file and POA 'Next' section 
     
+07/05
+    - Diag startup error when ran from command line, issue traced to no sym link to QData folder from bin 
+    - Fixed data file name used in test 6 (correct name is _QDelverCards.plist) 
+    - Added code to each populate...Deck() method to return false if 0 cards in deck.
+    - Added code to terminate game if decks are not populated. 
+    
 > In-Progress:
 
 
 > Next: (Note: UC=Use Case)
 
-    See [S1 Use Cases - Unearth.txt] 0601
+    See [Use Cases - Unearth.txt] 0601
 
     Administrivia; List make Game with args, what is already passed, what is needed. 0622
 

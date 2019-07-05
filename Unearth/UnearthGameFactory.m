@@ -302,7 +302,7 @@
     int rval = -1;
     
     // Tilde in path expansion, the pedestrian way.
-    NSString *tildePath = @"~/Documents/UnearthData/_DelverCards.plist";
+    NSString *tildePath = @"~/Documents/UnearthData/_QDelverCards.plist";
     NSString *fullPath = [tildePath stringByExpandingTildeInPath];
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.tRDCDwURL(): Got path %s.\n", [fullPath UTF8String]];
     [cli put:msg];
@@ -807,8 +807,9 @@
     // If factory members haven't been populated, do so now.
     bFactoryMembersPopulated = [self populateFactoryMembers];
     if (!bFactoryMembersPopulated) {
-        [cli debugMsg:@"ERROR: PopulateFactoryMembers() returned false. Can not continue." level:1];
-        
+        [cli put:@"ERROR: PopulateFactoryMembers() returned false. Can not continue.\n"];
+		[uge setGameState:@"ERROR"];
+		return uge;
     }
     
     if ([ap doesArg:@"-action" haveValue:@"dotest"]) {
@@ -867,7 +868,7 @@
         if (buildResults[x] == false)
             bRval = false;
     }
-    
+	
     return bRval;
     
 }
@@ -944,7 +945,11 @@
         } // for valueIdx
         
     } // for colorIdx
-    
+	
+	// V2 Quality improvement, this could check for any deviation from the expected deck size.
+	if ([ruinsDeck count] == 0)
+		bRval = false;
+
     return bRval;
     
 }
@@ -975,8 +980,11 @@
             } // for x
         } // if != #
     } // for aCardData...
-    
-    
+	
+	// V2 Quality improvement, this could check for any deviation from the expected deck size.
+	if ([delverDeck count] == 0)
+		bRval = false;
+	
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopDelverDeck() Built Delver Deck w/ %ld cards.",
                      [delverDeck count]];
     [cli debugMsg:msg level:2];
@@ -1003,6 +1011,10 @@
 
         } // if != #
     } // for aCardData...
+	
+	// V2 Quality improvement, this could check for any deviation from the expected deck size.
+	if ([endOfAgeDeck count] == 0)
+		bRval = false;
     
     
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopEndOfAgeDeck() Built End of Age Deck w/ %ld cards.",
@@ -1076,7 +1088,10 @@
         } // if != #
     } // for aCardData...
     
-    
+	// V2 Quality improvement, this could check for any deviation from the expected deck size.
+	if ([wonderDeck count] == 0)
+		bRval = false;
+
     NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDeck() Built Wonder Deck w/ %ld cards.",
                      [wonderDeck count]];
     [cli debugMsg:msg level:2];
