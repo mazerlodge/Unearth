@@ -39,7 +39,8 @@
     
     // TODO: Add more dictionary parsing
     //      (e.g. grab delver cards, ruins deck, end of age card, stone bag, active wonders)
-    
+	
+	cli = [dict objectForKey:@"CommandLineInterface"];
     players = [dict objectForKey:@"PlayerArray"];
     endOfAgeCard = [dict objectForKey:@"EndOfAgeCard"];
     stoneBag = [dict objectForKey:@"StoneBag"];
@@ -58,8 +59,8 @@
     
     [cli put:@"Inside of UnearthGameEngine.\n"];
     
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGE state = %@\n", gameState];
-    [cli put:msg];
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGE state = %@", gameState];
+    [cli debugMsg:msg level:100];
     
     msg = [[NSString alloc] initWithFormat:@"Game has %ld players.\n", [players count]];
     [cli put:msg];

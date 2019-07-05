@@ -193,13 +193,15 @@ S1 POA - Unearth
     - Fixed data file name used in test 6 (correct name is _QDelverCards.plist) 
     - Added code to each populate...Deck() method to return false if 0 cards in deck.
     - Added code to terminate game if decks are not populated. 
-    
+    - Added passing of cli from UGF to UGE.
+
 > In-Progress:
 
 
 > Next: (Note: UC=Use Case)
 
-    See [Use Cases - Unearth.txt] 0601
+    Use Cases F0 & F1, Flesh out UGE.go() with game engine loop at command line. 
+        N-- See [Use Cases - Unearth.txt] 0601
 
     Administrivia; List make Game with args, what is already passed, what is needed. 0622
 

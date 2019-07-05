@@ -828,7 +828,8 @@
 
         // TODO: Expand gameDataDict dictionary used to pass info into game engine.
         //       e.g. passing shuffled decks, random end of age card, & stonebag
-        NSDictionary *gameDataDict = @{ @"PlayerArray" : players,
+		NSDictionary *gameDataDict = @{ @"CommandLineInterface" : cli,
+									    @"PlayerArray" : players,
                                         @"EndOfAgeCard" : endOfAgeCard,
                                         @"StoneBag" : stoneBag
                                         };
