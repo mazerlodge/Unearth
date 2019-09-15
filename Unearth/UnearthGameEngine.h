@@ -18,9 +18,13 @@
     NSString *gameState;
     CommandLineInterface *cli;
     NSArray *delverDeck;
+	NSArray *ruinsDeck;
     NSArray *players;
     StoneBag *stoneBag;
     EndOfAgeCard *endOfAgeCard;
+	
+	int currentDelverDeckIdx;
+	int currentRuinsDeckIdx;
     
 }
 

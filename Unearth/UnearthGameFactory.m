@@ -831,7 +831,9 @@
 		NSDictionary *gameDataDict = @{ @"CommandLineInterface" : cli,
 									    @"PlayerArray" : players,
                                         @"EndOfAgeCard" : endOfAgeCard,
-                                        @"StoneBag" : stoneBag
+                                        @"StoneBag" : stoneBag,
+										@"DelverDeck" : delverDeck,
+										@"RuinsDeck" : ruinsDeck
                                         };
         [uge populateGameFromDictionary:gameDataDict];
 
@@ -947,6 +949,8 @@
         
     } // for colorIdx
 	
+	ruinsDeck = [self shuffleDeck:ruinsDeck];
+	
 	// V2 Quality improvement, this could check for any deviation from the expected deck size.
 	if ([ruinsDeck count] == 0)
 		bRval = false;
@@ -982,6 +986,9 @@
         } // if != #
     } // for aCardData...
 	
+	// shuffle the deck
+	delverDeck = [self shuffleDeck:delverDeck];
+	
 	// V2 Quality improvement, this could check for any deviation from the expected deck size.
 	if ([delverDeck count] == 0)
 		bRval = false;
@@ -1012,6 +1019,8 @@
 
         } // if != #
     } // for aCardData...
+	
+	endOfAgeDeck = [self shuffleDeck:endOfAgeDeck];
 	
 	// V2 Quality improvement, this could check for any deviation from the expected deck size.
 	if ([endOfAgeDeck count] == 0)
@@ -1099,6 +1108,25 @@
     
     return bRval;
     
+}
+
+- (NSArray *) shuffleDeck: (NSArray *) theDeck {
+	// Shuffle the provided deck of cards and return shuffled form.
+	
+	NSArray *rval = [[NSArray alloc] init];
+	NSMutableArray *inputDeck = [[NSMutableArray alloc] initWithArray:theDeck];
+
+	for (int x=0; x<[theDeck count]; x++) {
+		int remainingDeckSize = (int) [inputDeck count] - 1;
+		int inputIdx = [re getNextRandBetween:0 maxValueInclusive:remainingDeckSize];
+	
+		rval = [rval arrayByAddingObject:[inputDeck objectAtIndex:inputIdx]];
+		[inputDeck removeObjectAtIndex:inputIdx];
+		
+	}
+	
+	return rval;
+	
 }
 
 - (NSString *) startupAction {

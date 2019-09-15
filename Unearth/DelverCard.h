@@ -22,6 +22,9 @@
 - (id) initWithString: (NSString *) cardData;
 - (NSString *) toString;
 
+@property (readwrite, assign) int cardID;
+
+
 /*
  Method list from [Object Library.txt]
  > DelverCard

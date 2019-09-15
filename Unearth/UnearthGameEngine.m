@@ -44,6 +44,11 @@
     players = [dict objectForKey:@"PlayerArray"];
     endOfAgeCard = [dict objectForKey:@"EndOfAgeCard"];
     stoneBag = [dict objectForKey:@"StoneBag"];
+	delverDeck = [dict objectForKey:@"DelverDeck"];
+	ruinsDeck = [dict objectForKey:@"RuinsDeck"];
+	
+	currentDelverDeckIdx = 0;
+	currentRuinsDeckIdx = 0;
     
     // TODO: Add some validation of the above, for now assume it worked
 
@@ -55,6 +60,35 @@
     return bRval;
 }
 
+- (DelverCard *) getDelverCardFromDeck {
+	
+	DelverCard *rval = [[DelverCard alloc] initWithString:@"-1,NOT_SET,NOT_SET,-1"];
+	
+	if (currentDelverDeckIdx != -1) {
+		rval = [delverDeck objectAtIndex:currentDelverDeckIdx];
+		currentDelverDeckIdx++;
+
+	}
+	
+	if (currentDelverDeckIdx >= [delverDeck count])
+		currentDelverDeckIdx = -1;
+	
+	return rval;
+	
+}
+
+- (void) doInitialGameSetup {
+	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
+	
+	for (UnearthPlayer *aPlayer in players) {
+		[aPlayer addDelverCard:[self getDelverCardFromDeck]];
+		[aPlayer addDelverCard:[self getDelverCardFromDeck]];
+
+		// TODO: Also add a ruin card face down
+	}
+	
+}
+
 - (int) go {
     
     [cli put:@"Inside of UnearthGameEngine.\n"];
@@ -64,6 +98,9 @@
     
     msg = [[NSString alloc] initWithFormat:@"Game has %ld players.\n", [players count]];
     [cli put:msg];
+	
+	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
+	[self doInitialGameSetup];
     
     return 0;
     

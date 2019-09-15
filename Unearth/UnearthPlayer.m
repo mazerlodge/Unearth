@@ -14,7 +14,9 @@
     playerType = type;
     playerName = name;
     dieColor = color;
-    
+	
+	delverCards = [[NSMutableArray alloc] initWithCapacity:2];
+	
     return self;
     
 }
@@ -28,6 +30,30 @@
     return playerName;
     
 }
+
+- (NSUInteger) addDelverCard: (DelverCard *) card {
+	NSUInteger delverCardCount = 0;
+	
+	[delverCards addObject:card];
+	delverCardCount = [delverCards count];
+	
+	return delverCardCount;
+}
+
+- (DelverCard *) playDelverCard: (int) cardID {
+	// Returns a card with baseID = -1 if specified cardID wasn't found.
+	
+	DelverCard *cardToPlay = [[DelverCard alloc] initWithString:@"-1,NOT_SET,NOT_SET,-1"];
+	
+	for (DelverCard *aCard in delverCards) {
+		if ([aCard cardID] == cardID)
+			cardToPlay = aCard;
+	}
+	
+	return cardToPlay;
+	
+}
+
 
 - (NSString *) toString {
 	// Supports diagnostic and debug printing

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DelverDie.h"
+#import "DelverCard.h"
 
 typedef enum UnearthPlayerType : NSUInteger {
     UnearthPlayerHuman = 0,
@@ -20,6 +21,7 @@ typedef enum UnearthPlayerType : NSUInteger {
     NSString *playerName;
     UnearthPlayerType playerType;
     DelverDieColor dieColor;
+	NSMutableArray *delverCards;
     
 }
 
@@ -27,6 +29,8 @@ typedef enum UnearthPlayerType : NSUInteger {
 
 - (DelverDieColor) dieColor;
 - (NSString *) playerName;
+- (NSUInteger) addDelverCard: (DelverCard *) card;
+- (DelverCard *) playDelverCard: (int) cardID;
 
 - (NSString *) toString;
 

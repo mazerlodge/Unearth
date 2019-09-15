@@ -10,6 +10,7 @@
 
 @implementation DelverCard
 
+@synthesize cardID = baseID;
 
 - (id) initWithString: (NSString *) cardData; {
     

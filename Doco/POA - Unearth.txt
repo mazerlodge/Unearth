@@ -196,14 +196,19 @@ S1 POA - Unearth
     - Added passing of cli from UGF to UGE.
 
 09/15
-    - Created S1 - What Next 20190915.txt 
+    - Created S1 - What Next 20190915.txt
+	- Added UGF.shuffleDeck() method and invoked in UGF methods that make decks.
+	- Added passing delverDeck and ruinsDeck from UGF to UGE.
+	- Added exposing base card ID to DelverCard class
+	- Added addDelverCard() and playDelverCard() methods to UnearthPlayer class.
+	- Added doInitialGameSetup() to UGE and invoked from go(), added dealing initial two delver cards to each player
 
 > In-Progress:
 
 
 > Next: (Note: UC=Use Case)
     See S1 - What Next 20190915.txt 
-        TL;DR - Game engine is ready to set up board, deal delvers (2x) and ruin card to players 
+        TL;DR - add dealing ruin card to players in UGE.doInitialGameSetup() 
 
     Use Cases F0 & F1, Flesh out UGE.go() with game engine loop at command line. 
         N-- See [Use Cases - Unearth.txt] 0601
