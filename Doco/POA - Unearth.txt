@@ -195,10 +195,15 @@ S1 POA - Unearth
     - Added code to terminate game if decks are not populated. 
     - Added passing of cli from UGF to UGE.
 
+09/15
+    - Created S1 - What Next 20190915.txt 
+
 > In-Progress:
 
 
 > Next: (Note: UC=Use Case)
+    See S1 - What Next 20190915.txt 
+        TL;DR - Game engine is ready to set up board, deal delvers (2x) and ruin card to players 
 
     Use Cases F0 & F1, Flesh out UGE.go() with game engine loop at command line. 
         N-- See [Use Cases - Unearth.txt] 0601
