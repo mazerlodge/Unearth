@@ -199,7 +199,8 @@
 	msg = @"\n\n---------- Ruins Deck -------------\n";
 	[cli debugMsg:msg level:5];
 
-	for (RuinCard *rc in ruinsDeck) {
+	while ([ruinsDeck getCount] > 0) {
+		RuinCard *rc = [ruinsDeck getNextCard];
 		msg = [NSString stringWithFormat:@"%@\n",[rc toString]];
 		[cli debugMsg:msg level:5];
 	}
@@ -934,7 +935,7 @@
                                     RuinCardColorPurple,
                                     RuinCardColorGray};
     
-    ruinsDeck = [[NSArray alloc] init];
+    NSArray *ruinsCards = [[NSArray alloc] init];
     for (int colorIdx=0; colorIdx < 5; colorIdx++) {
         RuinCardColor currentColor = allColors[colorIdx];
         for (int valueIdx=0; valueIdx < 5; valueIdx++) {
@@ -943,16 +944,18 @@
             RuinCard *currentCard = [[RuinCard alloc] initWithColor:currentColor
                                                          claimValue:currentClaimValue
                                                          stoneValue:currentStoneValue];
-            ruinsDeck = [ruinsDeck arrayByAddingObject:currentCard];
+            ruinsCards = [ruinsCards arrayByAddingObject:currentCard];
             
         } // for valueIdx
         
     } // for colorIdx
 	
-	ruinsDeck = [self shuffleDeck:ruinsDeck];
+	// Shuffle deck and put it in the RuinsCard class instance.
+	ruinsCards = [self shuffleDeck:ruinsCards];
+	ruinsDeck = [[RuinDeck alloc] initWithRuinCards:ruinsCards];
 	
 	// V2 Quality improvement, this could check for any deviation from the expected deck size.
-	if ([ruinsDeck count] == 0)
+	if ([ruinsCards count] == 0)
 		bRval = false;
 
     return bRval;

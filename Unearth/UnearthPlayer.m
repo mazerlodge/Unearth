@@ -16,7 +16,8 @@
     dieColor = color;
 	
 	delverCards = [[NSMutableArray alloc] initWithCapacity:2];
-	
+	ruinCards = [[NSMutableArray alloc] initWithCapacity:1];
+
     return self;
     
 }
@@ -38,6 +39,17 @@
 	delverCardCount = [delverCards count];
 	
 	return delverCardCount;
+}
+
+- (NSUInteger) addRuinCard: (RuinCard *) card {
+
+	NSUInteger ruinCardCount = 0;
+	
+	[ruinCards addObject:card];
+	ruinCardCount = [ruinCards count];
+	
+	return ruinCardCount;
+
 }
 
 - (DelverCard *) playDelverCard: (int) cardID {

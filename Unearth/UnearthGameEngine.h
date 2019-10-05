@@ -12,13 +12,14 @@
 #import "EndOfAgeCard.h"
 #import "Stone.h"
 #import "StoneBag.h"
+#import "RuinDeck.h"
 
 @interface UnearthGameEngine : NSObject {
     
     NSString *gameState;
     CommandLineInterface *cli;
     NSArray *delverDeck;
-	NSArray *ruinsDeck;
+	RuinDeck *ruinsDeck;
     NSArray *players;
     StoneBag *stoneBag;
     EndOfAgeCard *endOfAgeCard;

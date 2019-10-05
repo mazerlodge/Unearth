@@ -15,12 +15,7 @@ Current 'playGame' startup, what happens (with -debug -debuglevel 100)
 	Program ended with exit code: 0
 
 What should happen next: 
-	- Game engine is ready to set up board, deal delvers (2x) and ruin card to players 
-	- game needs to get a ruinDeck (check rules)
-		- are single ruin cards dealt to players first? 
-		- how many in deck based on player count
-	- players need to get 2 delver cards each 
-	- players need to get a ruin card each 
+	- Game engine is ready to set up board
 
 	- who's the first player (player 1 ) 
 	- what can they do (need to make a list of possible actions) 

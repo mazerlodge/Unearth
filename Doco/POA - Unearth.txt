@@ -203,6 +203,9 @@ S1 POA - Unearth
 	- Added addDelverCard() and playDelverCard() methods to UnearthPlayer class.
 	- Added doInitialGameSetup() to UGE and invoked from go(), added dealing initial two delver cards to each player
 
+10/05
+    - Added code to give each player a ruin card at game start and required related methods.
+    
 > In-Progress:
 
 
@@ -226,7 +229,7 @@ S1 POA - Unearth
 
     HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed. (2x)
 
-    RuinCard.m:	// TODO: Add Delver Dice to output string.
+    RuinCard.m:	// TODO: Add Delver Dice to output string (ref to delver dice on the card).
 
     EndOfAgeCard.m:	// TODO: Add Delver Dice to output string.
 

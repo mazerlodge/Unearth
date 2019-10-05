@@ -24,6 +24,7 @@
 #import "DelverDie.h"
 #import "HexMap.h"
 #import "StoneBag.h"
+#import "RuinDeck.h"
 
 // CONSTANTS for Stone ID starting numbers
 #define MIN_STONE_ID 10
@@ -42,8 +43,8 @@
     
     NSArray *delverDeck;
     NSArray *endOfAgeDeck;
-    NSArray *ruinsDeck;
     NSArray *wonderDeck;
+    RuinDeck *ruinsDeck;
     StoneBag *stoneBag;
     
     

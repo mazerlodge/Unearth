@@ -77,6 +77,19 @@
 	
 }
 
+- (RuinCard *) getRuinCardFromDeck {
+	
+	RuinCard *rval = [[RuinCard alloc] initWithColor:RuinCardColorGray claimValue:-1 stoneValue:0];
+	
+	if ([ruinsDeck getCount] > 0) {
+		rval = [ruinsDeck getNextCard];
+
+	}
+		
+	return rval;
+	
+}
+
 - (void) doInitialGameSetup {
 	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
 	
@@ -84,7 +97,9 @@
 		[aPlayer addDelverCard:[self getDelverCardFromDeck]];
 		[aPlayer addDelverCard:[self getDelverCardFromDeck]];
 
-		// TODO: Also add a ruin card face down
+		// Give each player a ruin card face down (cards default to face down).
+		// No need to check if cards are remaining in the deck as this is the start of game.
+		[aPlayer addRuinCard:[self getRuinCardFromDeck]];
 	}
 	
 }
