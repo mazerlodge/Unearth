@@ -15,10 +15,22 @@ Current 'playGame' startup, what happens (with -debug -debuglevel 100)
 	Program ended with exit code: 0
 
 What should happen next: 
-	- Game engine is ready to set up board
+	- Remove top 5 (10 for 2 player) ruin cards and put them "in the box" (may be drawn by players later) 
+		-- Need to establish "the Box" in UGE class.
+	- Put 5 (4 for 2 player) ruin cards face up on the table 
+	- Draw stones from the bag and put them on the ruin cards on the table (according to stone value)
+		-- Need to add a method to the RuinCard class to expose this number.
+	- Put (number of players + 2) named wonder cards on the table 
+	- Put the lesser and greater wonder cards on the table w/ shuffled tokens on them (tokens have varying values)
+		-- Note lesser/greater wonders were implemented as invididual instances of the Wonder class.
+	- Players roll to see who goes first (Rules don't specify which die, d6 would work)
+		-- Create a currentPlayerIdx in the UGE class.
 
-	- who's the first player (player 1 ) 
-	- what can they do (need to make a list of possible actions) 
+	- On a players turn there are two phases 
+		-- Delver phase 
+		-- Excavation phase 
+
+	- General action a player can they do (need to make a list of possible actions) 
 		look at delver cards 
 		look at ruin cards 
 		see the board 
