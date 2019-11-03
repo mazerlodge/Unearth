@@ -211,7 +211,6 @@ S1 POA - Unearth
 
 > Next: (Note: UC=Use Case)
     See S1 - What Next 20190915.txt 
-        TL;DR - add dealing ruin card to players in UGE.doInitialGameSetup() 
 
     Use Cases F0 & F1, Flesh out UGE.go() with game engine loop at command line. 
         N-- See [Use Cases - Unearth.txt] 0601
