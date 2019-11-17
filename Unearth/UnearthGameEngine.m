@@ -107,6 +107,12 @@
 	for (int x=0; x<5; x++)
 		ruinsInBox = [ruinsInBox arrayByAddingObject:[ruinsDeck getNextCard]];
 	
+	// Put next five ruin cards on the table (four for two player)
+	int maxNumCards = ([players count] > 2) ? 5 : 4;
+	ruinsOnTable = [[NSArray alloc] init];
+	for (int x=0; x<maxNumCards; x++)
+		ruinsOnTable = [ruinsOnTable arrayByAddingObject:[ruinsDeck getNextCard]];
+
 	NSLog(@"Just a breakpoint, nothing to see");
 	
 	

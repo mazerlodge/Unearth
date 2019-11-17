@@ -208,7 +208,8 @@ S1 POA - Unearth
     
 11/17
 	- Added code to put initial 5 ruin cards in the box during UGE.doInitialGameSetup()
-	
+	- Added code to put next 5 ruin cards on the table during UGE.doInitialGameSetup()
+
 > In-Progress:
 
 
