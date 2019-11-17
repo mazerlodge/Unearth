@@ -206,6 +206,9 @@ S1 POA - Unearth
 10/05
     - Added code to give each player a ruin card at game start and required related methods.
     
+11/17
+	- Added code to put initial 5 ruin cards in the box during UGE.doInitialGameSetup()
+	
 > In-Progress:
 
 

@@ -102,6 +102,14 @@
 		[aPlayer addRuinCard:[self getRuinCardFromDeck]];
 	}
 	
+	// Put top five ruin cards in the box.
+	ruinsInBox = [[NSArray alloc] init];
+	for (int x=0; x<5; x++)
+		ruinsInBox = [ruinsInBox arrayByAddingObject:[ruinsDeck getNextCard]];
+	
+	NSLog(@"Just a breakpoint, nothing to see");
+	
+	
 }
 
 - (int) go {

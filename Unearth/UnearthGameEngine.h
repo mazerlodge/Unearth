@@ -20,6 +20,7 @@
     CommandLineInterface *cli;
     NSArray *delverDeck;
 	RuinDeck *ruinsDeck;
+	NSArray *ruinsInBox; // Top 5 cards are put in box at game start.
     NSArray *players;
     StoneBag *stoneBag;
     EndOfAgeCard *endOfAgeCard;
