@@ -1,17 +1,21 @@
 S1 - Whats Next 20910915
 
-Current 'playGame' startup, what happens (with -debug -debuglevel 100)
+Current 'playGame' startup, what happens (with -debug -debuglevel 5)
+	UGF.validateArguments() Info, debug parameter detected, min debug message level set to 5.
 	How many players?2
 	Collecting info for player  #1.
 	Select player type (0=human, 1=ai)? 0
-	Select die color (0=Orange, 1=Yellow, 2=Green, 3=Blue)?3
+	Select die color (0=Orange, 1=Yellow, 2=Green, 3=Blue)?0
 	Enter unused name for player: Paul
 	Collecting info for player  #2.
 	Select player type (0=human, 1=ai)? 1
-	Select die color (0=Orange, 1=Yellow, 2=Green)?0
+	Select die color (1=Yellow, 2=Green, 3=Blue)?1
 	Enter unused name for player: Mac
 	Inside of UnearthGameEngine.
+	UGE state = POPULATED(Severity: 100)
 	Game has 2 players.
+	Player Paul goes first.
+	2019-11-30 17:32:10.715822-0600 Unearth[18559:3117235] Just a breakpoint, nothing to see
 	Program ended with exit code: 0
 
 What should happen next: 
