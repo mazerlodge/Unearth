@@ -159,7 +159,23 @@
 	for (int x=0; x<[players count]+2; x++)
 		namedWondersOnTable = [namedWondersOnTable arrayByAddingObject:[self getWonderFromDeck:WonderTypeNamed]];
 	
-		
+	// Determine who goes first, each player roles a d6, high value goes first
+	int highPlayerIdx = -1;
+	int highRoll = -1;
+	for (int x=0; x<[players count]; x++) {
+		UnearthPlayer *currentPlayer = [players objectAtIndex:x];
+		int currentRoll = [currentPlayer roleDie:DelverDieSize6];
+		if (currentRoll > highRoll) {
+			highPlayerIdx = x;
+			highRoll = currentRoll;
+			
+		}
+	}
+
+	currentPlayerIdx = highPlayerIdx;
+	UnearthPlayer *firstPlayer = [players objectAtIndex:currentPlayerIdx];
+	NSString *msg = [[NSString alloc] initWithFormat:@"Player %@ goes first.\n", [firstPlayer playerName]];
+	[cli put:msg];
 	
 	NSLog(@"Just a breakpoint, nothing to see");
 	

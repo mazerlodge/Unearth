@@ -10,6 +10,7 @@
 #import "DelverDie.h"
 #import "DelverCard.h"
 #import "RuinCard.h"
+#import "RandomEngine.h"
 
 typedef enum UnearthPlayerType : NSUInteger {
     UnearthPlayerHuman = 0,
@@ -24,16 +25,19 @@ typedef enum UnearthPlayerType : NSUInteger {
     DelverDieColor dieColor;
 	NSMutableArray *delverCards;
 	NSMutableArray *ruinCards;
-    
+	RandomEngine *re;
+	
 }
 
-- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name;
+- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name randomEngine: (RandomEngine *) randomEngine;
+
 
 - (DelverDieColor) dieColor;
 - (NSString *) playerName;
 - (NSUInteger) addDelverCard: (DelverCard *) card;
 - (NSUInteger) addRuinCard: (RuinCard *) card;
 - (DelverCard *) playDelverCard: (int) cardID;
+- (int) roleDie: (DelverDieSize) dieSize;
 
 - (NSString *) toString;
 

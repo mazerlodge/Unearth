@@ -36,6 +36,7 @@
 	int currentLesserWonderIdx;
 	int currentGreaterWonderIdx;
 	int currentNamedWonderIdx;
+	int currentPlayerIdx;
 
 }
 

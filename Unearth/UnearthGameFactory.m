@@ -750,7 +750,8 @@
         
     UnearthPlayer *player = [[UnearthPlayer alloc] initWithPlayerType:playerType
                                                              dieColor:dieColor
-                                                           playerName:name];
+                                                           playerName:name
+														 randomEngine:re];
     
     return player;
 

@@ -213,6 +213,9 @@ S1 POA - Unearth
 11/30
 	- Draw stones from the bag and put them on the ruin cards on the table (according to stone value)
 	- Put named wonder cards on the table equal to (number of players + 2) 
+	- Put the shuffled lesser and greater wonder cards in the UGE. 
+	- Determine who goes first by having each player roll a d6 (Rules don't specify which die)
+
 
 > In-Progress:
 

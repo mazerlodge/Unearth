@@ -10,10 +10,11 @@
 
 @implementation UnearthPlayer
 
-- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name {
+- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name randomEngine:(RandomEngine *) randomEngine {
     playerType = type;
     playerName = name;
     dieColor = color;
+	re = randomEngine;
 	
 	delverCards = [[NSMutableArray alloc] initWithCapacity:2];
 	ruinCards = [[NSMutableArray alloc] initWithCapacity:1];
@@ -64,6 +65,33 @@
 	
 	return cardToPlay;
 	
+}
+
+- (int) roleDie: (DelverDieSize) dieSize {
+	
+	int rval = -1;
+	int maxDieVal = -1;
+	
+	switch (dieSize) {
+		case DelverDieSize4:
+			maxDieVal = 4;
+			break;
+		
+		case DelverDieSize6:
+			maxDieVal = 6;
+			break;
+			
+		case DelverDieSize8:
+			maxDieVal = 8;
+			break;
+			
+		default:
+			break;
+	}
+	
+	rval = [re getNextRandBetween:1 maxValueInclusive:maxDieVal];
+	
+	return rval;
 }
 
 
