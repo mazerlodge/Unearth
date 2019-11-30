@@ -43,7 +43,9 @@
     
     NSArray *delverDeck;
     NSArray *endOfAgeDeck;
-    NSArray *wonderDeck;
+    NSArray *lesserWonderDeck;
+    NSArray *greaterWonderDeck;
+    NSArray *namedWonderDeck;
     RuinDeck *ruinsDeck;
     StoneBag *stoneBag;
     

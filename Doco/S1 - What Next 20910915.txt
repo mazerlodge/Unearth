@@ -15,7 +15,6 @@ Current 'playGame' startup, what happens (with -debug -debuglevel 100)
 	Program ended with exit code: 0
 
 What should happen next: 
-	- Put (number of players + 2) named wonder cards on the table 
 	- Put the lesser and greater wonder cards on the table w/ shuffled tokens on them (tokens have varying values)
 		-- Note lesser/greater wonders were implemented as invididual instances of the Wonder class.
 	- Players roll to see who goes first (Rules don't specify which die, d6 would work)

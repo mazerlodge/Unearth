@@ -46,10 +46,16 @@
     stoneBag = [dict objectForKey:@"StoneBag"];
 	delverDeck = [dict objectForKey:@"DelverDeck"];
 	ruinsDeck = [dict objectForKey:@"RuinsDeck"];
-	
+	lesserWondersDeck = [dict objectForKey:@"LesserWondersDeck"];
+	greaterWondersDeck = [dict objectForKey:@"GreaterWondersDeck"];
+	namedWondersDeck = [dict objectForKey:@"NamedWondersDeck"];
+
 	currentDelverDeckIdx = 0;
 	currentRuinsDeckIdx = 0;
-    
+	currentLesserWonderIdx = 0;
+	currentGreaterWonderIdx = 0;
+	currentNamedWonderIdx = 0;
+
     // TODO: Add some validation of the above, for now assume it worked
 
     if (bRval)
@@ -90,6 +96,32 @@
 	
 }
 
+- (Wonder *) getWonderFromDeck: (WonderType) wonderType {
+	
+	Wonder *rval;
+	
+	switch(wonderType) {
+		case WonderTypeLesser:
+			rval = [lesserWondersDeck objectAtIndex:currentLesserWonderIdx];
+			currentLesserWonderIdx++;
+			break;
+
+		case WonderTypeGreater:
+			rval = [greaterWondersDeck objectAtIndex:currentGreaterWonderIdx];
+			currentGreaterWonderIdx++;
+			break;
+
+		case WonderTypeNamed:
+			rval = [namedWondersDeck objectAtIndex:currentNamedWonderIdx];
+			currentNamedWonderIdx++;
+			break;
+
+	}
+	
+	return rval;
+	
+}
+
 - (void) doInitialGameSetup {
 	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
 	
@@ -121,6 +153,14 @@
 			[currentCard addStoneToCard:[stoneBag getNextStone]];
 
 	}
+	
+	// Put (number of players + 2) named wonder cards on the table
+	namedWondersOnTable = [[NSArray alloc] init];
+	for (int x=0; x<[players count]+2; x++)
+		namedWondersOnTable = [namedWondersOnTable arrayByAddingObject:[self getWonderFromDeck:WonderTypeNamed]];
+	
+		
+	
 	NSLog(@"Just a breakpoint, nothing to see");
 	
 	

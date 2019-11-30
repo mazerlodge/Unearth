@@ -183,11 +183,21 @@
 	[cli debugMsg:msg level:5];
 
 	
-	for (Wonder *aw in wonderDeck) {
+	for (Wonder *aw in lesserWonderDeck) {
 		msg = [NSString stringWithFormat:@"%@\n",[aw toString]];
 		[cli debugMsg:msg level:5];
 	}
-	
+
+	for (Wonder *aw in greaterWonderDeck) {
+		msg = [NSString stringWithFormat:@"%@\n",[aw toString]];
+		[cli debugMsg:msg level:5];
+	}
+
+	for (Wonder *aw in namedWonderDeck) {
+		msg = [NSString stringWithFormat:@"%@\n",[aw toString]];
+		[cli debugMsg:msg level:5];
+	}
+
 	msg = @"\n\n---------- Delver Deck -------------\n";
 	[cli debugMsg:msg level:5];
 	
@@ -252,7 +262,7 @@
 	
 	// Put a lesser wonder in the middle of the 'loop' just created.
 	Wonder *aTestLesserWonder;
-	for (Wonder *aW in wonderDeck) {
+	for (Wonder *aW in lesserWonderDeck) {
 		if ([aW wonderType] == WonderTypeLesser) {
 			aTestLesserWonder = aW;
 			break;
@@ -834,7 +844,10 @@
                                         @"EndOfAgeCard" : endOfAgeCard,
                                         @"StoneBag" : stoneBag,
 										@"DelverDeck" : delverDeck,
-										@"RuinsDeck" : ruinsDeck
+										@"RuinsDeck" : ruinsDeck,
+										@"LesserWondersDeck" : lesserWonderDeck,
+										@"GreaterWondersDeck" : greaterWonderDeck,
+										@"NamedWondersDeck" : namedWonderDeck,
                                         };
         [uge populateGameFromDictionary:gameDataDict];
 
@@ -862,7 +875,7 @@
     buildResults[0] = [self populateDelverDeck];
     buildResults[1] = [self populateEndOfAgeDeck];
     buildResults[2] = [self populateRuinDeck];
-    buildResults[3] = [self populateWonderDeck];
+    buildResults[3] = [self populateWonderDecks];
     
     // Make stone bag, 60x, 15x of each color (defined in Stone.h as StoneColor...)
     buildResults[4] = [self populateStoneBag];
@@ -1038,7 +1051,7 @@
     
 }
 
-- (bool) populateWonderDeck {
+- (bool) populateWonderDecks {
     
     bool bRval = true;
 	int nextID = MIN_WONDER_ID;
@@ -1049,7 +1062,9 @@
 	int GREATER_WONDER__COUNTS[] = {1, 4, 1};
 	int GREATER_WONDER__VALUES[] = {6, 7, 8};
 	
-    wonderDeck = [[NSArray alloc] init];
+    lesserWonderDeck = [[NSArray alloc] init];
+    greaterWonderDeck = [[NSArray alloc] init];
+    namedWonderDeck = [[NSArray alloc] init];
     NSArray *wonderCardData = [self getDataForQConfigKey:@"DataFile_WonderCards"];
     for(NSString *aCardData in wonderCardData) {
         // Data format is in line zero: #ID, Title, Text, ColorRule
@@ -1064,7 +1079,7 @@
 				case WonderTypeNamed:
 					// Named Wonder cards do not have multiple copies, just make one of the card specified.
 					aCard = [[Wonder alloc] initWithString:aCardData newID:nextID pointValue: -1];
-					wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+					namedWonderDeck = [namedWonderDeck arrayByAddingObject:aCard];
 					nextID++;
 					break;
 
@@ -1075,7 +1090,7 @@
 							aCard = [[Wonder alloc] initWithString:aCardData
 															 newID:nextID
 														 pointValue:currentValue];
-							wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+							lesserWonderDeck = [lesserWonderDeck arrayByAddingObject:aCard];
 							nextID++;
 
 						}
@@ -1089,7 +1104,7 @@
 							aCard = [[Wonder alloc] initWithString:aCardData
 															 newID:nextID
 														 pointValue:currentValue];
-							wonderDeck = [wonderDeck arrayByAddingObject:aCard];
+							greaterWonderDeck = [greaterWonderDeck arrayByAddingObject:aCard];
 							nextID++;
 							
 						}
@@ -1100,15 +1115,34 @@
             
         } // if != #
     } // for aCardData...
-    
+	
+	// Shuffle decks
+	lesserWonderDeck = [self shuffleDeck:lesserWonderDeck];
+	greaterWonderDeck = [self shuffleDeck:greaterWonderDeck];
+	namedWonderDeck = [self shuffleDeck:namedWonderDeck];
+
 	// V2 Quality improvement, this could check for any deviation from the expected deck size.
-	if ([wonderDeck count] == 0)
+	if ([lesserWonderDeck count] == 0)
 		bRval = false;
 
-    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDeck() Built Wonder Deck w/ %ld cards.",
-                     [wonderDeck count]];
+	if ([greaterWonderDeck count] == 0)
+		bRval = false;
+
+	if ([namedWonderDeck count] == 0)
+		bRval = false;
+
+    NSString *msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDecks() Built Lesser Wonder Deck w/ %ld cards.",
+                     [lesserWonderDeck count]];
     [cli debugMsg:msg level:2];
-    
+
+	msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDecks() Built Greater Wonder Deck w/ %ld cards.",
+                     [greaterWonderDeck count]];
+    [cli debugMsg:msg level:2];
+
+    msg = [[NSString alloc] initWithFormat:@"UGF.PopWonderDecks() Built Named Wonder Deck w/ %ld cards.",
+                     [namedWonderDeck count]];
+    [cli debugMsg:msg level:2];
+
     return bRval;
     
 }

@@ -13,6 +13,7 @@
 #import "Stone.h"
 #import "StoneBag.h"
 #import "RuinDeck.h"
+#import "Wonder.h"
 
 @interface UnearthGameEngine : NSObject {
     
@@ -20,15 +21,22 @@
     CommandLineInterface *cli;
     NSArray *delverDeck;
 	RuinDeck *ruinsDeck;
+	NSArray *lesserWondersDeck;
+	NSArray *greaterWondersDeck;
+	NSArray *namedWondersDeck;
 	NSArray *ruinsInBox; // Top 5 cards are put in box at game start.
-	NSArray *ruinsOnTable; 
+	NSArray *ruinsOnTable;
+	NSArray *namedWondersOnTable;
     NSArray *players;
     StoneBag *stoneBag;
     EndOfAgeCard *endOfAgeCard;
 	
 	int currentDelverDeckIdx;
 	int currentRuinsDeckIdx;
-    
+	int currentLesserWonderIdx;
+	int currentGreaterWonderIdx;
+	int currentNamedWonderIdx;
+
 }
 
 - (id) initWithGameDataDictionary: (NSDictionary *) dict;
