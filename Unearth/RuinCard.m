@@ -46,7 +46,7 @@
     bFaceDown = true;
     cardColor = color;
     claimValue = claimVal;
-    stoneValue = stoneVal;
+    cardStoneValue = stoneVal;
     
     stones = [[NSMutableArray alloc] initWithCapacity:stoneVal];
     delverDice = [[NSMutableArray alloc] init];
@@ -55,14 +55,37 @@
     
 }
 
+- (NSUInteger) addStoneToCard: (Stone *) stoneToAdd {
+	[stones addObject:stoneToAdd];
+	
+	return [stones count];
+}
+
+- (int) stoneValue {
+	return cardStoneValue;
+	
+}
 
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
 	
 	// TODO: Add Delver Dice to output string.
 	
-	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card color=%@ claimValue=%d StoneValue=%d",
-					  [RuinCard RuinCardColorToString:cardColor], claimValue, stoneValue];
+	
+	
+	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card color=%@ claimValue=%d cardStoneValue=%d",
+					  [RuinCard RuinCardColorToString:cardColor], claimValue, cardStoneValue];
+	
+	if ([stones count] > 0) {
+		NSString *stonesMsg = @"\nStones on card:\n";
+		for (int x=0; x<[stones count]; x++) {
+			Stone *currentStone = [stones objectAtIndex:x];
+			stonesMsg = [stonesMsg stringByAppendingFormat:@"\t%@\n", [currentStone toString]];
+		}
+
+		rval = [rval stringByAppendingFormat:@"%@", stonesMsg];
+	}
+	
 	
 	return rval;
 	

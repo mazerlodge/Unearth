@@ -113,6 +113,14 @@
 	for (int x=0; x<maxNumCards; x++)
 		ruinsOnTable = [ruinsOnTable arrayByAddingObject:[ruinsDeck getNextCard]];
 
+	// For the cards on the table, put appropriate stone count on each card.
+	RuinCard *currentCard;
+	for (int x=0; x<[ruinsOnTable count]; x++) {
+		currentCard = [ruinsOnTable objectAtIndex:x];
+		for (int s=0; s<[currentCard stoneValue]; s++)
+			[currentCard addStoneToCard:[stoneBag getNextStone]];
+
+	}
 	NSLog(@"Just a breakpoint, nothing to see");
 	
 	

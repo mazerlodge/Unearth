@@ -210,6 +210,9 @@ S1 POA - Unearth
 	- Added code to put initial 5 ruin cards in the box during UGE.doInitialGameSetup()
 	- Added code to put next 5 ruin cards on the table during UGE.doInitialGameSetup()
 
+11/30
+	- Draw stones from the bag and put them on the ruin cards on the table (according to stone value)
+
 > In-Progress:
 
 
