@@ -27,9 +27,12 @@ What should happen next:
 		look at delver cards 
 		look at ruin cards 
 		see the board 
-	- Q: should control pass to player, e.g. player.doTurn()
+		quit game 
+
+	- Q: should control pass to player, e.g. player.doTurn() or stay in UGE, e.g. UGE.doTurn(player) 
 			seems like we'd have to pass the game into the player, circular ref issues. 
 			In the MVC architecture, the player is a Model, not a Controller, so not passing control in seems OK 
+			Staying in UGE has advantage of game elements are already available. 
 
 	- Need to put an overall game control loop inside Go, looping until End of Game state is reached 
 		Game state needed 
