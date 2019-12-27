@@ -15,9 +15,18 @@
 #import "RuinDeck.h"
 #import "Wonder.h"
 
+typedef enum GameStateEnum : NSInteger {
+	GameStatePopulationFailed = -2,
+	GameStateError = -1,
+    GameStateNotPopulated = 0,
+    GameStatePopulated = 1,
+    GameStateRunning = 2,
+    GameStateQuit = 3
+} GameState;
+
 @interface UnearthGameEngine : NSObject {
     
-    NSString *gameState;
+    GameState gameState;
     CommandLineInterface *cli;
     NSArray *delverDeck;
 	RuinDeck *ruinsDeck;
@@ -31,21 +40,26 @@
     StoneBag *stoneBag;
     EndOfAgeCard *endOfAgeCard;
 	
+	NSArray *delverCardsInPlay;
+	
 	int currentDelverDeckIdx;
 	int currentRuinsDeckIdx;
 	int currentLesserWonderIdx;
 	int currentGreaterWonderIdx;
 	int currentNamedWonderIdx;
 	int currentPlayerIdx;
+	
 
 }
 
++ (NSString *) GameStateToString: (GameState) gameState;
+
 - (id) initWithGameDataDictionary: (NSDictionary *) dict;
 - (int) go;
-- (void) setGameState: (NSString *) newState;
+- (void) setGameState: (GameState) newState;
 - (bool) populateGameFromDictionary: (NSDictionary *) dict;
 
-- (NSString *) gameState;
+- (GameState) gameState;
 
 
 /*

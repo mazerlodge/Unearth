@@ -63,7 +63,206 @@
 			cardToPlay = aCard;
 	}
 	
+	// Remove the card from the player's hand 
+	[delverCards removeObject:cardToPlay];
+	
 	return cardToPlay;
+	
+}
+
+- (NSString *) showPlayerActionHelp {
+	
+	NSString *msg = @"Player action words are:\n";
+	
+	//TODO: Refactor this to get keywords into a single location
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done", @"show", @"roll", nil];
+
+	for (NSString *keyword in keywords) {
+		msg = [msg stringByAppendingFormat:@"%@\n", keyword];
+	}
+	
+	return msg;
+	
+}
+
+- (NSString *) showPlayerActionTargetHelp {
+	
+	NSString *msg = @"Player action target words are:\n";
+	
+	//TODO: Refactor this to get keywords into a single location
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"delver", @"dice", @"map", @"ruin", @"wonder", nil];
+
+	for (NSString *keyword in keywords) {
+		msg = [msg stringByAppendingFormat:@"%@\n", keyword];
+	}
+	
+	return msg;
+	
+}
+
+- (NSString *) showPlayerActionTargetLocationHelp {
+	
+	NSString *msg = @"Player action words are:\n";
+	
+	//TODO: Refactor this to get keywords into a single location
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"hand", @"board", nil];
+
+	for (NSString *keyword in keywords) {
+		msg = [msg stringByAppendingFormat:@"%@\n", keyword];
+	}
+	
+	return msg;
+	
+}
+
+- (PlayerAction) parsePlayerActionFromString: (NSString *) phrase {
+	
+	PlayerAction rval = PlayerActionNotSet;
+
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done", @"show", @"roll", nil];
+	int keyIdxFound = 999;
+	int i=0;
+	for (NSString *keyword in keywords) {
+		NSRange keywordRange = [phrase rangeOfString:keyword options:NSCaseInsensitiveSearch];
+		
+		if (keywordRange.location != NSNotFound) {
+			keyIdxFound = i;
+			break;
+		}
+		
+		i++;
+	}
+	
+	// If a keyword wasn't found, return not set as action.
+	if (keyIdxFound == 999)
+		return rval;
+	
+	switch(keyIdxFound) {
+		case 0:
+			rval = PlayerActionHelp;
+			break;
+
+		case 1:
+			rval = PlayerActionQuit;
+			break;
+
+		case 2:
+			rval = PlayerActionDone;
+			break;
+
+		case 3:
+			rval = PlayerActionShow;
+			break;
+
+		case 4:
+			rval = PlayerActionRoll;
+			break;
+
+	}
+	
+	return rval;
+}
+
+- (PlayerActionTarget) parsePlayerActionTargetFromString: (NSString *) phrase {
+	
+	PlayerActionTarget rval = PlayerActionTargetNotSet;
+
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"delver", @"dice", @"map", @"ruin", @"wonder", nil];
+	int keyIdxFound = 999;
+	int i=0;
+	for (NSString *keyword in keywords) {
+		NSRange keywordRange = [phrase rangeOfString:keyword options:NSCaseInsensitiveSearch];
+		
+		if (keywordRange.location != NSNotFound) {
+			keyIdxFound = i;
+			break;
+		}
+		
+		i++;
+	}
+	
+	// If a keyword wasn't found, return not set as action.
+	if (keyIdxFound == 999)
+		return rval;
+	
+	switch(keyIdxFound) {
+		case 0:
+			rval = PlayerActionTargetHelp;
+			break;
+
+		case 1:
+			rval = PlayerActionTargetDelver;
+			break;
+
+		case 2:
+			rval = PlayerActionTargetDice;
+			break;
+
+		case 3:
+			rval = PlayerActionTargetMap;
+			break;
+
+		case 4:
+			rval = PlayerActionTargetRuin;
+			break;
+
+		case 5:
+			rval = PlayerActionTargetWonder;
+			break;
+
+	}
+	
+	return rval;
+}
+
+- (PlayerActionTargetLocation) parsePlayerActionTargetLocationFromString: (NSString *) phrase {
+	
+	PlayerActionTargetLocation rval = PlayerActionTargetLocationNotSet;
+	
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"hand", @"board", nil];
+	int keyIdxFound = 999;
+	int i=0;
+	for (NSString *keyword in keywords) {
+		NSRange keywordRange = [phrase rangeOfString:keyword options:NSCaseInsensitiveSearch];
+		
+		if (keywordRange.location != NSNotFound) {
+			keyIdxFound = i;
+			break;
+		}
+		
+		i++;
+	}
+	
+	// If a keyword wasn't found, return not set as action.
+	if (keyIdxFound == 999)
+		return rval;
+	
+	switch(keyIdxFound) {
+		case 0:
+			rval = PlayerActionTargetLocationHelp;
+			break;
+
+		case 1:
+			rval = PlayerActionTargetLocationHand;
+			break;
+
+		case 2:
+			rval = PlayerActionTargetLocationBoard;
+			break;
+
+	}
+	
+	return rval;
+}
+
+- (NSString *) showDelverCards {
+	
+	NSString *rval = @"Delver Cards:\n";
+	
+	for (DelverCard *dc in delverCards)
+		rval = [rval stringByAppendingFormat:@"%@\n", [dc toString]];
+	
+	return rval;
 	
 }
 
@@ -94,14 +293,19 @@
 	return rval;
 }
 
+- (UnearthPlayerType) getPlayerType {
+	return playerType;
+	
+}
 
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
 	
-	NSString *rval = [[NSString alloc] initWithFormat:@"UnearthPlayer name=%@ type=%lu dieColor=%lu",
+	NSString *rval = [[NSString alloc] initWithFormat:@"UnearthPlayer name=%@ type=%lu dieColor=%lu\n%@\n",
 					  playerName,
 					  playerType,
-					  dieColor];
+					  dieColor,
+					  [self showDelverCards]];
 	
 	return rval;
 	

@@ -617,6 +617,9 @@
     
     NSString *msg = [[NSString alloc] initWithFormat:@"Made player array with %ld elements.\n", [playerArray count]];
     [cli put:msg];
+	
+	for (UnearthPlayer *p in playerArray)
+		[cli put:[p toString]];
     
     return rval;
     
@@ -820,7 +823,7 @@
     bFactoryMembersPopulated = [self populateFactoryMembers];
     if (!bFactoryMembersPopulated) {
         [cli put:@"ERROR: PopulateFactoryMembers() returned false. Can not continue.\n"];
-		[uge setGameState:@"ERROR"];
+		[uge setGameState:GameStateError];
 		return uge;
     }
     

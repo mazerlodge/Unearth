@@ -216,9 +216,17 @@ S1 POA - Unearth
 	- Put the shuffled lesser and greater wonder cards in the UGE. 
 	- Determine who goes first by having each player roll a d6 (Rules don't specify which die)
 
+12/26
+    - Created framework for gameplay loop
+	- Changed GameState to be an enumeration, defined in UGE.
+	- Added initial version of game engine loop in go() w/ call to doPlayerTurn() and subsequent fn()s.
+    - Added enumerations for PlayerActions, PlayerActionTargets, PlayerActionTargetLocations
+    - Added methods to UnearthPlayer for parsePlayerActionTargetFromString
+    - Added methods to UnearthPlayer for parsePlayerActionFromString
+    - Added methods to UnearthPlayer for parsePlayerActionTargetLocationFromString
 
 > In-Progress:
-
+    - Fleshing out UGE.doAction:target:location:player() method 
 
 > Next: (Note: UC=Use Case)
     See S1 - What Next 20190915.txt 
