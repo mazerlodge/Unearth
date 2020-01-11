@@ -232,7 +232,9 @@ S1 POA - Unearth
 
 > In-Progress:
     - Fleshing out UGE.doAction:target:location:player() method 
-
+        -- Next, populate case PlayerActionShow 
+    - Consider bundling PlayerAction, PlayerActionTarget, and PlayerActionLocation into struct 
+        -- Also changing PlayerAction enum to PlayerActionVerb
 
 > Next: (Note: UC=Use Case)
     See S1 - What Next 20190915.txt 
