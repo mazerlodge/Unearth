@@ -17,14 +17,14 @@ typedef enum UnearthPlayerType : NSUInteger {
     UnearthPlayerAI = 1
 } UnearthPlayerType;
 
-typedef enum PlayerActionEnum : NSUInteger {
-	PlayerActionNotSet = 0,
-	PlayerActionHelp = 1,
-	PlayerActionQuit = 2,
-    PlayerActionDone = 3,
-	PlayerActionShow = 4,
-    PlayerActionRoll = 5
-} PlayerAction;
+typedef enum PlayerActionVerbEnum : NSUInteger {
+	PlayerActionVerbNotSet = 0,
+	PlayerActionVerbHelp = 1,
+	PlayerActionVerbQuit = 2,
+    PlayerActionVerbDone = 3,
+	PlayerActionVerbShow = 4,
+    PlayerActionVerbRoll = 5
+} PlayerActionVerb;
 
 typedef enum PlayerActionTargetEnum : NSUInteger {
 	PlayerActionTargetNotSet = 0,
@@ -43,6 +43,11 @@ typedef enum PlayerActionTargetLocationEnum : NSUInteger {
 	PlayerActionTargetLocationBoard  = 3
 } PlayerActionTargetLocation;
 
+struct PlayerAction {
+	NSUInteger	verb;
+	NSUInteger targetLocation;
+	NSUInteger target;
+};
 
 @interface UnearthPlayer : NSObject {
     
@@ -67,7 +72,9 @@ typedef enum PlayerActionTargetLocationEnum : NSUInteger {
 - (int) roleDie: (DelverDieSize) dieSize;
 - (UnearthPlayerType) getPlayerType;
 - (NSString *) toString;
-- (PlayerAction) parsePlayerActionFromString: (NSString *) phrase;
+- (struct PlayerAction) makePlayerActionNotSet;
+- (struct PlayerAction) parsePlayerActionFromString: (NSString *) phrase;
+- (PlayerActionVerb) parsePlayerActionVerbFromString: (NSString *) phrase;
 - (PlayerActionTarget) parsePlayerActionTargetFromString: (NSString *) phrase;
 - (PlayerActionTargetLocation) parsePlayerActionTargetLocationFromString: (NSString *) phrase;
 - (NSString *) showPlayerActionHelp;

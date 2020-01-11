@@ -215,10 +215,8 @@
 
 - (int) go {
     
-    [cli put:@"Inside of UnearthGameEngine.\n"];
-    
     NSString *msg = [[NSString alloc] initWithFormat:@"UGE state = %@", [UnearthGameEngine GameStateToString:gameState]];
-    [cli debugMsg:msg level:100];
+    [cli debugMsg:msg level:1];
     
     msg = [[NSString alloc] initWithFormat:@"Game has %ld players.\n", [players count]];
     [cli put:msg];
@@ -250,6 +248,7 @@
 	// Player's turn has two phases, delver and excavation
 	[cli put:@"Player Delver Phase.\n"];
 	
+	// Placeholder Delver phase code.
 	NSArray *delverCardsSelected = [[NSArray alloc] init];
 	NSString *playDC = [cli getStr:@"Would you like to play a delver card (y/n)?"];
 	if ([playDC compare:@"y"] == NSOrderedSame) {
@@ -266,25 +265,24 @@
 		delverCardsInPlay = delverCardsSelected;
 	}
 	
+	// TODO: Need to set a game engine state variable to indicate Delver phase is done.
+	
+	
 	[cli put:@"Player Excavation Phase.\n"];
 	// Show wonders and ruin cards currently on the table
 	[cli put:[self showWondersOnTable]];
 	[cli put:[self showRuinsOnTable]];
 	
 	// Do player action loop
-	PlayerAction currentAction = PlayerActionNotSet;
-	PlayerActionTarget currentActionTarget = PlayerActionTargetNotSet;
-	PlayerActionTargetLocation currentActionTargetLocation = PlayerActionTargetLocationNotSet;
+	struct PlayerAction currentAction = [player makePlayerActionNotSet];
 	bool bTurnDone = false;
 	while (!bTurnDone){
 		NSString *commandMsg = [cli getStr:@"Enter command (or 'help')"];
 		currentAction = [player parsePlayerActionFromString:commandMsg];
-		currentActionTarget = [player parsePlayerActionTargetFromString:commandMsg];
-		currentActionTargetLocation = [player parsePlayerActionTargetLocationFromString:commandMsg];
-		[self doAction:currentAction target:currentActionTarget location:currentActionTargetLocation player:player];
+		[self doAction:currentAction player:player];
 		
-		if ((currentAction == PlayerActionDone)
-			|| (currentAction == PlayerActionQuit))
+		if ((currentAction.verb == PlayerActionVerbDone)
+			|| (currentAction.verb == PlayerActionVerbQuit))
 			bTurnDone = true;
 		
 	}
@@ -292,8 +290,36 @@
 }
 
 - (void) doAIPlayerTurn: (UnearthPlayer *) player {
+
+	[cli put:@"AI Player Delver Phase.\n"];
 	
-	[cli put:@"UGE.doAIPlayerTurn() not yet implemented.\n"];
+	// TODO: AI Considers playing delver card(s).
+	
+	// TODO: Need to set a game engine state variable to indicate Delver phase is done.
+
+	
+	[cli put:@"AI Player Excavation Phase.\n"];
+
+	// TODO: AI Considers wonders and ruin cards currently on the table
+	
+	// Do player action loop
+	struct PlayerAction currentAction = [player makePlayerActionNotSet];
+	bool bTurnDone = false;
+	while (!bTurnDone){
+		[cli put:@"UGE.doAIPlayerTurn() not yet implemented.\n"];
+
+		// TODO: AI compute player action verb, target, and location.
+		currentAction.verb = PlayerActionVerbDone;
+		
+		[self doAction:currentAction
+				player:player];
+		
+		if ((currentAction.verb == PlayerActionVerbDone)
+			|| (currentAction.verb == PlayerActionVerbQuit))
+			bTurnDone = true;
+		
+	}
+	
 	
 }
 
@@ -339,36 +365,34 @@
     
 }
 
-- (void) doAction: (PlayerAction) action
-		   target: (PlayerActionTarget) target
-		 location: (PlayerActionTargetLocation) loc
+- (void) doAction: (struct PlayerAction) action
 		   player: (UnearthPlayer *) player {
 	
-	switch(action) {
-		case PlayerActionNotSet:
+	switch(action.verb) {
+		case PlayerActionVerbNotSet:
 			// treat as help.
 			[cli put:[player showPlayerActionHelp]];
 			break;
 
-		case PlayerActionHelp:
+		case PlayerActionVerbHelp:
 			[cli put:[player showPlayerActionHelp]];
 			break;
 
-		case PlayerActionQuit:
+		case PlayerActionVerbQuit:
 			// Set game state to Quit.
 			// TODO: Add confirmation before setting game state to quit.
 			gameState = GameStateQuit;
 			break;
 
-		case PlayerActionDone:
+		case PlayerActionVerbDone:
 			// TODO: Add any clean up with player action done (e.g. replace ruins taken in this turn)
 			break;
 
-		case PlayerActionShow:
+		case PlayerActionVerbShow:
 			// TODO: Add method to show target specified.
 			break;
 
-		case PlayerActionRoll:
+		case PlayerActionVerbRoll:
 			// TODO: Add method to handle rolling of dice.
 			break;
 

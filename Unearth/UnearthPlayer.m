@@ -115,10 +115,33 @@
 	
 }
 
-- (PlayerAction) parsePlayerActionFromString: (NSString *) phrase {
-	
-	PlayerAction rval = PlayerActionNotSet;
+- (struct PlayerAction) makePlayerActionNotSet {
 
+	struct PlayerAction rval;
+	rval.verb = PlayerActionVerbNotSet;
+	rval.target = PlayerActionTargetNotSet;
+	rval.targetLocation = PlayerActionTargetLocationNotSet;
+	
+	return rval;
+	
+}
+
+- (struct PlayerAction) parsePlayerActionFromString: (NSString *) phrase {
+
+	struct PlayerAction rval = [self makePlayerActionNotSet];
+
+	rval.verb = [self parsePlayerActionVerbFromString:phrase];
+	rval.target = [self parsePlayerActionTargetLocationFromString:phrase];
+	rval.targetLocation = [self parsePlayerActionTargetLocationFromString:phrase];
+	
+	return rval;
+}
+
+- (PlayerActionVerb) parsePlayerActionVerbFromString: (NSString *) phrase {
+	
+	PlayerActionVerb rval = PlayerActionVerbNotSet;
+	
+	// Find verb in phrase
 	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done", @"show", @"roll", nil];
 	int keyIdxFound = 999;
 	int i=0;
@@ -139,23 +162,23 @@
 	
 	switch(keyIdxFound) {
 		case 0:
-			rval = PlayerActionHelp;
+			rval = PlayerActionVerbHelp;
 			break;
 
 		case 1:
-			rval = PlayerActionQuit;
+			rval = PlayerActionVerbQuit;
 			break;
 
 		case 2:
-			rval = PlayerActionDone;
+			rval = PlayerActionVerbDone;
 			break;
 
 		case 3:
-			rval = PlayerActionShow;
+			rval = PlayerActionVerbShow;
 			break;
 
 		case 4:
-			rval = PlayerActionRoll;
+			rval = PlayerActionVerbRoll;
 			break;
 
 	}

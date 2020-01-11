@@ -229,15 +229,31 @@ S1 POA - Unearth
 01/10
     - Added member variable to Wonder to hold title & included in toString() method 
 
+01/11
+    - Changed PlayerAction enum to PlayerActionVerb, freeing variable name for use in struct 
+    - Bundled PlayerActionVerb, PlayerActionTarget, and PlayerActionLocation into struct PlayerAction 
+    - Updated existing PlayerAction... references to use struct 
+    - Stubbed in shell of AI player turn to report not implemented and end turn 
+    - Updated POA next steps 
 
 > In-Progress:
-    - Fleshing out UGE.doAction:target:location:player() method 
+    - Fleshing out UGE.doAction:player() method (Use case F0)
         -- Next, populate case PlayerActionShow 
-    - Consider bundling PlayerAction, PlayerActionTarget, and PlayerActionLocation into struct 
-        -- Also changing PlayerAction enum to PlayerActionVerb
+
+    - LU source of msg "UGE state = Populated(Severity: 100)" 
+
+    - Add not implemented msg in "AI Player Delver Phase." 
+
 
 > Next: (Note: UC=Use Case)
-    See S1 - What Next 20190915.txt 
+    - Add ability to output list of delver cards with each card as a single line of text 
+        -- Invoked in player delver phase 
+
+    - Add ability to output wonders on table as ID and Title only 
+        -- Invoked in player excavation phase 
+
+    - Add ability to output ruins on table as rectangles with claim value, stone count, stones count by color 
+        -- Invoked in player excavation phase 
 
     Use Cases F0 & F1, Flesh out UGE.go() with game engine loop at command line. 
         N-- See [Use Cases - Unearth.txt] 0601

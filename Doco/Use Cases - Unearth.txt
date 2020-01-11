@@ -12,7 +12,7 @@ Goal - Define use cases for incremental development of the Unearth project.
 	. U2. Fully populate UGE from UGF via dictionary passed into UGE.populateGameFromDictionary().
 
 > Functionality 
-	. F0. CLI high level interaction flow 
+	/ F0. CLI high level interaction flow 
 			Start game, enter player info, exercise show commands (see F1), quit 
 
 	. F1. Interacting with the game through CLI.
