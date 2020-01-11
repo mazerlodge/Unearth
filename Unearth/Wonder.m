@@ -92,6 +92,7 @@
 	baseID = (int)[(NSString *)[data objectAtIndex:0] integerValue];
 	wonderType = [Wonder wonderTypeFromRawData:wonderData];
 	tileType = HexTileTypeWonder;
+	title = (NSString *)[data objectAtIndex:1];
 	descriptiveText = (NSString *)[data objectAtIndex:2];
 	requiredPattern = (NSString *)[data objectAtIndex:3];
 	idNumber = newID;
@@ -149,8 +150,8 @@
 	if (pointValue == 0)
 		pointValueMsg = @"Determined at end of game";
 	
-	NSString *rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ value=%@\ndescriptive text=%@",
-					  idNumber, [Wonder wonderTypeToString:wonderType], pointValueMsg, descriptiveText];
+	NSString *rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ title=%@ value=%@\ndescriptive text=%@",
+					  idNumber, [Wonder wonderTypeToString:wonderType], title, pointValueMsg, descriptiveText];
 	
 	return rval;
 	

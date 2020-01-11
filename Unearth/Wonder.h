@@ -19,6 +19,7 @@ typedef enum WonderType : NSUInteger {
     WonderType wonderType;
     bool isOwned;
     int pointValue;
+	NSString *title;
 	NSString *descriptiveText;
 	NSString *requiredPattern;
     NSString *rawData;

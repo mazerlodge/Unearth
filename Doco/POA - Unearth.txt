@@ -225,8 +225,14 @@ S1 POA - Unearth
     - Added methods to UnearthPlayer for parsePlayerActionFromString
     - Added methods to UnearthPlayer for parsePlayerActionTargetLocationFromString
 
+== 2020 ==
+01/10
+    - Added member variable to Wonder to hold title & included in toString() method 
+
+
 > In-Progress:
     - Fleshing out UGE.doAction:target:location:player() method 
+
 
 > Next: (Note: UC=Use Case)
     See S1 - What Next 20190915.txt 
