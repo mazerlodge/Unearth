@@ -395,7 +395,7 @@
 			break;
 
 		case PlayerActionVerbShow:
-			// TODO: Add method to show target specified.
+			[self doActionShow:action player:player];
 			break;
 
 		case PlayerActionVerbRoll:
@@ -405,6 +405,15 @@
 			
 		
 	}
+}
+
+- (void) doActionShow: (struct PlayerAction) action player: (UnearthPlayer *) player {
+
+	NSString *msg = [[NSString alloc] initWithFormat:@"In doActionShow with verb=%ld target=%ld location=%ld",
+					 action.verb, action.target, action.targetLocation];
+	
+	[cli put:msg];
+	
 }
 
 - (GameState) gameState {

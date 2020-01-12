@@ -244,7 +244,7 @@ S1 POA - Unearth
     - Fleshing out UGE.doAction:player() method (Use case F0)
         -- Next, populate case PlayerActionShow 
 
-
+    - Resolve issue with cli.getStr() only getting text up to space. e.g. 'show delver hand' = 'show' 
 
 > Next: (Note: UC=Use Case)
 
