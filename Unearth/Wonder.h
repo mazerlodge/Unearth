@@ -36,6 +36,7 @@ typedef enum WonderType : NSUInteger {
 - (WonderType) wonderType;
 - (NSString *) getWonderTypeAsShortString;
 - (NSString *) toString;
+- (NSString *) toStringBriefOutput: (bool) bBriefOutput;
 
 /*
  Method list from [Object Library.txt]

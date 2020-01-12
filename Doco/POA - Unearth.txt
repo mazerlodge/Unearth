@@ -235,22 +235,18 @@ S1 POA - Unearth
     - Updated existing PlayerAction... references to use struct 
     - Stubbed in shell of AI player turn to report not implemented and end turn 
     - Updated POA next steps 
+    - Add not implemented msg in AI Player Delver and Execution Phases. 
+    - Added confirmation before setting game state to quit.
+    - Add ability to output wonders on table as ID and Title only 
+    - Add ability to output list of delver cards with each card as a single line of text 
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
         -- Next, populate case PlayerActionShow 
 
-    - LU source of msg "UGE state = Populated(Severity: 100)" 
-
-    - Add not implemented msg in "AI Player Delver Phase." 
 
 
 > Next: (Note: UC=Use Case)
-    - Add ability to output list of delver cards with each card as a single line of text 
-        -- Invoked in player delver phase 
-
-    - Add ability to output wonders on table as ID and Title only 
-        -- Invoked in player excavation phase 
 
     - Add ability to output ruins on table as rectangles with claim value, stone count, stones count by color 
         -- Invoked in player excavation phase 

@@ -44,8 +44,7 @@
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
 
-	NSString *rval = [[NSString alloc] initWithFormat:@"Delver Card baseID=%d title=%@\
-					  \nText=%@",
+	NSString *rval = [[NSString alloc] initWithFormat:@"Delver Card ID=%.3d title=%@, %@",
 					  baseID, title, descriptiveText];
 	
 	return rval;

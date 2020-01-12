@@ -256,7 +256,7 @@
 		while (selectedCardID != 0) {
 			[cli put:@"Choose a card to play (or 0 for none)"];
 			[cli put:[player showDelverCards]];
-			selectedCardID = [cli getInt:@"Select card (0 for none)"];
+			selectedCardID = [cli getInt:@"Select card ID (0 for none)"];
 			// Pull delver cards from player's hand into game engine member var, delverCards in play.
 			DelverCard *dc = [player playDelverCard:selectedCardID];
 			delverCardsSelected = [delverCardsSelected arrayByAddingObject:dc];
@@ -294,7 +294,8 @@
 	[cli put:@"AI Player Delver Phase.\n"];
 	
 	// TODO: AI Considers playing delver card(s).
-	
+	[cli put:@"UGE.doAIPlayerTurn(), Delver Phase not yet implemented.\n"];
+
 	// TODO: Need to set a game engine state variable to indicate Delver phase is done.
 
 	
@@ -306,7 +307,7 @@
 	struct PlayerAction currentAction = [player makePlayerActionNotSet];
 	bool bTurnDone = false;
 	while (!bTurnDone){
-		[cli put:@"UGE.doAIPlayerTurn() not yet implemented.\n"];
+		[cli put:@"UGE.doAIPlayerTurn(), Excavation Phase not yet implemented.\n"];
 
 		// TODO: AI compute player action verb, target, and location.
 		currentAction.verb = PlayerActionVerbDone;
@@ -342,7 +343,9 @@
 	NSString *rval = @"Wonders on Table:\n";
 	
 	for (Wonder *w in namedWondersOnTable)
-		rval = [rval stringByAppendingFormat:@"%@\n", [w toString]];
+		rval = [rval stringByAppendingFormat:@"%@\n", [w toStringBriefOutput:true]];
+	
+	rval = [rval stringByAppendingString:@"\n"];
 	
 	return rval;
 	
@@ -368,6 +371,8 @@
 - (void) doAction: (struct PlayerAction) action
 		   player: (UnearthPlayer *) player {
 	
+	NSString *confirmQuit;
+	
 	switch(action.verb) {
 		case PlayerActionVerbNotSet:
 			// treat as help.
@@ -380,8 +385,9 @@
 
 		case PlayerActionVerbQuit:
 			// Set game state to Quit.
-			// TODO: Add confirmation before setting game state to quit.
-			gameState = GameStateQuit;
+			confirmQuit = [cli getStr:@"Are you sure you want to quit (Y/n)?"];
+			if ([confirmQuit caseInsensitiveCompare:@"Y"] == NSOrderedSame)
+				gameState = GameStateQuit;
 			break;
 
 		case PlayerActionVerbDone:

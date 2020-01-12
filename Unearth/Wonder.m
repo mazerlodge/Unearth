@@ -146,12 +146,28 @@
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
 	
+	return [self toStringBriefOutput:false];
+	
+}
+
+- (NSString *) toStringBriefOutput: (bool) bBriefOutput {
+	// Supports diagnostic and debug printing
+	
 	NSString *pointValueMsg = [[NSString alloc] initWithFormat:@"%d", pointValue];
 	if (pointValue == 0)
 		pointValueMsg = @"Determined at end of game";
 	
-	NSString *rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ title=%@ value=%@\ndescriptive text=%@",
-					  idNumber, [Wonder wonderTypeToString:wonderType], title, pointValueMsg, descriptiveText];
+	NSString *rval;
+	
+	if (bBriefOutput) {
+		rval = [[NSString alloc] initWithFormat:@"%.3d title=%@", idNumber, title];
+
+	}
+	else {
+		rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ title=%@ value=%@\ndescriptive text=%@",
+						  idNumber, [Wonder wonderTypeToString:wonderType], title, pointValueMsg, descriptiveText];
+
+	}
 	
 	return rval;
 	
