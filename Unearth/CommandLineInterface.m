@@ -29,20 +29,21 @@
 
 - (NSString * ) getStr: (NSString *) msg {
     NSString *rval = @"NOT_SET";
-    
-    // TODO: How to scan for strings, fails with large strings.
-    // This is OK: upercalafragileistice
-    // This isn't: upercalafragileisticex
-    // Before making inputVal to an array, this caused 'illegal instruction': upercalafragileisticexpealli
-    //    NSString *inMessage = [NSString stringWithCString:&inputVal encoding:NSUTF8StringEncoding];
-
-    char inputVal[255] = {0};// = "NOT_SET";
+    	
     printf("%s", [msg UTF8String]);
-    scanf("%s", inputVal);
-    NSString *inMessage = [[NSString alloc] initWithUTF8String:inputVal];
+	char *cmd = malloc(256);
+	fgets(cmd, 256, stdin);
 
+	// Remove trailing newline
+    if ((strlen(cmd) > 0) && (cmd[strlen(cmd)-1] == '\n'))
+        cmd[strlen(cmd)-1] = '\0';
+
+	// Convert CString into NSString
+	NSString *inMessage = [[NSString alloc] initWithUTF8String:cmd];
     rval = inMessage;
     
+	free(cmd);
+	
     return rval;
     
 }

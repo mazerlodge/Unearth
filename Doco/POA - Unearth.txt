@@ -240,11 +240,14 @@ S1 POA - Unearth
     - Add ability to output wonders on table as ID and Title only 
     - Add ability to output list of delver cards with each card as a single line of text 
 
+02/02
+    - Resolved issue with cli.getStr() only getting text up to space. e.g. 'show delver hand' = 'show' 
+
+
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
-        -- Next, populate case PlayerActionShow 
+        -- Next, workig in case PlayerActionShow, flesh out UGE.doActionShow:player() method 
 
-    - Resolve issue with cli.getStr() only getting text up to space. e.g. 'show delver hand' = 'show' 
 
 > Next: (Note: UC=Use Case)
 

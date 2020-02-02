@@ -409,7 +409,7 @@
 
 - (void) doActionShow: (struct PlayerAction) action player: (UnearthPlayer *) player {
 
-	NSString *msg = [[NSString alloc] initWithFormat:@"In doActionShow with verb=%ld target=%ld location=%ld",
+	NSString *msg = [[NSString alloc] initWithFormat:@"In doActionShow with verb=%ld target=%ld location=%ld\n",
 					 action.verb, action.target, action.targetLocation];
 	
 	[cli put:msg];
