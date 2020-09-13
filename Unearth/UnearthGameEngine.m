@@ -57,6 +57,14 @@
 		case GameStateError:
 			rval = @"Error";
 			break;
+			
+		case GameStateDelverPhase:
+			rval = @"DelverPhase";
+			break;
+			
+		case GameStateExcavationPhase:
+			rval = @"ExcavationPhase";
+			break;
 
 		case GameStateQuit:
 			rval = @"Quit";
@@ -226,6 +234,8 @@
 	
 	while (gameState != GameStateQuit) {
 		UnearthPlayer *currentPlayer = [self getCurrentPlayer];
+		NSString *msg = [[NSString alloc] initWithFormat:@"Current Player is now %@.\n", [currentPlayer playerName]];
+		[cli put:msg];
 		[self doPlayerTurn:currentPlayer];
 		[self advanceToNextPlayer];
 	}
@@ -246,17 +256,17 @@
 - (void) doHumanPlayerTurn: (UnearthPlayer *) player {
 	
 	// Player's turn has two phases, delver and excavation
-	[cli put:@"Player Delver Phase.\n"];
-	
+	[self setGameState:GameStateDelverPhase];
+
 	// Placeholder Delver phase code.
 	NSArray *delverCardsSelected = [[NSArray alloc] init];
-	NSString *playDC = [cli getStr:@"Would you like to play a delver card (y/n)?"];
+	NSString *playDC = [cli getStr:@"Would you like to play a delver card (y/n)? "];
 	if ([playDC compare:@"y"] == NSOrderedSame) {
 		int selectedCardID = -1;
 		while (selectedCardID != 0) {
 			[cli put:@"Choose a card to play (or 0 for none)"];
 			[cli put:[player showDelverCards]];
-			selectedCardID = [cli getInt:@"Select card ID (0 for none)"];
+			selectedCardID = [cli getInt:@"Select card ID (0 for done): "];
 			// Pull delver cards from player's hand into game engine member var, delverCards in play.
 			DelverCard *dc = [player playDelverCard:selectedCardID];
 			delverCardsSelected = [delverCardsSelected arrayByAddingObject:dc];
@@ -264,11 +274,10 @@
 		} // while selectedCardID != 0
 		delverCardsInPlay = delverCardsSelected;
 	}
+
+	// Do excavation phase
+	[self setGameState:GameStateExcavationPhase];
 	
-	// TODO: Need to set a game engine state variable to indicate Delver phase is done.
-	
-	
-	[cli put:@"Player Excavation Phase.\n"];
 	// Show wonders and ruin cards currently on the table
 	[cli put:[self showWondersOnTable]];
 	[cli put:[self showRuinsOnTable]];
@@ -277,7 +286,7 @@
 	struct PlayerAction currentAction = [player makePlayerActionNotSet];
 	bool bTurnDone = false;
 	while (!bTurnDone){
-		NSString *commandMsg = [cli getStr:@"Enter command (or 'help')"];
+		NSString *commandMsg = [cli getStr:@"Enter command (or 'help') "];
 		currentAction = [player parsePlayerActionFromString:commandMsg];
 		[self doAction:currentAction player:player];
 		
@@ -291,15 +300,15 @@
 
 - (void) doAIPlayerTurn: (UnearthPlayer *) player {
 
-	[cli put:@"AI Player Delver Phase.\n"];
+	// Do delver phase
+	[self setGameState:GameStateDelverPhase];
+
 	
 	// TODO: AI Considers playing delver card(s).
-	[cli put:@"UGE.doAIPlayerTurn(), Delver Phase not yet implemented.\n"];
+	[cli put:@"UGE.doAIPlayerTurn(), AI Delver Phase not yet implemented.\n"];
 
-	// TODO: Need to set a game engine state variable to indicate Delver phase is done.
-
-	
-	[cli put:@"AI Player Excavation Phase.\n"];
+	// Do excavation phase
+	[self setGameState:GameStateExcavationPhase];
 
 	// TODO: AI Considers wonders and ruin cards currently on the table
 	
@@ -307,7 +316,7 @@
 	struct PlayerAction currentAction = [player makePlayerActionNotSet];
 	bool bTurnDone = false;
 	while (!bTurnDone){
-		[cli put:@"UGE.doAIPlayerTurn(), Excavation Phase not yet implemented.\n"];
+		[cli put:@"UGE.doAIPlayerTurn(), AI Excavation Phase not yet implemented.\n"];
 
 		// TODO: AI compute player action verb, target, and location.
 		currentAction.verb = PlayerActionVerbDone;
@@ -364,6 +373,12 @@
 
 - (void) setGameState: (GameState) newState {
     
+	NSString *gameStateText = [UnearthGameEngine GameStateToString:newState];
+	NSString *msg = [[NSString alloc] initWithFormat:@"GameState set to %@\n",
+													 gameStateText];
+
+	[cli put:msg];
+
     gameState = newState;
     
 }
@@ -413,6 +428,19 @@
 					 action.verb, action.target, action.targetLocation];
 	
 	[cli put:msg];
+	
+	// Valid show targets are delver, dice (in hand), map, ruin (hand or board), wonder (hand or board)
+	// TODO: add handling for showing more targets
+	// Note: Initial version here just shows dice in hand
+	/*
+	switch (action.target) {
+		case PlayerActionTargetDice:
+			if (action.target == PlayerActionTargetLocationHand)
+				[player showDice];
+			break;
+			
+	}
+	*/
 	
 }
 

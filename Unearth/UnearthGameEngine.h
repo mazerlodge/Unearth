@@ -21,6 +21,8 @@ typedef enum GameStateEnum : NSInteger {
     GameStateNotPopulated = 0,
     GameStatePopulated = 1,
     GameStateRunning = 2,
+	GameStateDelverPhase = 21,
+	GameStateExcavationPhase = 22,
     GameStateQuit = 3
 } GameState;
 

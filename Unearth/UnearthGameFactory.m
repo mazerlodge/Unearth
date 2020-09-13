@@ -631,7 +631,7 @@
     NSArray *playerArray = [[NSArray alloc] init];
     
     // Ask the user how many players
-    int numberOfPlayers = [cli getInt:@"How many players?"];
+    int numberOfPlayers = [cli getInt:@"How many players? "];
     
     if ((numberOfPlayers < 1) || (numberOfPlayers > 4)) {
         [cli put:@"UGF.popPlayerArray() Exiting with invalid number of players specified.\n"];
@@ -739,7 +739,7 @@
     
     int dieColor = -1;
     while (dieColor < 0 || dieColor > 3 || [self isDieColorUsed:dieColor inPlayerArray:existingPlayers]) {
-        NSString *msg = [[NSString alloc] initWithFormat:@"Select die color %@?",
+        NSString *msg = [[NSString alloc] initWithFormat:@"Select die color %@? ",
                                                          [self getAvailableDieColors:existingPlayers]];
         dieColor = [cli getInt:msg];
     
@@ -748,11 +748,43 @@
     NSString *name = @"NOT_SET";
     while ([name compare:@"NOT_SET"] == NSOrderedSame || [self isPlayerNameUsed:name inPlayerArray:existingPlayers]) {
         name = [cli getStr:@"Enter unused name for player: "];
+		
+		if ([name length] == 0) {
+			NSString *useNullName = [cli getStr:@"Get a null name, would you like to enter a name (y/n)?"];
+			if ([useNullName compare:@"y"] == NSOrderedSame) {
+				name = @"NOT_SET";
+			}
+		}
     
     }
-        
+	
+	// Make player dice array w/ 3d6, 1d4, 1d8
+	NSMutableArray *playerDice = [[NSMutableArray alloc] initWithCapacity:5];
+	
+	// Make 1 d4 die
+	// Die IDs are player number * 100 + color index * 10  + die instance
+	int dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
+	DelverDie *aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize4 dieBaseID:dieID];
+	[playerDice addObject:aDie];
+	
+	// Make 3 d6 dice
+	for (int x=0; x<4; x++) {
+		// Die IDs are player number * 100 + color index * 10  + die instance
+		dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
+		aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize6 dieBaseID:dieID];
+		[playerDice addObject:aDie];
+
+	}
+
+	// Make 1 d8 die
+	// Die IDs are player number * 100 + color index * 10  + die instance
+	dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
+	aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize8 dieBaseID:dieID];
+	[playerDice addObject:aDie];
+
     UnearthPlayer *player = [[UnearthPlayer alloc] initWithPlayerType:playerType
                                                              dieColor:dieColor
+															  diceSet: playerDice
                                                            playerName:name
 														 randomEngine:re];
     
@@ -836,6 +868,11 @@
     
     if ([ap doesArg:@"-action" haveValue:@"playgame"]) {
         NSArray *players = [self populatePlayerArray];
+		
+		if ([players count] == 0) {
+			[uge setGameState:GameStateError];
+			return uge;
+		}
         
         // Get a random end of age card
         int endOfAgeIdx = [re getNextRandBetween:0 maxValueInclusive:4];

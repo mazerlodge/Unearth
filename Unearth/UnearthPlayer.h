@@ -56,11 +56,16 @@ struct PlayerAction {
     DelverDieColor dieColor;
 	NSMutableArray *delverCards;
 	NSMutableArray *ruinCards;
+	NSMutableArray *dice;
 	RandomEngine *re;
 	
 }
 
-- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name randomEngine: (RandomEngine *) randomEngine;
+- (id) initWithPlayerType: (UnearthPlayerType) type
+				dieColor: (DelverDieColor) color
+				  diceSet: (NSMutableArray *) playerDice
+			   playerName: (NSString *) name
+			 randomEngine: (RandomEngine *) randomEngine;
 
 
 - (DelverDieColor) dieColor;

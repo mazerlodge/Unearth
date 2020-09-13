@@ -243,13 +243,26 @@ S1 POA - Unearth
 02/02
     - Resolved issue with cli.getStr() only getting text up to space. e.g. 'show delver hand' = 'show' 
 
+09/12/20
+	- Cleaned up gathering player info, consistent spacing after prompts
+	- Added protection for null player name input and null player count input
+	- Added dieSet construction and assignment to the player in UGF.makePlayer()
+	- Refactored CLI.getFloat() and CLI.getInt() to handle non-numeric input.
+
+09/13
+	- Fleshed out delver die to init, store, and expose die color and size
+
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
-        -- Next, workig in case PlayerActionShow, flesh out UGE.doActionShow:player() method 
-
+		N-- Note core of game run is at UGE.go()
+        N-- Next, workig in case PlayerActionShow, flesh out UGE.doActionShow:player() method
+		N-- Working up enough code to role dice at a target
+		
 
 > Next: (Note: UC=Use Case)
+
+	- Add [cli getStr] like method that is getYN, validates y or n response and returns boolean.
 
     - Add ability to output ruins on table as rectangles with claim value, stone count, stones count by color 
         -- Invoked in player excavation phase 

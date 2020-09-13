@@ -10,14 +10,20 @@
 
 @implementation UnearthPlayer
 
-- (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name randomEngine:(RandomEngine *) randomEngine {
+- (id) initWithPlayerType: (UnearthPlayerType) type
+				 dieColor: (DelverDieColor) color
+				  diceSet: (NSMutableArray *) playerDice
+			   playerName: (NSString *) name
+			 randomEngine:(RandomEngine *) randomEngine {
     playerType = type;
     playerName = name;
-    dieColor = color;
+	DelverDie *aDie = [playerDice objectAtIndex:0];
+    dieColor = [aDie dieColor];
 	re = randomEngine;
 	
 	delverCards = [[NSMutableArray alloc] initWithCapacity:2];
 	ruinCards = [[NSMutableArray alloc] initWithCapacity:1];
+	dice = playerDice;
 
     return self;
     

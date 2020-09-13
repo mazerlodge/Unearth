@@ -51,10 +51,15 @@
 - (int) getInt: (NSString *) msg  {
     
     int rval = -1;
+	
+	NSString *rawInput = [self getStr:msg];
+	rval = (int)[rawInput integerValue];
 
+	/*
     printf("%s", [msg UTF8String]);
     scanf("%i",&rval);
-    
+    */
+	
     return rval;
     
 }
@@ -63,9 +68,14 @@
     
     float rval = 0.0;
 
+	NSString *rawInput = [self getStr:msg];
+	rval = (float)[rawInput floatValue];
+
+	/*
     printf("%s", [msg UTF8String]);
     scanf("%f",&rval);
-
+	*/
+	
     return rval;
     
 }

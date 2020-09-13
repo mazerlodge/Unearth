@@ -22,11 +22,20 @@ typedef enum DelverDieSize : NSUInteger {
 } DelverDieSize;
 
 @interface DelverDie : NSObject {
+
+	int baseID;
     DelverDieColor color;
     DelverDieSize size;
     
 }
 
+- (id) initWithColor: (DelverDieColor) dieColor size:(DelverDieSize) dieSize dieBaseID: (int) dieID;
+
+- (NSString *) toString;
+
+@property (readwrite, assign) int dieID;
+@property (readwrite, assign) DelverDieColor dieColor;
+@property (readwrite, assign) DelverDieSize dieSize;
 
 /*
  Method list from [Object Library.txt]
