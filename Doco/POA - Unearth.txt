@@ -256,7 +256,7 @@ S1 POA - Unearth
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Note core of game run is at UGE.go()
-        N-- Next, workig in case PlayerActionShow, flesh out UGE.doActionShow:player() method
+        N-- Next, working in case PlayerActionShow, flesh out UGE.doActionShow:player() method
 		N-- Working up enough code to role dice at a target
 		
 
@@ -275,22 +275,31 @@ S1 POA - Unearth
 
 
 > Raw TODO markers:
-    UnearthGameFactory.m:	// TODO: This may need to get it's CLI from the one set up in the factory (UGF).
-    UnearthGameFactory.m:        // TODO: Expand gameDataDict dictionary used to pass info into game engine.
+	ArgParser.m: // TODO: Add check for arg (and assoc val) already in array
+	ArgParser.m: // TODO: Make AP.isInArgs method case insensitive and add a ver w/ caseSensitive: true/false param.
 
-    UnearthGameEngine.m:    // TODO: Add more dictionary parsing
-    UnearthGameEngine.m:    // TODO: Add some validation of the above, for now assume it worked
+	UnearthGameFactory.m: // TODO: This may need to get it's CLI from the one set up in the factory (UGF).
+	UnearthGameFactory.m: // TODO: Expand gameDataDict dictionary used to pass info into game engine.
 
-    HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed. (2x)
+	UnearthGameEngine.m: // TODO: Add more dictionary parsing
+	UnearthGameEngine.m: // TODO: Add some validation of the above, for now assume it worked
+	UnearthGameEngine.m: // TODO: AI Considers playing delver card(s).
+	UnearthGameEngine.m: // TODO: AI Considers wonders and ruin cards currently on the table
+	UnearthGameEngine.m: // TODO: AI compute player action verb, target, and location.
+	UnearthGameEngine.m: // TODO: Add any clean up with player action done (e.g. replace ruins taken in this turn)
+	UnearthGameEngine.m: // TODO: Add method to handle rolling of dice.
+	UnearthGameEngine.m: // TODO: add handling for showing more targets
 
-    RuinCard.m:	// TODO: Add Delver Dice to output string (ref to delver dice on the card).
+	HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
+	HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
 
-    EndOfAgeCard.m:	// TODO: Add Delver Dice to output string.
+	EndOfAgeCard.m:	// TODO: Add Delver Dice to output string.
 
-    ArgParser.m:    // TODO: Add check for arg (and assoc val) already in array
-    ArgParser.m:    // TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive:                           true/false param.
+	UnearthPlayer.m:	//TODO: Refactor this to get keywords into a single location
+	UnearthPlayer.m:	//TODO: Refactor this to get keywords into a single location
+	UnearthPlayer.m:	//TODO: Refactor this to get keywords into a single location
 
-    CommandLineInterface.m:    // TODO: How to scan for strings, fails with large strings.
+	RuinCard.m:	// TODO: Add Delver Dice to output string.
 
 
 > Archived/Postponed/Cancelled Tasks:
