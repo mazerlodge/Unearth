@@ -17,7 +17,7 @@
 	
 	switch(playerType) {
 		case UnearthPlayerNotSet:
-			rval = @"Not Set";
+			rval = @"NOT_SET";
 			break;
 
 		case UnearthPlayerHuman:
@@ -39,7 +39,7 @@
 	
 	switch(verb) {
 		case PlayerActionVerbNotSet:
-			rval = @"Not Set";
+			rval = @"NOT_SET";
 			break;
 			
 		case PlayerActionVerbHelp:
@@ -73,7 +73,7 @@
 	
 	switch(target) {
 		case PlayerActionTargetNotSet:
-			rval = @"Not Set";
+			rval = @"NOT_SET";
 			break;
 			
 		case PlayerActionTargetHelp:
@@ -111,7 +111,7 @@
 	
 	switch(location) {
 		case PlayerActionTargetLocationNotSet:
-			rval = @"Not Set";
+			rval = @"NOT_SET";
 			break;
 			
 		case PlayerActionTargetLocationHelp:

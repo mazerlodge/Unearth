@@ -250,12 +250,25 @@ S1 POA - Unearth
 	- Refactored CLI.getFloat() and CLI.getInt() to handle non-numeric input.
 
 09/13
+	- Cleaned up gathering player info, consistent spacing after prompts
+	- Added protection for null player name input and null player count input
+	- Added dieSet construction and assignment to the player in UGF.makePlayer()
+	- Refactored CLI.getFloat() and CLI.getInt() to handle non-numeric input.
 	- Fleshed out delver die to init, store, and expose die color and size
 
+11/21
+	- Cleaned up POA & updated raw TODO marker list.
+
+12/19
+	- Implement command "show dice in hand"
+	- Added toString class methods for all enums (that didn't have them yet).
+	- Expanded UGE.doAction() to include default action locations for show wonder, ruins, delver, and dice
+	- Modified includes referencing HexDirection.h to include check for ndef
+	- Moved enum toString() methods to top of their classes where they weren't already.
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
-		N-- Note core of game run is at UGE.go()
+		N-- Core of game run is at UGE.go()
         N-- Next, working in case PlayerActionShow, flesh out UGE.doActionShow:player() method
 		N-- Working up enough code to role dice at a target
 		

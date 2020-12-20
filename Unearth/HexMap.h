@@ -11,7 +11,10 @@
 #import "Stone.h"
 #import "Wonder.h"
 #import "CommandLineInterface.h"
+
+#ifndef HexDirection_h
 #import "HexDirection.h"
+#endif
 
 @interface HexMap : NSObject {
 

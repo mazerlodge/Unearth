@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#ifndef HexDirection_h
 #import "HexDirection.h"
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 

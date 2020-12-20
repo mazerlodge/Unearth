@@ -261,8 +261,8 @@
 
 	// Placeholder Delver phase code.
 	NSArray *delverCardsSelected = [[NSArray alloc] init];
-	NSString *playDC = [cli getStr:@"Would you like to play a delver card (y/n)? "];
-	if ([playDC compare:@"y"] == NSOrderedSame) {
+	NSString *seeDC = [cli getStr:@"Would you like to look at your delver cards (y/n)? "];
+	if ([seeDC compare:@"y"] == NSOrderedSame) {
 		int selectedCardID = -1;
 		while (selectedCardID != 0) {
 			[cli put:@"Choose a card to play (or 0 for none)"];
@@ -372,6 +372,18 @@
 	
 }
 
+- (NSString *) showDelverCardsInPlay {
+	
+	NSString *rval = @"Delver Cards in Play:\n";
+	
+	for (DelverCard *c in delverCardsInPlay)
+		rval = [rval stringByAppendingFormat:@"%@\n", [c toString]];
+	
+	return rval;
+	
+}
+
+
 - (void) setGameState: (GameState) newState {
     
 	NSString *gameStateText = [UnearthGameEngine GameStateToString:newState];
@@ -432,12 +444,48 @@
 	
 	// Valid show targets are delver, dice (in hand), map, ruin (hand or board), wonder (hand or board)
 	// TODO: add handling for showing more targets
+	
+	// If Show action target location was not specified, assume hand for delver cards and dice
+	if (((action.target == PlayerActionTargetDelver) || (action.target == PlayerActionTargetDice))
+		&& (action.targetLocation == PlayerActionTargetLocationNotSet)) {
+		[cli put:@"You didn't specify, so showing from Hand (options are hand or board)" withNewline:true];
+		action.targetLocation = PlayerActionTargetLocationHand;
+	}
+
+	// If Show action target location was not specified, assume board for wonders and ruins
+	if (((action.target == PlayerActionTargetWonder) || (action.target == PlayerActionTargetRuin))
+		&& (action.targetLocation == PlayerActionTargetLocationNotSet)) {
+		[cli put:@"You didn't specify, so showing from Board (options are hand or board)" withNewline:true];
+		action.targetLocation = PlayerActionTargetLocationBoard;
+	}
+
+	
 	// Note: Initial version here just shows dice in hand
 	switch (action.target) {
 		case PlayerActionTargetDice:
-			if (action.targetLocation == PlayerActionTargetLocationHand)
-				[cli put:[player showDice]];
+			switch(action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[player showDice]];
+					break;
+			
+				case PlayerActionTargetLocationBoard:
+					[cli put:@"UGE.doActionShow(): show target=dice, location=board not yet implemented." withNewline:true];
+					break;
+			}
 			break;
+
+		case PlayerActionTargetDelver:
+			switch(action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[player showDelverCards]];
+					break;
+			
+				case PlayerActionTargetLocationBoard:
+					[cli put:[self showDelverCardsInPlay]];
+					break;
+			}
+			break;
+
 			
 	}
 

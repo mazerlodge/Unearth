@@ -6,6 +6,9 @@
 //  Copyright © 2019 mazerlodge. All rights reserved.
 //
 
+// NOTE: Method to convert this enum to a string is in HexMap.
+//		 + (NSString *) HexDirectionToString: (HexDirection) direction
+
 #ifndef HexDirection_h
 #define HexDirection_h
 

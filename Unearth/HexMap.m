@@ -10,27 +10,6 @@
 
 @implementation HexMap
 
-- (id) init {
-	
-	cli = [[CommandLineInterface alloc] init];
-    HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
-    hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
-
-    return self;
-    
-}
-
-
-- (id) initWithCLI: (CommandLineInterface *) commandLineInterface {
-	
-	cli = commandLineInterface;
-	HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
-	hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
-	
-	return self;
-	
-}
-
 + (NSString *) HexDirectionToString: (HexDirection) direction {
 	
 	NSString *rval;
@@ -61,7 +40,7 @@
 			break;
 			
 		default:
-			rval = @"Unknown";
+			rval = @"NOT_SET";
 			break;
 			
 	}
@@ -69,6 +48,28 @@
 	return rval;
 	
 }
+
+- (id) init {
+	
+	cli = [[CommandLineInterface alloc] init];
+    HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
+    hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
+
+    return self;
+    
+}
+
+
+- (id) initWithCLI: (CommandLineInterface *) commandLineInterface {
+	
+	cli = commandLineInterface;
+	HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
+	hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
+	
+	return self;
+	
+}
+
 
 - (HexCell *) getOriginHexCell {
 	// Return the origin hex cell, it was loaded at index 0 during init.

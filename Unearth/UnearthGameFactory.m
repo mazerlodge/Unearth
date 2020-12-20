@@ -733,8 +733,10 @@
     // - (id) initWithPlayerType: (UnearthPlayerType) type dieColor: (DelverDieColor) color playerName: (NSString *) name;
 
     int playerType = -1;
-    while (playerType < 0 || playerType > 1) {
-        playerType = [cli getInt:@"Select player type (0=human, 1=ai)? "];
+	
+    //while (playerType < 0 || playerType > 1) {
+	while ([[UnearthPlayer UnearthPlayerTypeToString:playerType] compare:@"NOT_SET"] == NSOrderedSame) {
+        playerType = [cli getInt:@"Select player type (1=human, 2=ai)? "];
     }
     
     int dieColor = -1;

@@ -33,7 +33,7 @@
 			break;
 			
 		default:
-			rval = @"Unknown";
+			rval = @"NOT_SET";
 			break;
 		
 	}
