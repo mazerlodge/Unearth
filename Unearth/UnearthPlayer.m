@@ -10,6 +10,127 @@
 
 @implementation UnearthPlayer
 
+
++ (NSString *) UnearthPlayerTypeToString: (UnearthPlayerType) playerType {
+	
+	NSString *rval = @"NOT_SET";
+	
+	switch(playerType) {
+		case UnearthPlayerNotSet:
+			rval = @"Not Set";
+			break;
+
+		case UnearthPlayerHuman:
+			rval = @"Human";
+			break;
+			
+		case UnearthPlayerAI:
+			rval = @"AI";
+			break;
+						
+	}
+	
+	return rval;
+}
+
++ (NSString *) PlayerActionVerbToString: (PlayerActionVerb) verb {
+	
+	NSString *rval = @"NOT_SET";
+	
+	switch(verb) {
+		case PlayerActionVerbNotSet:
+			rval = @"Not Set";
+			break;
+			
+		case PlayerActionVerbHelp:
+			rval = @"Help";
+			break;
+
+		case PlayerActionVerbQuit:
+			rval = @"Quit";
+			break;
+
+		case PlayerActionVerbDone:
+			rval = @"Done";
+			break;
+
+		case PlayerActionVerbShow:
+			rval = @"Show";
+			break;
+			
+		case PlayerActionVerbRoll:
+			rval = @"Roll";
+			break;
+						
+	}
+	
+	return rval;
+}
+
++ (NSString *) PlayerActionTargetToString: (PlayerActionTarget) target {
+	
+	NSString *rval = @"NOT_SET";
+	
+	switch(target) {
+		case PlayerActionTargetNotSet:
+			rval = @"Not Set";
+			break;
+			
+		case PlayerActionTargetHelp:
+			rval = @"Help";
+			break;
+
+		case PlayerActionTargetDelver:
+			rval = @"Delver";
+			break;
+
+		case PlayerActionTargetDice:
+			rval = @"Dice";
+			break;
+
+		case PlayerActionTargetMap:
+			rval = @"Map";
+			break;
+			
+		case PlayerActionTargetRuin:
+			rval = @"Ruin";
+			break;
+
+		case PlayerActionTargetWonder:
+			rval = @"Wonder";
+			break;
+
+	}
+	
+	return rval;
+}
+
++ (NSString *) PlayerActionTargetLocationToString: (PlayerActionTargetLocation) location {
+	
+	NSString *rval = @"NOT_SET";
+	
+	switch(location) {
+		case PlayerActionTargetLocationNotSet:
+			rval = @"Not Set";
+			break;
+			
+		case PlayerActionTargetLocationHelp:
+			rval = @"Help";
+			break;
+
+		case PlayerActionTargetLocationHand:
+			rval = @"Hand";
+			break;
+
+		case PlayerActionTargetLocationBoard:
+			rval = @"Board";
+			break;
+
+	}
+	
+	return rval;
+}
+
 - (id) initWithPlayerType: (UnearthPlayerType) type
 				 dieColor: (DelverDieColor) color
 				  diceSet: (NSMutableArray *) playerDice

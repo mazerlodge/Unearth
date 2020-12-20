@@ -10,6 +10,28 @@
 
 @implementation Wonder
 
++ (NSString *) wonderTypeToString: (WonderType) wonderType {
+	
+	NSString *rval = @"NOT_SET";
+	
+	switch(wonderType) {
+		case WonderTypeNamed:
+			rval = @"Named Wonder";
+			break;
+			
+		case WonderTypeGreater:
+			rval = @"Greater Wonder";
+			break;
+			
+		case WonderTypeLesser:
+			rval = @"Lesser Wonder";
+			break;
+	}
+	
+	return rval;
+			
+}
+
 + (WonderType) wonderTypeFromWonderName: (NSString *) wonderName {
 	
 	WonderType rval = WonderTypeNamed;
@@ -49,27 +71,6 @@
 	return rval;
 }
 
-+ (NSString *) wonderTypeToString: (WonderType) wonderType {
-	
-	NSString *rval = @"NOT_SET";
-	
-	switch(wonderType) {
-		case WonderTypeNamed:
-			rval = @"Named Wonder";
-			break;
-			
-		case WonderTypeGreater:
-			rval = @"Greater Wonder";
-			break;
-			
-		case WonderTypeLesser:
-			rval = @"Lesser Wonder";
-			break;
-	}
-	
-	return rval;
-			
-}
 
 - (id) initWithString:(NSString *)wonderData newID: (int) newID pointValue: (int) value{
     

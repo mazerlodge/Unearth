@@ -26,10 +26,11 @@ typedef enum WonderType : NSUInteger {
 
 }
 
++ (NSString *) wonderTypeToString: (WonderType) wonderType;
+
 + (WonderType) wonderTypeFromWonderName: (NSString *) wonderName;
 + (WonderType) wonderTypeFromRawData: (NSString *) rawData;
 + (NSString *) wonderNameFromRawData: (NSString *) rawData;
-+ (NSString *) wonderTypeToString: (WonderType) wonderType;
 
 - (id) initWithString: (NSString *) wonderData newID: (int) newID pointValue: (int) value;
 - (int) getWonderID;

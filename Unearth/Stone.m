@@ -10,16 +10,6 @@
 
 @implementation Stone
 
-- (id) initWithColor: (StoneColor) initColor idNumber:(int) initID {
-    
-    idNumber = initID;
-	baseID = initID;
-	
-    color = initColor;
-    
-    return self;
-    
-}
 
 + (NSString *) StoneColorToString: (StoneColor) color {
 	
@@ -50,6 +40,18 @@
 	
 	return rval;
 	
+}
+
+
+- (id) initWithColor: (StoneColor) initColor idNumber:(int) initID {
+    
+    idNumber = initID;
+	baseID = initID;
+	
+    color = initColor;
+    
+    return self;
+    
 }
 
 

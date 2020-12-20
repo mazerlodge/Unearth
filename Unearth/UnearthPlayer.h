@@ -13,8 +13,9 @@
 #import "RandomEngine.h"
 
 typedef enum UnearthPlayerType : NSUInteger {
-    UnearthPlayerHuman = 0,
-    UnearthPlayerAI = 1
+	UnearthPlayerNotSet = 0,
+    UnearthPlayerHuman = 1,
+    UnearthPlayerAI = 2
 } UnearthPlayerType;
 
 typedef enum PlayerActionVerbEnum : NSUInteger {
@@ -60,6 +61,15 @@ struct PlayerAction {
 	RandomEngine *re;
 	
 }
+
++ (NSString *) UnearthPlayerTypeToString: (UnearthPlayerType) playerType;
+
++ (NSString *) PlayerActionVerbToString: (PlayerActionVerb) verb;
+
++ (NSString *) PlayerActionTargetToString: (PlayerActionTarget) target;
+
++ (NSString *) PlayerActionTargetLocationToString: (PlayerActionTargetLocation) location;
+
 
 - (id) initWithPlayerType: (UnearthPlayerType) type
 				dieColor: (DelverDieColor) color

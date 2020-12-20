@@ -29,6 +29,11 @@ typedef enum DelverDieSize : NSUInteger {
     
 }
 
++ (NSString *) DelverDieColorToString: (DelverDieColor) color;
+
++ (NSString *) DelverDieSizeToString: (DelverDieSize) size;
+
+
 - (id) initWithColor: (DelverDieColor) dieColor size:(DelverDieSize) dieSize dieBaseID: (int) dieID;
 
 - (NSString *) toString;
@@ -36,6 +41,7 @@ typedef enum DelverDieSize : NSUInteger {
 @property (readwrite, assign) int dieID;
 @property (readwrite, assign) DelverDieColor dieColor;
 @property (readwrite, assign) DelverDieSize dieSize;
+
 
 /*
  Method list from [Object Library.txt]

@@ -262,6 +262,8 @@ S1 POA - Unearth
 
 > Next: (Note: UC=Use Case)
 
+	- Should HexDirection.h be integrated into another header (e.g. consumer class's header)
+
 	- Add [cli getStr] like method that is getYN, validates y or n response and returns boolean.
 
     - Add ability to output ruins on table as rectangles with claim value, stone count, stones count by color 

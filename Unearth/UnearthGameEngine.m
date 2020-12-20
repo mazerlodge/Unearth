@@ -10,29 +10,6 @@
 
 @implementation UnearthGameEngine
 
-- (id) init {
-    cli = [[CommandLineInterface alloc] init];
-    
-    gameState = GameStatePopulated;
-    
-    return self;
-    
-}
-
-- (id) initWithGameDataDictionary: (NSDictionary *) dict {
-    
-    cli = [[CommandLineInterface alloc] init];
-    gameState = GameStateNotPopulated;
-    
-    if ([self populateGameFromDictionary:dict])
-        gameState = GameStatePopulated;
-    else
-        gameState = GameStatePopulationFailed;
-    
-    return self;
-
-}
-
 + (NSString *) GameStateToString: (GameState) gameState {
 	
 	NSString *rval = @"NOT_SET";
@@ -74,6 +51,30 @@
 	
 	return rval;
 }
+
+- (id) init {
+    cli = [[CommandLineInterface alloc] init];
+    
+    gameState = GameStatePopulated;
+    
+    return self;
+    
+}
+
+- (id) initWithGameDataDictionary: (NSDictionary *) dict {
+    
+    cli = [[CommandLineInterface alloc] init];
+    gameState = GameStateNotPopulated;
+    
+    if ([self populateGameFromDictionary:dict])
+        gameState = GameStatePopulated;
+    else
+        gameState = GameStatePopulationFailed;
+    
+    return self;
+
+}
+
 
 - (bool) populateGameFromDictionary: (NSDictionary *) dict {
     
