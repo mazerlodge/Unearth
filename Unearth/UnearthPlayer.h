@@ -74,6 +74,7 @@ struct PlayerAction {
 - (NSUInteger) addRuinCard: (RuinCard *) card;
 - (DelverCard *) playDelverCard: (int) cardID;
 - (NSString *) showDelverCards;
+- (NSString *) showDice;
 - (int) roleDie: (DelverDieSize) dieSize;
 - (UnearthPlayerType) getPlayerType;
 - (NSString *) toString;
@@ -82,6 +83,7 @@ struct PlayerAction {
 - (PlayerActionVerb) parsePlayerActionVerbFromString: (NSString *) phrase;
 - (PlayerActionTarget) parsePlayerActionTargetFromString: (NSString *) phrase;
 - (PlayerActionTargetLocation) parsePlayerActionTargetLocationFromString: (NSString *) phrase;
+
 - (NSString *) showPlayerActionHelp;
 - (NSString *) showPlayerActionTargetHelp;
 - (NSString *) showPlayerActionTargetLocationHelp;

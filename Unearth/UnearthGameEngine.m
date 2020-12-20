@@ -424,7 +424,7 @@
 
 - (void) doActionShow: (struct PlayerAction) action player: (UnearthPlayer *) player {
 
-	NSString *msg = [[NSString alloc] initWithFormat:@"In doActionShow with verb=%ld target=%ld location=%ld\n",
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%ld target=%ld location=%ld\n",
 					 action.verb, action.target, action.targetLocation];
 	
 	[cli put:msg];
@@ -432,16 +432,14 @@
 	// Valid show targets are delver, dice (in hand), map, ruin (hand or board), wonder (hand or board)
 	// TODO: add handling for showing more targets
 	// Note: Initial version here just shows dice in hand
-	/*
 	switch (action.target) {
 		case PlayerActionTargetDice:
-			if (action.target == PlayerActionTargetLocationHand)
-				[player showDice];
+			if (action.targetLocation == PlayerActionTargetLocationHand)
+				[cli put:[player showDice]];
 			break;
 			
 	}
-	*/
-	
+
 }
 
 - (GameState) gameState {

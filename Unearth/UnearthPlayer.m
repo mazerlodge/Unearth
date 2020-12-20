@@ -137,7 +137,7 @@
 	struct PlayerAction rval = [self makePlayerActionNotSet];
 
 	rval.verb = [self parsePlayerActionVerbFromString:phrase];
-	rval.target = [self parsePlayerActionTargetLocationFromString:phrase];
+	rval.target = [self parsePlayerActionTargetFromString:phrase];
 	rval.targetLocation = [self parsePlayerActionTargetLocationFromString:phrase];
 	
 	return rval;
@@ -294,6 +294,18 @@
 	return rval;
 	
 }
+
+- (NSString *) showDice {
+	
+	NSString *rval = @"Dice in player's hand:\n";
+	
+	for (DelverDie *die in dice)
+		rval = [rval stringByAppendingFormat:@"%@\n", [die toString]];
+	
+	return rval;
+	
+}
+
 
 - (int) roleDie: (DelverDieSize) dieSize {
 	
