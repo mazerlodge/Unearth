@@ -59,6 +59,8 @@
 - (bool) addWonder: (Wonder *) w touchingHexCell: (HexCell *) c onSide: (HexDirection) direction;
 
 - (void) drawMap;
+- (void) showWonders;
+
 
 /*
  Method list from [Object Library.txt]

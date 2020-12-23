@@ -783,11 +783,16 @@
 	dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
 	aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize8 dieBaseID:dieID];
 	[playerDice addObject:aDie];
+	
+	// Make a HexMap
+	HexMap *aMap = [[HexMap alloc] initWithCLI:cli];
 
+	// Make a player from the parts constructed above.
     UnearthPlayer *player = [[UnearthPlayer alloc] initWithPlayerType:playerType
                                                              dieColor:dieColor
 															  diceSet: playerDice
                                                            playerName:name
+															   hexMap:aMap
 														 randomEngine:re];
     
     return player;

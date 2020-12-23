@@ -497,6 +497,8 @@
 	for (HexCell *aCell in hexCells)
 		[cli debugMsg:[aCell toString] level:4];
 	
+	// Output a blank line before the map content.
+	[cli put:@"\n"];
 	
 	// output the cell's positions in order by position.
 	[self updateStats];
@@ -546,6 +548,9 @@
 
 	[self drawACell:hexCells[0]];
 	
+	// Output a blank line before the map content.
+	[cli put:@"\n"];
+
 }
 
 - (void) drawACell: (HexCell *) cell {
@@ -676,5 +681,22 @@
 	
 }
 
+- (void) showWonders {
+	// Print a list of wonders found in the map
+	
+	int wonderCount = 0;
+	
+	for (HexCell *aCell in hexCells) {
+		if ([aCell isWonder]) {
+			[cli put:[aCell toString]];
+			wonderCount++;
+		}
+		
+	}
+	
+	if (wonderCount == 0)
+		[cli put:@"No wonders in player's map.\n"];
+
+}
 
 @end

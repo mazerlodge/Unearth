@@ -135,16 +135,19 @@
 				 dieColor: (DelverDieColor) color
 				  diceSet: (NSMutableArray *) playerDice
 			   playerName: (NSString *) name
+				   hexMap: (HexMap *) aMap
 			 randomEngine:(RandomEngine *) randomEngine {
+	re = randomEngine;
+	map = aMap;
     playerType = type;
     playerName = name;
 	DelverDie *aDie = [playerDice objectAtIndex:0];
     dieColor = [aDie dieColor];
-	re = randomEngine;
 	
 	delverCards = [[NSMutableArray alloc] initWithCapacity:2];
 	ruinCards = [[NSMutableArray alloc] initWithCapacity:1];
 	dice = playerDice;
+
 
     return self;
     
@@ -369,7 +372,7 @@
 	
 	PlayerActionTargetLocation rval = PlayerActionTargetLocationNotSet;
 	
-	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"hand", @"board", nil];
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"hand", @"board", @"table", nil];
 	int keyIdxFound = 999;
 	int i=0;
 	for (NSString *keyword in keywords) {
@@ -397,6 +400,7 @@
 			break;
 
 		case 2:
+		case 3:
 			rval = PlayerActionTargetLocationBoard;
 			break;
 
@@ -416,6 +420,17 @@
 	
 }
 
+- (NSString *) showRuinCards {
+	
+	NSString *rval = @"Ruin Cards:\n";
+	
+	for (RuinCard *rc in ruinCards)
+		rval = [rval stringByAppendingFormat:@"%@\n", [rc toString]];
+	
+	return rval;
+	
+}
+
 - (NSString *) showDice {
 	
 	NSString *rval = @"Dice in player's hand:\n";
@@ -424,6 +439,19 @@
 		rval = [rval stringByAppendingFormat:@"%@\n", [die toString]];
 	
 	return rval;
+	
+}
+
+- (void) showMap {
+	
+	[map drawMap];
+	
+}
+
+- (void) showMapWonders {
+	// Print a list of wonders from the map.
+	
+	[map showWonders];
 	
 }
 

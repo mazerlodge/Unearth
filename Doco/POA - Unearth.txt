@@ -266,6 +266,11 @@ S1 POA - Unearth
 	- Modified includes referencing HexDirection.h to include check for ndef
 	- Moved enum toString() methods to top of their classes where they weren't already.
 
+12/23
+	- Add HexMap to UnearthPlayer and expose showWonders() method to continue UGE.doActionShow:player()
+	- When parsing command, allow the word 'table' to mean 'board'.
+	- Added support for show ruins on board or in hand, show wonders on board or in hand
+	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
@@ -275,7 +280,7 @@ S1 POA - Unearth
 
 > Next: (Note: UC=Use Case)
 
-	- Should HexDirection.h be integrated into another header (e.g. consumer class's header)
+	- Add Examine action to view details of an object by ID 
 
 	- Add [cli getStr] like method that is getYN, validates y or n response and returns boolean.
 
@@ -322,5 +327,6 @@ S1 POA - Unearth
     - Add call CLI from within validate args, eg collect test number 0909
     - Add debug logging class w/ output to file 0620 1103
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
+	- Should HexDirection.h be integrated into another header (e.g. consumer class's header)
 
 

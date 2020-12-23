@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RandomEngine.h"
 #import "DelverDie.h"
 #import "DelverCard.h"
 #import "RuinCard.h"
-#import "RandomEngine.h"
+#import "HexMap.h"
 
 typedef enum UnearthPlayerType : NSUInteger {
 	UnearthPlayerNotSet = 0,
@@ -52,13 +53,14 @@ struct PlayerAction {
 
 @interface UnearthPlayer : NSObject {
     
+	RandomEngine *re;
     NSString *playerName;
     UnearthPlayerType playerType;
     DelverDieColor dieColor;
+	HexMap *map;
 	NSMutableArray *delverCards;
 	NSMutableArray *ruinCards;
 	NSMutableArray *dice;
-	RandomEngine *re;
 	
 }
 
@@ -75,20 +77,30 @@ struct PlayerAction {
 				dieColor: (DelverDieColor) color
 				  diceSet: (NSMutableArray *) playerDice
 			   playerName: (NSString *) name
+				   hexMap:(HexMap *) aMap
 			 randomEngine: (RandomEngine *) randomEngine;
 
 
 - (DelverDieColor) dieColor;
 - (NSString *) playerName;
+
 - (NSUInteger) addDelverCard: (DelverCard *) card;
 - (NSUInteger) addRuinCard: (RuinCard *) card;
+
 - (DelverCard *) playDelverCard: (int) cardID;
+
 - (NSString *) showDelverCards;
+- (NSString *) showRuinCards;
 - (NSString *) showDice;
+- (void) showMap;
+- (void) showMapWonders;
+
 - (int) roleDie: (DelverDieSize) dieSize;
+
 - (UnearthPlayerType) getPlayerType;
 - (NSString *) toString;
 - (struct PlayerAction) makePlayerActionNotSet;
+
 - (struct PlayerAction) parsePlayerActionFromString: (NSString *) phrase;
 - (PlayerActionVerb) parsePlayerActionVerbFromString: (NSString *) phrase;
 - (PlayerActionTarget) parsePlayerActionTargetFromString: (NSString *) phrase;

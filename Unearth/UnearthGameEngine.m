@@ -436,15 +436,16 @@
 }
 
 - (void) doActionShow: (struct PlayerAction) action player: (UnearthPlayer *) player {
-
-	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%ld target=%ld location=%ld\n",
-					 action.verb, action.target, action.targetLocation];
-	
-	[cli put:msg];
-	
 	// Valid show targets are delver, dice (in hand), map, ruin (hand or board), wonder (hand or board)
-	// TODO: add handling for showing more targets
+
+	bool bShowNotYetImplementedMsg = false;
 	
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%@ target=%@ location=%@\n",
+					 [UnearthPlayer PlayerActionVerbToString:action.verb],
+					 [UnearthPlayer PlayerActionTargetToString:action.target],
+					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
+	[cli debugMsg:msg level:5];
+		
 	// If Show action target location was not specified, assume hand for delver cards and dice
 	if (((action.target == PlayerActionTargetDelver) || (action.target == PlayerActionTargetDice))
 		&& (action.targetLocation == PlayerActionTargetLocationNotSet)) {
@@ -469,8 +470,13 @@
 					break;
 			
 				case PlayerActionTargetLocationBoard:
-					[cli put:@"UGE.doActionShow(): show target=dice, location=board not yet implemented." withNewline:true];
+					bShowNotYetImplementedMsg = true;
 					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+					
 			}
 			break;
 
@@ -483,10 +489,61 @@
 				case PlayerActionTargetLocationBoard:
 					[cli put:[self showDelverCardsInPlay]];
 					break;
+
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+
+			}
+			break;
+		
+		case PlayerActionTargetMap:
+			// Note: only valid target location for map is Hand.
+			[player showMap];
+			break;
+			
+		case PlayerActionTargetWonder:
+			switch (action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[player showMapWonders];
+					break;
+					
+				case PlayerActionTargetLocationBoard:
+					[cli put:[self showWondersOnTable]];
+					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+
+			}
+			break;
+
+		case PlayerActionTargetRuin:
+			switch (action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[player showRuinCards]];
+					break;
+					
+				case PlayerActionTargetLocationBoard:
+					[cli put:[self showRuinsOnTable]];
+					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+
 			}
 			break;
 
 			
+	} // switch action.target
+	
+	if(bShowNotYetImplementedMsg) {
+		msg = [[NSString alloc] initWithFormat:@"UGE.doActionShow:player(): Recieved Target=%@ with Location=%@, not yet implemented",
+			   [UnearthPlayer PlayerActionTargetToString:action.target],
+			   [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
+
 	}
 
 }
