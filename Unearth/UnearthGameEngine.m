@@ -165,6 +165,22 @@
 	
 }
 
+- (Wonder *) getWonderByID: (NSUInteger) objectID {
+	
+	Wonder *rval = nil;
+	
+	for (Wonder *aWonder in namedWondersOnTable) {
+		if ([aWonder getWonderID] == objectID) {
+			rval = aWonder;
+			break;
+		}
+		
+	}
+	
+	return rval;
+	
+}
+
 - (void) doInitialGameSetup {
 	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
 	
@@ -430,9 +446,57 @@
 			// TODO: Add method to handle rolling of dice.
 			break;
 
-			
+		case PlayerActionVerbExamine:
+			[self doActionExamine:action player:player];
+			break;
 		
 	}
+}
+
+- (void) doActionExamine: (struct PlayerAction) action player: (UnearthPlayer *) player {
+
+	bool bShowNotYetImplementedMsg = false;
+	
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionExamine:player() with verb=%@ target=%@ location=%@ objectID=%ld\n",
+					 [UnearthPlayer PlayerActionVerbToString:action.verb],
+					 [UnearthPlayer PlayerActionTargetToString:action.target],
+					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],
+					 action.objectID];
+	[cli debugMsg:msg level:5];
+	
+	switch (action.target) {
+		
+		case PlayerActionTargetWonder:
+			switch (action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[[player getWonderByID:action.objectID] toString] withNewline:true];
+					break;
+					
+				case PlayerActionTargetLocationBoard:
+					[cli put:[[self getWonderByID:action.objectID] toString] withNewline:true];
+					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+
+			}
+			break;
+			
+		default:
+			bShowNotYetImplementedMsg = true;
+			break;
+
+	} // switch action.target
+		
+
+	if(bShowNotYetImplementedMsg) {
+		msg = [[NSString alloc] initWithFormat:@"UGE.doActionExamine:player(): Recieved Target=%@ with Location=%@, not yet implemented",
+			   [UnearthPlayer PlayerActionTargetToString:action.target],
+			   [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
+
+	}
+
 }
 
 - (void) doActionShow: (struct PlayerAction) action player: (UnearthPlayer *) player {
@@ -440,10 +504,11 @@
 
 	bool bShowNotYetImplementedMsg = false;
 	
-	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%@ target=%@ location=%@\n",
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%@ target=%@ location=%@ objectID=%ld\n",
 					 [UnearthPlayer PlayerActionVerbToString:action.verb],
 					 [UnearthPlayer PlayerActionTargetToString:action.target],
-					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
+					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],
+					 action.objectID];
 	[cli debugMsg:msg level:5];
 		
 	// If Show action target location was not specified, assume hand for delver cards and dice
@@ -459,9 +524,7 @@
 		[cli put:@"You didn't specify, so showing from Board (options are hand or board)" withNewline:true];
 		action.targetLocation = PlayerActionTargetLocationBoard;
 	}
-
 	
-	// Note: Initial version here just shows dice in hand
 	switch (action.target) {
 		case PlayerActionTargetDice:
 			switch(action.targetLocation) {
@@ -536,7 +599,6 @@
 			}
 			break;
 
-			
 	} // switch action.target
 	
 	if(bShowNotYetImplementedMsg) {

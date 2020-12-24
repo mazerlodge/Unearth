@@ -11,7 +11,7 @@ ID, Title, Text, ColorRule
 307, The Eternal Flame, When a Ruin that you have no dice on is claimed you may draw a Delver Card. This Wonder is worth 1 point., YYY???
 308, Tomb of the Last Age, At the end of the game score 1 point for each color of Ruin you have., LRBY??
 309, Fountain of Reflection, At the end of the game score 2 points for each Stone of the type you have the least of., LRBY??
-310, Underground Library, When you draw Stones from the bag you may draw two and choose one to keep. This Wonder is wroth 2 points., ??????
+310, Underground Library, When you draw Stones from the bag you may draw two and choose one to keep. This Wonder is worth 2 points., ??????
 311, Palace of Relics, This wonder is worth 6 points., 111222
 312, Temple of Flames, At the end of the game score 1 point for every red Stone you have., RRRR??
 313, Temple of Fate, At the end of the game score 1 point for every black Stone you have., LLLL??

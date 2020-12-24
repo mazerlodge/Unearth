@@ -61,7 +61,11 @@
 		case PlayerActionVerbRoll:
 			rval = @"Roll";
 			break;
-						
+
+		case PlayerActionVerbExamine:
+			rval = @"Examine";
+			break;
+
 	}
 	
 	return rval;
@@ -183,6 +187,16 @@
 
 }
 
+- (Wonder *) getWonderByID:(NSUInteger)objectID {
+	
+	Wonder *rval = nil;
+	
+	[map getWonderByID:objectID];
+	
+	return rval;
+	
+}
+
 - (DelverCard *) playDelverCard: (int) cardID {
 	// Returns a card with baseID = -1 if specified cardID wasn't found.
 	
@@ -263,6 +277,7 @@
 	rval.verb = [self parsePlayerActionVerbFromString:phrase];
 	rval.target = [self parsePlayerActionTargetFromString:phrase];
 	rval.targetLocation = [self parsePlayerActionTargetLocationFromString:phrase];
+	rval.objectID = [self parsePlayerActionObjectIDFromString: phrase];
 	
 	return rval;
 }
@@ -272,7 +287,8 @@
 	PlayerActionVerb rval = PlayerActionVerbNotSet;
 	
 	// Find verb in phrase
-	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done", @"show", @"roll", nil];
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done", @"show",
+														 @"roll", @"examine", nil];
 	int keyIdxFound = 999;
 	int i=0;
 	for (NSString *keyword in keywords) {
@@ -311,6 +327,9 @@
 			rval = PlayerActionVerbRoll;
 			break;
 
+		case 5:
+			rval = PlayerActionVerbExamine;
+			break;
 	}
 	
 	return rval;
@@ -407,6 +426,28 @@
 	}
 	
 	return rval;
+}
+
+
+- (NSUInteger) parsePlayerActionObjectIDFromString: (NSString *) phrase {
+	// Return the first number found in the specified phrase (e.g. examine wonder 089 returns 89)
+		
+	NSUInteger rval = 999;
+	
+	NSArray *words = [phrase componentsSeparatedByString:@" "];
+	
+	for (NSString *aWord in words) {
+		NSUInteger sampleVal = [aWord integerValue];
+		if (sampleVal > 0) {
+			rval = sampleVal;
+			break;
+			
+		}
+		
+	} // for aWord
+
+	return rval;
+	
 }
 
 - (NSString *) showDelverCards {

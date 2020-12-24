@@ -161,7 +161,20 @@
 	
 	return rval; 
 	
-} 
+}
+
+- (Wonder *) getWonderByID: (NSUInteger) objectID {
+	
+	Wonder *rval  = nil;
+	
+	for (HexCell *aCell in hexCells) {
+		if ([aCell isWonder])
+			rval = (Wonder *) [aCell getTile];
+	}
+	
+	return rval;
+	
+}
 
 - (NSArray *) getNeighborCells: (HexCell *) hexCell onlyUnoccupied: (bool) bOnlyUnoccupied {
 	// Return an array of the cells around to the specified cell

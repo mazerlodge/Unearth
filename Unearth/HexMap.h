@@ -49,6 +49,7 @@
 - (HexCell *) getHexCellAtPosition: (HexCellPosition *) position;
 
 - (NSArray *) getAvailableHexCells;
+- (Wonder *) getWonderByID: (NSUInteger) objectID;
 
 - (bool) isPositionValid: (HexCellPosition *) position;
 

@@ -270,7 +270,9 @@ S1 POA - Unearth
 	- Add HexMap to UnearthPlayer and expose showWonders() method to continue UGE.doActionShow:player()
 	- When parsing command, allow the word 'table' to mean 'board'.
 	- Added support for show ruins on board or in hand, show wonders on board or in hand
-	
+	- Add Examine action to view details of an object by ID, initial version supports Wonders
+	- Wonder 95 (310) had a typo in the descriptive text (Word 'wroth' instead of 'worth')
+
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
@@ -279,8 +281,6 @@ S1 POA - Unearth
 		
 
 > Next: (Note: UC=Use Case)
-
-	- Add Examine action to view details of an object by ID 
 
 	- Add [cli getStr] like method that is getYN, validates y or n response and returns boolean.
 

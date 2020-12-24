@@ -57,11 +57,15 @@ typedef enum GameStateEnum : NSInteger {
 + (NSString *) GameStateToString: (GameState) gameState;
 
 - (id) initWithGameDataDictionary: (NSDictionary *) dict;
+
 - (int) go;
+
 - (void) setGameState: (GameState) newState;
 - (bool) populateGameFromDictionary: (NSDictionary *) dict;
 
 - (GameState) gameState;
+
+- (Wonder *) getWonderByID: (NSUInteger) objectID;
 
 
 /*

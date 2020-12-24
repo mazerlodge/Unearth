@@ -12,6 +12,7 @@
 #import "DelverCard.h"
 #import "RuinCard.h"
 #import "HexMap.h"
+#import "Wonder.h"
 
 typedef enum UnearthPlayerType : NSUInteger {
 	UnearthPlayerNotSet = 0,
@@ -20,12 +21,13 @@ typedef enum UnearthPlayerType : NSUInteger {
 } UnearthPlayerType;
 
 typedef enum PlayerActionVerbEnum : NSUInteger {
-	PlayerActionVerbNotSet = 0,
-	PlayerActionVerbHelp = 1,
-	PlayerActionVerbQuit = 2,
-    PlayerActionVerbDone = 3,
-	PlayerActionVerbShow = 4,
-    PlayerActionVerbRoll = 5
+	PlayerActionVerbNotSet  = 0,
+	PlayerActionVerbHelp    = 1,
+	PlayerActionVerbQuit    = 2,
+    PlayerActionVerbDone    = 3,
+	PlayerActionVerbShow    = 4,
+    PlayerActionVerbRoll    = 5,
+	PlayerActionVerbExamine = 6
 } PlayerActionVerb;
 
 typedef enum PlayerActionTargetEnum : NSUInteger {
@@ -49,6 +51,7 @@ struct PlayerAction {
 	NSUInteger	verb;
 	NSUInteger targetLocation;
 	NSUInteger target;
+	NSUInteger objectID;
 };
 
 @interface UnearthPlayer : NSObject {
@@ -86,6 +89,8 @@ struct PlayerAction {
 
 - (NSUInteger) addDelverCard: (DelverCard *) card;
 - (NSUInteger) addRuinCard: (RuinCard *) card;
+
+- (Wonder *) getWonderByID: (NSUInteger) objectID;
 
 - (DelverCard *) playDelverCard: (int) cardID;
 
