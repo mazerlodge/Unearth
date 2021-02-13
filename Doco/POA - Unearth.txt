@@ -282,6 +282,11 @@ S1 POA - Unearth
 
 > Next: (Note: UC=Use Case)
 
+	- Show ruin on table, need to output card number, helps with 'roll d6 at 000' 0213
+	- Show command, need ability to show wonder 090 to see details of wonder, helps player plan rolls. 0213
+	- Show command w/ no options should list targets possible 0213
+	- Roll should output some sort of message (even 'not yet implemented') 0213 
+
 	- Add [cli getStr] like method that is getYN, validates y or n response and returns boolean.
 
     - Add ability to output ruins on table as rectangles with claim value, stone count, stones count by color 
