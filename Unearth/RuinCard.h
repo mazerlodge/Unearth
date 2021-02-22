@@ -22,6 +22,7 @@ typedef enum RuinCardColor : NSUInteger {
     RuinCardColor cardColor;
     int claimValue;
     int cardStoneValue;
+	int cardID;
     NSMutableArray *stones;
     NSMutableArray *delverDice;
     
@@ -29,7 +30,7 @@ typedef enum RuinCardColor : NSUInteger {
 
 + (NSString *) RuinCardColorToString: (RuinCardColor) color;
 
-- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal;
+- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal cardIdentifier: (int) cardIdentifier;
 - (NSString *) toString;
 - (NSUInteger) addStoneToCard: (Stone *) stoneToAdd;
 - (int) stoneValue;

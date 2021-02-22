@@ -41,13 +41,13 @@
 }
 
 
-- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal {
+- (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal cardIdentifier: (int) cardIdentifier {
     
     bFaceDown = true;
     cardColor = color;
     claimValue = claimVal;
     cardStoneValue = stoneVal;
-    
+	cardID = cardIdentifier;
     stones = [[NSMutableArray alloc] initWithCapacity:stoneVal];
     delverDice = [[NSMutableArray alloc] init];
     
@@ -73,8 +73,8 @@
 	
 	
 	
-	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card color=%@ claimValue=%d cardStoneValue=%d",
-					  [RuinCard RuinCardColorToString:cardColor], claimValue, cardStoneValue];
+	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card id=%d color=%@ claimValue=%d cardStoneValue=%d",
+					  cardID, [RuinCard RuinCardColorToString:cardColor], claimValue, cardStoneValue];
 	
 	if ([stones count] > 0) {
 		NSString *stonesMsg = @"\nStones on card:\n";

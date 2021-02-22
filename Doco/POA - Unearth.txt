@@ -273,6 +273,12 @@ S1 POA - Unearth
 	- Add Examine action to view details of an object by ID, initial version supports Wonders
 	- Wonder 95 (310) had a typo in the descriptive text (Word 'wroth' instead of 'worth')
 
+== 2021 ==
+
+02/21
+	- Added ID to Ruin Cards, to be used as target for rolling a die at the card.
+	
+	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()

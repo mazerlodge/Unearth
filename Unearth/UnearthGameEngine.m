@@ -128,7 +128,10 @@
 
 - (RuinCard *) getRuinCardFromDeck {
 	
-	RuinCard *rval = [[RuinCard alloc] initWithColor:RuinCardColorGray claimValue:-1 stoneValue:0];
+	RuinCard *rval = [[RuinCard alloc] initWithColor:RuinCardColorGray
+										  claimValue:-1
+										  stoneValue:0
+										  cardIdentifier:-1];
 	
 	if ([ruinsDeck getCount] > 0) {
 		rval = [ruinsDeck getNextCard];

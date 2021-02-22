@@ -997,6 +997,7 @@
                                     RuinCardColorGray};
     
     NSArray *ruinsCards = [[NSArray alloc] init];
+	int cardID = 100;
     for (int colorIdx=0; colorIdx < 5; colorIdx++) {
         RuinCardColor currentColor = allColors[colorIdx];
         for (int valueIdx=0; valueIdx < 5; valueIdx++) {
@@ -1004,7 +1005,8 @@
             int currentStoneValue = allStoneValues[valueIdx];
             RuinCard *currentCard = [[RuinCard alloc] initWithColor:currentColor
                                                          claimValue:currentClaimValue
-                                                         stoneValue:currentStoneValue];
+                                                         stoneValue:currentStoneValue
+														 cardIdentifier: cardID++];
             ruinsCards = [ruinsCards arrayByAddingObject:currentCard];
             
         } // for valueIdx
