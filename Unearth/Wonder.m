@@ -165,8 +165,12 @@
 
 	}
 	else {
-		rval = [[NSString alloc] initWithFormat:@"Wonder id=%d type=%@ title=%@ value=%@\ndescriptive text=%@",
-						  idNumber, [Wonder wonderTypeToString:wonderType], title, pointValueMsg, descriptiveText];
+		rval = [[NSString alloc] initWithFormat:@"Wonder ID=%d Title=%@\n\tType=%@\n\tDescriptive text=%@\n\tValue=%@\n\tRequired Pattern=%@",
+						  idNumber, title,
+				[Wonder wonderTypeToString:wonderType],
+				descriptiveText,
+				pointValueMsg,
+				requiredPattern];
 
 	}
 	

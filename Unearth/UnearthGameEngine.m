@@ -380,6 +380,45 @@
 	
 }
 
+- (NSString *) showWonderDetailsOnTable: (NSUInteger) wonderID {
+
+	NSString *rval = @"Wonder Details:\n";
+	
+	Wonder *w;
+	bool bWonderFound = false;
+	
+	// Search table for wonder
+	for (Wonder *cw in namedWondersOnTable) {
+		NSUInteger cwID = cw.getWonderID;
+		if (cwID == wonderID) {
+			w = cw;
+			bWonderFound = true;
+			NSString *wonderLongDescription = [w toString];
+			rval = [rval stringByAppendingFormat:@" %@\n", wonderLongDescription];
+		}
+	}
+	
+	if (!bWonderFound)
+		rval = [NSString stringWithFormat:@"Wonder with ID=%ld not found on table.\n", wonderID];
+	
+	return rval;
+}
+
+
+- (NSString *) showWonderDetailsinPlayerHand: (UnearthPlayer *) player forWonderID: (NSUInteger) wonderID {
+
+	NSString *rval = @"Wonder Details:\n";
+	
+	Wonder *w = [player getWonderByID:wonderID];
+	rval = [rval stringByAppendingFormat:@" %@", [w toString]];
+
+	if (w == nil)
+		rval = [NSString stringWithFormat:@"Wonder with ID=%ld not found in player's hand.\n", wonderID];
+	
+	return rval;
+}
+
+
 - (NSString *) showRuinsOnTable {
 	
 	NSString *rval = @"Ruins on Table:\n";
@@ -571,11 +610,21 @@
 		case PlayerActionTargetWonder:
 			switch (action.targetLocation) {
 				case PlayerActionTargetLocationHand:
-					[player showMapWonders];
+					if (action.objectID == 999)
+						[player showMapWonders];
+					else
+						// TODO: Show wonder details for ID specified
+						[cli put:[self showWonderDetailsinPlayerHand:player forWonderID: action.objectID]];
 					break;
 					
 				case PlayerActionTargetLocationBoard:
-					[cli put:[self showWondersOnTable]];
+					if (action.objectID == 999)
+						// No specific card was specified
+						[cli put:[self showWondersOnTable]];
+					else
+						// TODO: Show wonder details for ID specified
+						[cli put:[self showWonderDetailsOnTable: action.objectID]];
+						
 					break;
 					
 				default:

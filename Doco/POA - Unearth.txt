@@ -278,6 +278,8 @@ S1 POA - Unearth
 02/21
 	- Added ID to Ruin Cards, to be used as target for rolling a die at the card.
 	
+04/18
+	- Added ability to display details of wonders either in hand or on the table.
 	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
@@ -288,8 +290,19 @@ S1 POA - Unearth
 
 > Next: (Note: UC=Use Case)
 
-	- Show ruin on table, need to output card number, helps with 'roll d6 at 000' 0213
 	- Show command, need ability to show wonder 090 to see details of wonder, helps player plan rolls. 0213
+Current output when issuing $show wonder 101
+In UGE.doActionShow with verb=Show target=Wonder location=NOT_SET objectID=101
+(Severity: 5)
+You didn't specify, so showing from Board (options are hand or board)
+Wonders on Table:
+101 title= The Sanctuary of the Builders
+097 title= Temple of Flames
+092 title= The Eternal Flame
+096 title= Palace of Relics
+
+ln577
+	
 	- Show command w/ no options should list targets possible 0213
 	- Roll should output some sort of message (even 'not yet implemented') 0213 
 
