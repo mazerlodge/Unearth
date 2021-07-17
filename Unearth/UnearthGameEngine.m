@@ -506,6 +506,21 @@
 					 action.objectID];
 	[cli debugMsg:msg level:5];
 	
+	// If action target location was not specified, assume hand for delver cards and dice
+	if (((action.target == PlayerActionTargetDelver) || (action.target == PlayerActionTargetDice))
+		&& (action.targetLocation == PlayerActionTargetLocationNotSet)) {
+		[cli put:@"You didn't specify, so examining from Hand (options are hand or board)" withNewline:true];
+		action.targetLocation = PlayerActionTargetLocationHand;
+	}
+
+	// If action target location was not specified, assume board for wonders and ruins
+	if (((action.target == PlayerActionTargetWonder) || (action.target == PlayerActionTargetRuin))
+		&& (action.targetLocation == PlayerActionTargetLocationNotSet)) {
+		[cli put:@"You didn't specify, so examining from Board (options are hand or board)" withNewline:true];
+		action.targetLocation = PlayerActionTargetLocationBoard;
+	}
+
+	
 	switch (action.target) {
 		
 		case PlayerActionTargetWonder:

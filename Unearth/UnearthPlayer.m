@@ -219,7 +219,8 @@
 	NSString *msg = @"Player action words are:\n";
 	
 	//TODO: Refactor this to get keywords into a single location
-	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done", @"show", @"roll", nil];
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"quit", @"done",
+														 @"show", @"roll", @"examine", nil];
 
 	for (NSString *keyword in keywords) {
 		msg = [msg stringByAppendingFormat:@"%@\n", keyword];
@@ -234,7 +235,8 @@
 	NSString *msg = @"Player action target words are:\n";
 	
 	//TODO: Refactor this to get keywords into a single location
-	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"delver", @"dice", @"map", @"ruin", @"wonder", nil];
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"delver", @"dice",
+														 @"map", @"ruin", @"wonder", nil];
 
 	for (NSString *keyword in keywords) {
 		msg = [msg stringByAppendingFormat:@"%@\n", keyword];

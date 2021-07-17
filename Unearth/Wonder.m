@@ -93,9 +93,10 @@
 	baseID = (int)[(NSString *)[data objectAtIndex:0] integerValue];
 	wonderType = [Wonder wonderTypeFromRawData:wonderData];
 	tileType = HexTileTypeWonder;
-	title = (NSString *)[data objectAtIndex:1];
-	descriptiveText = (NSString *)[data objectAtIndex:2];
-	requiredPattern = (NSString *)[data objectAtIndex:3];
+	title = (NSString *)[[data objectAtIndex:1] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	descriptiveText = (NSString *)[[data objectAtIndex:2] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	requiredPattern = (NSString *)[[data objectAtIndex:3] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	
 	idNumber = newID;
 	
 	if (value == -1)
@@ -161,7 +162,7 @@
 	NSString *rval;
 	
 	if (bBriefOutput) {
-		rval = [[NSString alloc] initWithFormat:@"%.3d title=%@", idNumber, title];
+		rval = [[NSString alloc] initWithFormat:@"%.3d Pattern=%@ Title=%@", idNumber, requiredPattern, title];
 
 	}
 	else {

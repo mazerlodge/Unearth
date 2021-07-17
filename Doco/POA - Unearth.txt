@@ -281,6 +281,13 @@ S1 POA - Unearth
 04/18
 	- Added ability to display details of wonders either in hand or on the table.
 	
+07/17
+	- Trimmed whitespace from wonder pattern, title and description
+	- Added 'examine' to list of commands returned by help in UnearthPlayer
+	- In UGE, added setting of default action targetLocation in doActionExamine:player() method.
+	- Added to 'ToDo' list in POA.
+	
+	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
@@ -291,15 +298,77 @@ S1 POA - Unearth
 > Next: (Note: UC=Use Case)
 
 	- Show command, need ability to show wonder 090 to see details of wonder, helps player plan rolls. 0213
-Current output when issuing $show wonder 101
-In UGE.doActionShow with verb=Show target=Wonder location=NOT_SET objectID=101
-(Severity: 5)
-You didn't specify, so showing from Board (options are hand or board)
-Wonders on Table:
-101 title= The Sanctuary of the Builders
-097 title= Temple of Flames
-092 title= The Eternal Flame
-096 title= Palace of Relics
+		Current output when issuing $show wonder 101
+		In UGE.doActionShow with verb=Show target=Wonder location=NOT_SET objectID=101
+		(Severity: 5)
+		You didn't specify, so showing from Board (options are hand or board)
+		Wonders on Table:
+		101 title= The Sanctuary of the Builders
+		097 title= Temple of Flames
+		092 title= The Eternal Flame
+		096 title= Palace of Relics
+		
+		>This appears to be done, exampe $show wonder 088
+		In UGE.doActionShow with verb=Show target=Wonder location=NOT_SET objectID=88
+		(Severity: 5)
+		You didn't specify, so showing from Board (options are hand or board)
+		Wonder Details:
+		 Wonder ID=88 Title= Temple of Prosperity
+			Type=Named Wonder
+			Descriptive text= At the end of the game score 1 point for every yellow Stone you have.
+			Value=Determined at end of game
+			Required Pattern= YYYY??
+
+		>Examine keyword doing the same as 'show wonder nnn'
+		example $examine wonder 088
+		Enter command (or 'help') examine wonder 088
+		In UGE.doActionExamine:player() with verb=Examine target=Wonder location=NOT_SET objectID=88
+		(Severity: 5)
+
+
+
+	- Change Ruin Card on table display to shorter 'icon' form
+		Current output when issuing $show ruins on table
+		In UGE.doActionShow with verb=Show target=Ruin location=Board objectID=999
+		(Severity: 5)
+		Ruins on Table:
+		Ruin Card id=112 color=Blue claimValue=13 cardStoneValue=2
+		Stones on card:
+			Stone id=35 color=Yellow
+			Stone id=44 color=Blue
+
+		Ruin Card id=119 color=Purple claimValue=17 cardStoneValue=3
+		Stones on card:
+			Stone id=17 color=Red
+			Stone id=47 color=Blue
+			Stone id=28 color=Yellow
+
+		Ruin Card id=110 color=Blue claimValue=9 cardStoneValue=2
+		Stones on card:
+			Stone id=59 color=Black
+			Stone id=37 color=Yellow
+
+		Ruin Card id=118 color=Purple claimValue=15 cardStoneValue=3
+		Stones on card:
+			Stone id=65 color=Black
+			Stone id=16 color=Red
+			Stone id=46 color=Blue
+
+		> Desired output
+		Ruins on Table:
+		Ruin Card id=112 color=Blue claimValue=13 cardStoneValue=2
+		Stones on card: (Yel) (Blu)
+
+		Ruin Card id=119 color=Purple claimValue=17 cardStoneValue=3
+		Stones on card: (Red) (Blu) (Yel)
+
+		Ruin Card id=110 color=Blue claimValue=9 cardStoneValue=2
+		Stones on card: (Bla) (Yel)
+
+		Ruin Card id=118 color=Purple claimValue=15 cardStoneValue=3
+		Stones on card: (Bla) (Red) (Blu)
+
+		
 
 ln577
 	
