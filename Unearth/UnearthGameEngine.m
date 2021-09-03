@@ -454,8 +454,7 @@
     
 }
 
-- (void) doAction: (struct PlayerAction) action
-		   player: (UnearthPlayer *) player {
+- (void) doAction: (struct PlayerAction) action player: (UnearthPlayer *) player {
 	
 	NSString *confirmQuit;
 	
@@ -485,7 +484,7 @@
 			break;
 
 		case PlayerActionVerbRoll:
-			// TODO: Add method to handle rolling of dice.
+			[self doActionRoll:action player:player];
 			break;
 
 		case PlayerActionVerbExamine:
@@ -494,6 +493,47 @@
 		
 	}
 }
+
+
+- (void) doActionRoll: (struct PlayerAction) action player: (UnearthPlayer *) player {
+
+	bool bShowNotYetImplementedMsg = false;
+	
+	// For rolls, the action structure can be updated; target always a ruin, location always on the table
+	action.target = PlayerActionTargetRuin;
+	action.targetLocation = PlayerActionTargetLocationBoard;
+	
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionRoll:player() with verb=%@ subject=%ld target=%@ location=%@ objectID=%ld\n",
+					 [UnearthPlayer PlayerActionVerbToString:action.verb],
+					 action.subject,
+					 [UnearthPlayer PlayerActionTargetToString:action.target],
+					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],
+					 action.objectID];
+	[cli debugMsg:msg level:5];
+
+	// TODO: UGE.doActionRoll:player() Not yet implemented.
+	bShowNotYetImplementedMsg = true;
+	
+	// TODO: Take a die from the player of the size specified and put it on the target ruin specified.
+	
+	// TODO: Check the ruin to see if it has been claimed, if so give it to the appropriate player
+	
+	// TODO: If ruin claimed, retun dice to owning players.
+	
+	// TODO: If ruin claimed, return any remaining stones to the bag
+	
+	// TODO: If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
+	
+
+	if(bShowNotYetImplementedMsg) {
+		msg = [[NSString alloc] initWithFormat:@"UGE.doActionRoll:player(): Recieved Target=%@ with Location=%@, not yet implemented",
+			   [UnearthPlayer PlayerActionTargetToString:action.target],
+			   [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
+
+	}
+
+}
+
 
 - (void) doActionExamine: (struct PlayerAction) action player: (UnearthPlayer *) player {
 
@@ -582,24 +622,13 @@
 		action.targetLocation = PlayerActionTargetLocationBoard;
 	}
 	
+	/*
+	 TODO: Two PlayerActionTarget... enums not yet implemented:
+	 PlayerActionTargetNotSet = 0,
+	 PlayerActionTargetHelp   = 1,
+	 
+	 */
 	switch (action.target) {
-		case PlayerActionTargetDice:
-			switch(action.targetLocation) {
-				case PlayerActionTargetLocationHand:
-					[cli put:[player showDice]];
-					break;
-			
-				case PlayerActionTargetLocationBoard:
-					bShowNotYetImplementedMsg = true;
-					break;
-					
-				default:
-					bShowNotYetImplementedMsg = true;
-					break;
-					
-			}
-			break;
-
 		case PlayerActionTargetDelver:
 			switch(action.targetLocation) {
 				case PlayerActionTargetLocationHand:
@@ -617,9 +646,43 @@
 			}
 			break;
 		
+		case PlayerActionTargetDice:
+			switch(action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[player showDice]];
+					break;
+			
+				case PlayerActionTargetLocationBoard:
+					bShowNotYetImplementedMsg = true;
+					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+					
+			}
+			break;
+
 		case PlayerActionTargetMap:
 			// Note: only valid target location for map is Hand.
 			[player showMap];
+			break;
+			
+		case PlayerActionTargetRuin:
+			switch (action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[player showRuinCards]];
+					break;
+					
+				case PlayerActionTargetLocationBoard:
+					[cli put:[self showRuinsOnTable]];
+					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+
+			}
 			break;
 			
 		case PlayerActionTargetWonder:
@@ -649,22 +712,8 @@
 			}
 			break;
 
-		case PlayerActionTargetRuin:
-			switch (action.targetLocation) {
-				case PlayerActionTargetLocationHand:
-					[cli put:[player showRuinCards]];
-					break;
-					
-				case PlayerActionTargetLocationBoard:
-					[cli put:[self showRuinsOnTable]];
-					break;
-					
-				default:
-					bShowNotYetImplementedMsg = true;
-					break;
-
-			}
-			break;
+		default:
+			bShowNotYetImplementedMsg = true;
 
 	} // switch action.target
 	

@@ -48,7 +48,8 @@ typedef enum PlayerActionTargetLocationEnum : NSUInteger {
 } PlayerActionTargetLocation;
 
 struct PlayerAction {
-	NSUInteger	verb;
+	NSUInteger verb;
+	NSUInteger subject;	// for example, a die (e.g. d6) in a roll action.
 	NSUInteger targetLocation;
 	NSUInteger target;
 	NSUInteger objectID;

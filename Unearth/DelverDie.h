@@ -16,9 +16,10 @@ typedef enum DelverDieColor : NSUInteger {
 } DelverDieColor;
 
 typedef enum DelverDieSize : NSUInteger {
-    DelverDieSize4 = 0,
-    DelverDieSize6 = 1,
-    DelverDieSize8 = 2
+	DelverDieSizeNotSet = 0,
+    DelverDieSize4 = 4,
+    DelverDieSize6 = 6,
+    DelverDieSize8 = 8
 } DelverDieSize;
 
 @interface DelverDie : NSObject {
@@ -29,12 +30,20 @@ typedef enum DelverDieSize : NSUInteger {
     
 }
 
++ (NSArray *) GetDieWords;
+
 + (NSString *) DelverDieColorToString: (DelverDieColor) color;
 
 + (NSString *) DelverDieSizeToString: (DelverDieSize) size;
 
++ (NSInteger) DelverDieStringToNumber: (NSString *) dieString;
+
++ (DelverDieSize) DelverDieStringToSize: (NSString *) dieString;
+
 
 - (id) initWithColor: (DelverDieColor) dieColor size:(DelverDieSize) dieSize dieBaseID: (int) dieID;
+
+- (int) getDieID;
 
 - (NSString *) toString;
 

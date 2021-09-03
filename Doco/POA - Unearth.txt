@@ -287,7 +287,15 @@ S1 POA - Unearth
 	- In UGE, added setting of default action targetLocation in doActionExamine:player() method.
 	- Added to 'ToDo' list in POA.
 	
-	
+09/03
+	- In UGE.doActionShow:player added default case for not yet implemented PlayerActionTargets...
+	- Also cleaned up order of switch/case blocks, made them alphabetical.
+	- Expanded Delver Die class to include die to string/number and vice versa methods
+	- Changed delver die enumeration to be based on die sizes
+	- Added getDieID method to Delver Die class.
+	- Expanded PlayerAction structure to include subject (used to hold die info for roll actions)
+	- Verb 'roll...' responded with prompt, added UGE.doActionRoll:Player() stub w/ many TODOs
+
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
@@ -296,35 +304,15 @@ S1 POA - Unearth
 		
 
 > Next: (Note: UC=Use Case)
+	
+	- Roll at target
+		N-- Set target, current output from sample run:
+				Enter command (or 'help') roll d6 at 106
+				In UGE.doActionRoll:player() with verb=Roll target=NOT_SET location=NOT_SET objectID=106
 
-	- Show command, need ability to show wonder 090 to see details of wonder, helps player plan rolls. 0213
-		Current output when issuing $show wonder 101
-		In UGE.doActionShow with verb=Show target=Wonder location=NOT_SET objectID=101
-		(Severity: 5)
-		You didn't specify, so showing from Board (options are hand or board)
-		Wonders on Table:
-		101 title= The Sanctuary of the Builders
-		097 title= Temple of Flames
-		092 title= The Eternal Flame
-		096 title= Palace of Relics
-		
-		>This appears to be done, exampe $show wonder 088
-		In UGE.doActionShow with verb=Show target=Wonder location=NOT_SET objectID=88
-		(Severity: 5)
-		You didn't specify, so showing from Board (options are hand or board)
-		Wonder Details:
-		 Wonder ID=88 Title= Temple of Prosperity
-			Type=Named Wonder
-			Descriptive text= At the end of the game score 1 point for every yellow Stone you have.
-			Value=Determined at end of game
-			Required Pattern= YYYY??
-
-		>Examine keyword doing the same as 'show wonder nnn'
-		example $examine wonder 088
-		Enter command (or 'help') examine wonder 088
-		In UGE.doActionExamine:player() with verb=Examine target=Wonder location=NOT_SET objectID=88
-		(Severity: 5)
-
+		.-- Parse die from command line, current output (note die not captured):
+				Enter command (or 'help') roll d6 at 117
+				In UGE.doActionRoll:player() with verb=Roll target=Ruin location=Board objectID=117
 
 
 	- Change Ruin Card on table display to shorter 'icon' form

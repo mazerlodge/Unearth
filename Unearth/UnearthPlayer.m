@@ -277,11 +277,33 @@
 	struct PlayerAction rval = [self makePlayerActionNotSet];
 
 	rval.verb = [self parsePlayerActionVerbFromString:phrase];
+	rval.subject = [self parsePlayerActionSubjectFromString:phrase];
 	rval.target = [self parsePlayerActionTargetFromString:phrase];
 	rval.targetLocation = [self parsePlayerActionTargetLocationFromString:phrase];
 	rval.objectID = [self parsePlayerActionObjectIDFromString: phrase];
 	
 	return rval;
+}
+
+- (NSInteger) parsePlayerActionSubjectFromString: (NSString *) phrase {
+	// Only relevant for rolls with a die.  Returns the id of a die of the size specified.
+		
+	NSInteger rval = 999;
+	
+	NSArray *words = [phrase componentsSeparatedByString:@" "];
+	NSArray *dieWords = [DelverDie GetDieWords];
+	for (NSString *aWord in words) {
+		for (NSString *aDieWord in dieWords) {
+			if ([aWord compare:aDieWord] == NSOrderedSame) {
+				rval = [DelverDie DelverDieStringToNumber:aDieWord];
+				break;
+				
+			}
+		}
+	}
+
+	return rval;
+	
 }
 
 - (PlayerActionVerb) parsePlayerActionVerbFromString: (NSString *) phrase {

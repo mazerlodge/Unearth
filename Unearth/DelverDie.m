@@ -14,6 +14,14 @@
 @synthesize dieColor = color;
 @synthesize dieSize = size;
 
++ (NSArray *) GetDieWords {
+	
+	NSArray *dieWords = [[NSArray alloc] initWithObjects:@"d4", @"d6", @"d8", nil];
+
+	return dieWords;
+	
+}
+
 + (NSString *) DelverDieColorToString: (DelverDieColor) color {
 	
 	NSString *rval = @"NOT_SET";
@@ -64,6 +72,61 @@
 	
 }
 
+
++ (NSInteger) DelverDieStringToNumber: (NSString *) dieString {
+	
+	NSInteger rval = 0;
+	
+	// Get integer portion of string (e.g. d4 = 4)
+	NSArray *dieWords = [DelverDie GetDieWords];
+	for (NSString *dieWord in dieWords) {
+		if ([dieWord compare:dieString] == NSEqualToComparison) {
+			rval = [[dieString substringFromIndex:1] integerValue];
+			break;
+
+		}
+	} // for dieWord
+	
+	return rval;
+	
+}
+
++ (DelverDieSize) DelverDieStringToSize: (NSString *) dieString {
+	
+	DelverDieSize rval = DelverDieSizeNotSet;
+	
+	// Get integer portion of string (e.g. d4 = 4)
+	NSInteger dieNumber = 0;
+	Boolean bDieStringValid = false;
+	NSArray *dieWords = [DelverDie GetDieWords];
+	for (NSString *dieWord in dieWords) {
+		if ([dieWord compare:dieString] == NSEqualToComparison) {
+			dieNumber = [[dieString substringFromIndex:1] integerValue];
+			bDieStringValid = true;
+			break;
+
+		}
+	} // for dieWord
+
+	switch(dieNumber) {
+		case 4:
+			rval = DelverDieSize4;
+			break;
+			
+		case 6:
+			rval = DelverDieSize6;
+			break;
+			
+		case 8:
+			rval = DelverDieSize8;
+			break;
+			
+	}
+	
+	return rval;
+	
+}
+
 - (id) initWithColor: (DelverDieColor) dieColor size:(DelverDieSize) dieSize dieBaseID: (int) dieID {
 	// Die data in the form "color, size"
 
@@ -75,6 +138,10 @@
     
 }
 
+- (int) getDieID {
+	return baseID;
+	
+}
 
 
 
