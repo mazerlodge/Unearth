@@ -55,26 +55,52 @@
     
 }
 
+- (NSUInteger) addDieToCard: (DelverDie *) dieToAdd {
+	[delverDice addObject:dieToAdd];
+	
+	// Add up total of dice on card, return that total (used to determine if card has been claimed)
+	NSUInteger total = 0;
+	for (DelverDie *aDie in delverDice)
+		total += [aDie getDieValue];
+	
+	return total;
+	
+}
+
 - (NSUInteger) addStoneToCard: (Stone *) stoneToAdd {
 	[stones addObject:stoneToAdd];
 	
 	return [stones count];
 }
 
+- (int) getRuinID {
+	return cardID;
+	
+}
+
+- (int) getDiceTotal {
+	// Recalc die total and return value
+	int rval = 0;
+	
+	for (DelverDie *aDie in delverDice)
+		rval += [aDie getDieValue];
+	
+	return rval;
+}
+
+
 - (int) stoneValue {
 	return cardStoneValue;
 	
 }
 
+
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
-	
-	// TODO: Add Delver Dice to output string.
-	
-	
-	
-	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card id=%d color=%@ claimValue=%d cardStoneValue=%d",
-					  cardID, [RuinCard RuinCardColorToString:cardColor], claimValue, cardStoneValue];
+
+	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card id=%d color=%@ claimValue=%d cardStoneValue=%d diceTotal=%d",
+					  cardID, [RuinCard RuinCardColorToString:cardColor], claimValue,
+					  cardStoneValue, [self getDiceTotal]];
 	
 	if ([stones count] > 0) {
 		NSString *stonesMsg = @"\nStones on card:\n";
@@ -85,7 +111,16 @@
 
 		rval = [rval stringByAppendingFormat:@"%@", stonesMsg];
 	}
-	
+
+	if ([delverDice count] > 0) {
+		NSString *diceMsg = @"\nDice on card:\n";
+		for (DelverDie *aDie in delverDice) {
+			diceMsg = [diceMsg stringByAppendingFormat:@"\t%@\n", [aDie toString]];
+		}
+
+		rval = [rval stringByAppendingFormat:@"%@", diceMsg];
+	}
+
 	
 	return rval;
 	

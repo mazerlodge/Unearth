@@ -766,14 +766,14 @@
 	// Make 1 d4 die
 	// Die IDs are player number * 100 + color index * 10  + die instance
 	int dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
-	DelverDie *aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize4 dieBaseID:dieID];
+	DelverDie *aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize4 dieBaseID:dieID randomEngine:re];
 	[playerDice addObject:aDie];
 	
 	// Make 3 d6 dice
 	for (int x=0; x<4; x++) {
 		// Die IDs are player number * 100 + color index * 10  + die instance
 		dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
-		aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize6 dieBaseID:dieID];
+		aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize6 dieBaseID:dieID randomEngine:re];
 		[playerDice addObject:aDie];
 
 	}
@@ -781,7 +781,7 @@
 	// Make 1 d8 die
 	// Die IDs are player number * 100 + color index * 10  + die instance
 	dieID = (int) ((int)[existingPlayers count] + 1) * 100 + dieColor * 10 + (int)[playerDice count] + 1;
-	aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize8 dieBaseID:dieID];
+	aDie = [[DelverDie alloc] initWithColor:dieColor size:DelverDieSize8 dieBaseID:dieID randomEngine:re];
 	[playerDice addObject:aDie];
 	
 	// Make a HexMap
@@ -888,6 +888,7 @@
         // TODO: Expand gameDataDict dictionary used to pass info into game engine.
         //       e.g. passing shuffled decks, random end of age card, & stonebag
 		NSDictionary *gameDataDict = @{ @"CommandLineInterface" : cli,
+										@"RandomEngine" : re,
 									    @"PlayerArray" : players,
                                         @"EndOfAgeCard" : endOfAgeCard,
                                         @"StoneBag" : stoneBag,

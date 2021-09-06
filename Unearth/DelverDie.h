@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RandomEngine.h"
 
 typedef enum DelverDieColor : NSUInteger {
     DelverDieColorOrange = 0,
@@ -24,26 +25,29 @@ typedef enum DelverDieSize : NSUInteger {
 
 @interface DelverDie : NSObject {
 
+	RandomEngine *re;
 	int baseID;
     DelverDieColor color;
     DelverDieSize size;
+	int dieValue;
     
 }
 
++ (NSString *) DelverDieColorToString: (DelverDieColor) color;
++ (int) DelverDieSizeToNumber: (DelverDieSize) size;
++ (NSString *) DelverDieSizeToString: (DelverDieSize) size;
++ (NSInteger) DelverDieStringToNumber: (NSString *) dieString;
++ (DelverDieSize) DelverDieStringToSize: (NSString *) dieString;
 + (NSArray *) GetDieWords;
 
-+ (NSString *) DelverDieColorToString: (DelverDieColor) color;
-
-+ (NSString *) DelverDieSizeToString: (DelverDieSize) size;
-
-+ (NSInteger) DelverDieStringToNumber: (NSString *) dieString;
-
-+ (DelverDieSize) DelverDieStringToSize: (NSString *) dieString;
-
-
-- (id) initWithColor: (DelverDieColor) dieColor size:(DelverDieSize) dieSize dieBaseID: (int) dieID;
+- (id) initWithColor: (DelverDieColor) dieColor size:(DelverDieSize) dieSize
+		   dieBaseID: (int) dieID randomEngine: (RandomEngine *) randEngine;
 
 - (int) getDieID;
+- (DelverDieSize) getDieSize;
+- (int) getDieValue;
+- (int) roll;
+- (int) setDieValue: (int) value;
 
 - (NSString *) toString;
 

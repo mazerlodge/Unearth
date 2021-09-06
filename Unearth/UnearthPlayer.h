@@ -69,13 +69,9 @@ struct PlayerAction {
 }
 
 + (NSString *) UnearthPlayerTypeToString: (UnearthPlayerType) playerType;
-
 + (NSString *) PlayerActionVerbToString: (PlayerActionVerb) verb;
-
 + (NSString *) PlayerActionTargetToString: (PlayerActionTarget) target;
-
 + (NSString *) PlayerActionTargetLocationToString: (PlayerActionTargetLocation) location;
-
 
 - (id) initWithPlayerType: (UnearthPlayerType) type
 				dieColor: (DelverDieColor) color
@@ -89,9 +85,11 @@ struct PlayerAction {
 - (NSString *) playerName;
 
 - (NSUInteger) addDelverCard: (DelverCard *) card;
+- (NSUInteger) addDie: (DelverDie *) die;
 - (NSUInteger) addRuinCard: (RuinCard *) card;
 
 - (Wonder *) getWonderByID: (NSUInteger) objectID;
+- (DelverDie *) getDieOfSize: (DelverDieSize) dieSize;
 
 - (DelverCard *) playDelverCard: (int) cardID;
 

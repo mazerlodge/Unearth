@@ -296,6 +296,10 @@ S1 POA - Unearth
 	- Expanded PlayerAction structure to include subject (used to hold die info for roll actions)
 	- Verb 'roll...' responded with prompt, added UGE.doActionRoll:Player() stub w/ many TODOs
 
+09/05
+	- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
+
+
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
@@ -310,10 +314,21 @@ S1 POA - Unearth
 				Enter command (or 'help') roll d6 at 106
 				In UGE.doActionRoll:player() with verb=Roll target=NOT_SET location=NOT_SET objectID=106
 
-		.-- Parse die from command line, current output (note die not captured):
-				Enter command (or 'help') roll d6 at 117
-				In UGE.doActionRoll:player() with verb=Roll target=Ruin location=Board objectID=117
+		.-- Flesh out UGE.doActionRoll:player()
+			N-- Current output:
+					Enter command (or 'help') roll d6 at 114
+					In UGE.doActionRoll:player() with verb=Roll subject=6 target=Ruin location=Board objectID=114
+			X-- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
+			.-- Check the ruin to see if it has been claimed, if so give it to the appropriate player
+			.-- If ruin claimed, retun dice to owning players.
+			.-- If ruin claimed, return any remaining stones to the bag
+			.-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 
+	- Light stuff
+		.-- Clean up order of methods in UGE, alphabetical.
+		
+	- Utility Stuff
+		.-- Add method to random engine to set seed to current ms time
 
 	- Change Ruin Card on table display to shorter 'icon' form
 		Current output when issuing $show ruins on table

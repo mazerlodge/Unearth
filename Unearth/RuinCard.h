@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Stone.h"
+#import "DelverDie.h"
 
 typedef enum RuinCardColor : NSUInteger {
     RuinCardColorPeach = 0,
@@ -16,6 +17,7 @@ typedef enum RuinCardColor : NSUInteger {
     RuinCardColorPurple = 3,
     RuinCardColorGray = 4
 } RuinCardColor;
+
 
 @interface RuinCard : NSObject {
     bool bFaceDown;
@@ -31,9 +33,15 @@ typedef enum RuinCardColor : NSUInteger {
 + (NSString *) RuinCardColorToString: (RuinCardColor) color;
 
 - (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal cardIdentifier: (int) cardIdentifier;
-- (NSString *) toString;
+
+- (NSUInteger) addDieToCard: (DelverDie *) dieToAdd;
 - (NSUInteger) addStoneToCard: (Stone *) stoneToAdd;
+- (int) getRuinID;
+- (int) getDiceTotal;
 - (int) stoneValue;
+
+
+- (NSString *) toString;
 
 /*
  Method list from [Object Library.txt]

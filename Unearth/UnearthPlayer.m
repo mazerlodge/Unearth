@@ -33,6 +33,7 @@
 	return rval;
 }
 
+
 + (NSString *) PlayerActionVerbToString: (PlayerActionVerb) verb {
 	
 	NSString *rval = @"NOT_SET";
@@ -70,6 +71,7 @@
 	
 	return rval;
 }
+
 
 + (NSString *) PlayerActionTargetToString: (PlayerActionTarget) target {
 	
@@ -109,6 +111,7 @@
 	return rval;
 }
 
+
 + (NSString *) PlayerActionTargetLocationToString: (PlayerActionTargetLocation) location {
 	
 	NSString *rval = @"NOT_SET";
@@ -135,6 +138,7 @@
 	return rval;
 }
 
+
 - (id) initWithPlayerType: (UnearthPlayerType) type
 				 dieColor: (DelverDieColor) color
 				  diceSet: (NSMutableArray *) playerDice
@@ -157,15 +161,18 @@
     
 }
 
+
 - (DelverDieColor) dieColor {
     return dieColor;
     
 }
 
+
 - (NSString *) playerName {
     return playerName;
     
 }
+
 
 - (NSUInteger) addDelverCard: (DelverCard *) card {
 	NSUInteger delverCardCount = 0;
@@ -174,6 +181,17 @@
 	delverCardCount = [delverCards count];
 	
 	return delverCardCount;
+}
+
+- (NSUInteger) addDie: (DelverDie *) die {
+
+	NSUInteger diceCount = 0;
+	
+	[dice addObject:die];
+	diceCount = [dice count];
+	
+	return diceCount;
+
 }
 
 - (NSUInteger) addRuinCard: (RuinCard *) card {
@@ -187,6 +205,7 @@
 
 }
 
+
 - (Wonder *) getWonderByID:(NSUInteger)objectID {
 	
 	Wonder *rval = nil;
@@ -196,6 +215,7 @@
 	return rval;
 	
 }
+
 
 - (DelverCard *) playDelverCard: (int) cardID {
 	// Returns a card with baseID = -1 if specified cardID wasn't found.
@@ -213,6 +233,26 @@
 	return cardToPlay;
 	
 }
+
+
+- (DelverDie *) getDieOfSize: (DelverDieSize) dieSize {
+	DelverDie *rval;
+	
+	bool bDieFound = false;
+	for (DelverDie *aDie in dice)
+		if ([aDie getDieSize] == dieSize) {
+			rval = aDie;
+			bDieFound = true;
+			break;
+		}
+
+	// If found, Remove the die from the player's dice.
+	if (bDieFound)
+		[dice removeObject:rval];
+
+	return rval;
+}
+
 
 - (NSString *) showPlayerActionHelp {
 	

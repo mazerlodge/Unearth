@@ -14,6 +14,7 @@
 #import "StoneBag.h"
 #import "RuinDeck.h"
 #import "Wonder.h"
+#import "RandomEngine.h"
 
 typedef enum GameStateEnum : NSInteger {
 	GameStatePopulationFailed = -2,
@@ -29,6 +30,7 @@ typedef enum GameStateEnum : NSInteger {
 @interface UnearthGameEngine : NSObject {
     
     GameState gameState;
+	RandomEngine *re;
     CommandLineInterface *cli;
     NSArray *delverDeck;
 	RuinDeck *ruinsDeck;
@@ -66,6 +68,7 @@ typedef enum GameStateEnum : NSInteger {
 - (GameState) gameState;
 
 - (Wonder *) getWonderByID: (NSUInteger) objectID;
+- (RuinCard *) getRuinByID: (NSUInteger) objectID;
 
 
 /*

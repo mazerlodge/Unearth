@@ -84,6 +84,7 @@
     //      (e.g. grab delver cards, ruins deck, end of age card, stone bag, active wonders)
 	
 	cli = [dict objectForKey:@"CommandLineInterface"];
+	re = [dict objectForKey:@"RandomEngine"];
     players = [dict objectForKey:@"PlayerArray"];
     endOfAgeCard = [dict objectForKey:@"EndOfAgeCard"];
     stoneBag = [dict objectForKey:@"StoneBag"];
@@ -166,6 +167,22 @@
 	
 	return rval;
 	
+}
+
+- (RuinCard *) getRuinByID: (NSUInteger) objectID {
+
+	RuinCard *rval = nil;
+	
+	for (RuinCard *aRuin in ruinsOnTable) {
+		if ([aRuin getRuinID] == objectID) {
+			rval = aRuin;
+			break;
+		}
+		
+	}
+	
+	return rval;
+
 }
 
 - (Wonder *) getWonderByID: (NSUInteger) objectID {
@@ -497,7 +514,7 @@
 
 - (void) doActionRoll: (struct PlayerAction) action player: (UnearthPlayer *) player {
 
-	bool bShowNotYetImplementedMsg = false;
+	bool bShowNotYetImplementedMsg = true;
 	
 	// For rolls, the action structure can be updated; target always a ruin, location always on the table
 	action.target = PlayerActionTargetRuin;
@@ -515,6 +532,44 @@
 	bShowNotYetImplementedMsg = true;
 	
 	// TODO: Take a die from the player of the size specified and put it on the target ruin specified.
+	// Convert the die size number (e.g. 6) to a die size, then get one of that size from the player's dice.
+	NSString *dieSizeString = [[NSString alloc] initWithFormat:@"d%ld", action.subject];
+	DelverDieSize dieSize = [DelverDie DelverDieStringToSize:dieSizeString];
+	if (dieSize == DelverDieSizeNotSet) {
+		[cli put:@"Die of size specified is not valid." withNewline:true];
+		return;
+	}
+	
+	// Get the die of the size specified from the player and roll it
+	DelverDie *theDie = [player getDieOfSize:dieSize];
+	if (theDie == nil) {
+		NSString *msg = [[NSString alloc] initWithFormat:@"Die of size specified (%ld) not found in players dice.",
+						 action.subject];
+		[cli put:msg withNewline:true];
+		return;
+	}
+	[theDie roll];
+
+	msg = [[NSString alloc] initWithFormat:@"Die roll = %d  (%@).",
+		   [theDie getDieValue], [theDie toString] ];
+	[cli put:msg withNewline:true];
+
+	// TODO: Evaluate if delver cards in play manipulate die, allow reroll or altering target.
+	
+	// Get the ruin card specified and put the die on the ruin
+	RuinCard *theCard = [self getRuinByID: action.objectID];
+	if (theCard == nil) {
+		NSString *msg = [[NSString alloc] initWithFormat:@"Ruin Card with ID specified (%ld) not found on table.",
+						 action.objectID];
+		[cli put:msg withNewline:true];
+		
+		// return the die to the player
+		[player addDie: theDie];
+		return;
+	}
+	else {
+		[theCard addDieToCard:theDie];
+	}
 	
 	// TODO: Check the ruin to see if it has been claimed, if so give it to the appropriate player
 	
@@ -526,7 +581,7 @@
 	
 
 	if(bShowNotYetImplementedMsg) {
-		msg = [[NSString alloc] initWithFormat:@"UGE.doActionRoll:player(): Recieved Target=%@ with Location=%@, not yet implemented",
+		msg = [[NSString alloc] initWithFormat:@"UGE.doActionRoll:player(): Recieved Target=%@ with Location=%@, not yet (fully) implemented",
 			   [UnearthPlayer PlayerActionTargetToString:action.target],
 			   [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
 
