@@ -301,7 +301,7 @@
 	if ([seeDC compare:@"y"] == NSOrderedSame) {
 		int selectedCardID = -1;
 		while (selectedCardID != 0) {
-			[cli put:@"Choose a card to play (or 0 for none)"];
+			[cli put:@"Choose a card to play (or 0 for none)" withNewline:true];
 			[cli put:[player showDelverCards]];
 			selectedCardID = [cli getInt:@"Select card ID (0 for done): "];
 			// Pull delver cards from player's hand into game engine member var, delverCards in play.

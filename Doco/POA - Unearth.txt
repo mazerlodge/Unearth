@@ -299,6 +299,10 @@ S1 POA - Unearth
 09/05
 	- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
 
+== 2022 ==
+05/25
+	- Minor fix to message output to CLI when asking player if they want to see delver cards
+
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
