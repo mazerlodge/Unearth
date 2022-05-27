@@ -39,7 +39,7 @@ typedef enum RuinCardColor : NSUInteger {
 - (int) getRuinID;
 - (int) getDiceTotal;
 - (int) stoneValue;
-
+- (int) claimValue;
 
 - (NSString *) toString;
 

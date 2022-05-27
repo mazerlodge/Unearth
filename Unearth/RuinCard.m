@@ -94,6 +94,9 @@
 	
 }
 
+- (int) claimValue {
+	return claimValue;
+}
 
 - (NSString *) toString {
 	// Supports diagnostic and debug printing

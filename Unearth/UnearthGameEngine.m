@@ -514,7 +514,7 @@
 
 - (void) doActionRoll: (struct PlayerAction) action player: (UnearthPlayer *) player {
 
-	bool bShowNotYetImplementedMsg = true;
+	bool bShowUnderConstruction = true;
 	
 	// For rolls, the action structure can be updated; target always a ruin, location always on the table
 	action.target = PlayerActionTargetRuin;
@@ -528,8 +528,8 @@
 					 action.objectID];
 	[cli debugMsg:msg level:5];
 
-	// TODO: UGE.doActionRoll:player() Not yet implemented.
-	bShowNotYetImplementedMsg = true;
+	// TODO: UGE.doActionRoll:player() Not yet (fully) implemented.
+	bShowUnderConstruction = true;
 	
 	// TODO: Take a die from the player of the size specified and put it on the target ruin specified.
 	// Convert the die size number (e.g. 6) to a die size, then get one of that size from the player's dice.
@@ -558,6 +558,7 @@
 	
 	// Get the ruin card specified and put the die on the ruin
 	RuinCard *theCard = [self getRuinByID: action.objectID];
+	NSUInteger cardNewDieTotal = 0;
 	if (theCard == nil) {
 		NSString *msg = [[NSString alloc] initWithFormat:@"Ruin Card with ID specified (%ld) not found on table.",
 						 action.objectID];
@@ -568,19 +569,27 @@
 		return;
 	}
 	else {
-		[theCard addDieToCard:theDie];
+		cardNewDieTotal = [theCard addDieToCard:theDie];
 	}
 	
 	// TODO: Check the ruin to see if it has been claimed, if so give it to the appropriate player
+	if (cardNewDieTotal >= theCard.claimValue) {
+		// Card has been claimed
+		NSString *msg = [[NSString alloc] initWithFormat:@"Ruin Card with ID (%ld) has been claimed by the player.",
+						 action.objectID];
+		[cli put:msg withNewline:true];
+
+		// TODO: ruin claimed, return dice to owning players.
+		
+		// TODO: ruin claimed, return any remaining stones to the bag
+		
+		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
+
+	}
 	
-	// TODO: If ruin claimed, retun dice to owning players.
-	
-	// TODO: If ruin claimed, return any remaining stones to the bag
-	
-	// TODO: If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 	
 
-	if(bShowNotYetImplementedMsg) {
+	if(bShowUnderConstruction) {
 		msg = [[NSString alloc] initWithFormat:@"UGE.doActionRoll:player(): Recieved Target=%@ with Location=%@, not yet (fully) implemented",
 			   [UnearthPlayer PlayerActionTargetToString:action.target],
 			   [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation]];
@@ -656,7 +665,7 @@
 
 	bool bShowNotYetImplementedMsg = false;
 	
-	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%@ target=%@ location=%@ objectID=%ld\n",
+ 	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionShow with verb=%@ target=%@ location=%@ objectID=%ld\n",
 					 [UnearthPlayer PlayerActionVerbToString:action.verb],
 					 [UnearthPlayer PlayerActionTargetToString:action.target],
 					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],
@@ -678,9 +687,10 @@
 	}
 	
 	/*
-	 TODO: Two PlayerActionTarget... enums not yet implemented:
-	 PlayerActionTargetNotSet = 0,
-	 PlayerActionTargetHelp   = 1,
+	 Future Enhancement: PlayerActionTarget... enum not yet implemented:
+	 PlayerActionTargetHelp   = 1
+		Never gets hit b/c UP.parsePlayerActionVerbFromString always returns first verb occurrence,
+		  e.g. show delver help always returns "help" as the action instead of "show".
 	 
 	 */
 	switch (action.target) {
@@ -765,6 +775,12 @@
 					break;
 
 			}
+			break;
+			
+		case PlayerActionTargetBoard:
+			// Show wonders and ruin cards currently on the table
+			[cli put:[self showWondersOnTable]];
+			[cli put:[self showRuinsOnTable]];
 			break;
 
 		default:

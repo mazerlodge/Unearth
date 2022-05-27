@@ -37,7 +37,8 @@ typedef enum PlayerActionTargetEnum : NSUInteger {
 	PlayerActionTargetDice   = 3,
     PlayerActionTargetMap    = 4,
 	PlayerActionTargetRuin   = 5,
-    PlayerActionTargetWonder = 6
+    PlayerActionTargetWonder = 6,
+	PlayerActionTargetBoard  = 7
 } PlayerActionTarget;
 
 typedef enum PlayerActionTargetLocationEnum : NSUInteger {
