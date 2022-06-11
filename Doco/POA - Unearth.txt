@@ -310,6 +310,9 @@ S1 POA - Unearth
 
 06/11
 	- Corrected 'roll D8 at 113' returns "Die of size specified is not valid."
+	- Added Ruins as target for 'examine' command 
+	- Added show ruin 113 shows only ruin 113
+	- After roll at card show the ruin
 
 
 > In-Progress:
@@ -322,9 +325,6 @@ S1 POA - Unearth
 		N-- ruin claimed, return dice to owning players.
 	
 	- Clean up roll at card sequence
-		.-- show ruin 113 should show ruin 113  only
-			N-- same as 'examine ruin 113' UGE.doActionExamine:player(), should show ruin details
-		.-- after roll at card UGE.doActionRoll:player(), show ruin
 		.-- 'show die in hand' should work same as 'show dice in hand'
 
 > Next: (Note: UC=Use Case)

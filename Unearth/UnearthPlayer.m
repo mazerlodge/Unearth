@@ -221,6 +221,23 @@
 }
 
 
+- (RuinCard *) getRuinByID: (NSUInteger) objectID {
+
+	RuinCard *rval = nil;
+	
+	for (RuinCard *aRuin in ruinCards) {
+		if ([aRuin getRuinID] == objectID) {
+			rval = aRuin;
+			break;
+		}
+		
+	}
+	
+	return rval;
+
+}
+
+
 - (DelverCard *) playDelverCard: (int) cardID {
 	// Returns a card with baseID = -1 if specified cardID wasn't found.
 	

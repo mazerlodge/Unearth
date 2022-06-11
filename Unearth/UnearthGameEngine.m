@@ -570,6 +570,7 @@
 	}
 	else {
 		cardNewDieTotal = [theCard addDieToCard:theDie];
+		[cli put:[[self getRuinByID:action.objectID] toString] withNewline:true];
 	}
 	
 	// TODO: Check the ruin to see if it has been claimed, if so give it to the appropriate player
@@ -644,6 +645,23 @@
 			}
 			break;
 			
+		case PlayerActionTargetRuin:
+			switch (action.targetLocation) {
+				case PlayerActionTargetLocationHand:
+					[cli put:[[player getRuinByID:action.objectID] toString] withNewline:true];
+					break;
+					
+				case PlayerActionTargetLocationBoard:
+					[cli put:[[self getRuinByID:action.objectID] toString] withNewline:true];
+					break;
+					
+				default:
+					bShowNotYetImplementedMsg = true;
+					break;
+
+			}
+			break;
+
 		default:
 			bShowNotYetImplementedMsg = true;
 			break;
@@ -736,11 +754,17 @@
 		case PlayerActionTargetRuin:
 			switch (action.targetLocation) {
 				case PlayerActionTargetLocationHand:
-					[cli put:[player showRuinCards]];
+					if (action.objectID == 999)
+						[cli put:[player showRuinCards]];
+					else
+						[cli put:[[player getRuinByID:action.objectID] toString] withNewline:true];
 					break;
 					
 				case PlayerActionTargetLocationBoard:
-					[cli put:[self showRuinsOnTable]];
+					if (action.objectID == 999)
+						[cli put:[self showRuinsOnTable]];
+					else
+						[cli put:[[self getRuinByID:action.objectID] toString] withNewline:true];
 					break;
 					
 				default:
