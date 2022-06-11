@@ -308,6 +308,9 @@ S1 POA - Unearth
 	- tested roll at ruin
 	- stubbed in claiming of a ruin
 
+06/11
+	- Corrected 'roll D8 at 113' returns "Die of size specified is not valid."
+
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
@@ -317,7 +320,12 @@ S1 POA - Unearth
 		
 	- In UGE.doActionRoll:player() method (~ln 582), see TODO
 		N-- ruin claimed, return dice to owning players.
-
+	
+	- Clean up roll at card sequence
+		.-- show ruin 113 should show ruin 113  only
+			N-- same as 'examine ruin 113' UGE.doActionExamine:player(), should show ruin details
+		.-- after roll at card UGE.doActionRoll:player(), show ruin
+		.-- 'show die in hand' should work same as 'show dice in hand'
 
 > Next: (Note: UC=Use Case)
 	

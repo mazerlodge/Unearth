@@ -101,9 +101,9 @@
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
 
-	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card id=%d color=%@ claimValue=%d cardStoneValue=%d diceTotal=%d",
-					  cardID, [RuinCard RuinCardColorToString:cardColor], claimValue,
-					  cardStoneValue, [self getDiceTotal]];
+	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card id=%d color=%@ cardStoneValue=%d claimValue=%d diceTotal=%d",
+					  cardID, [RuinCard RuinCardColorToString:cardColor], cardStoneValue,
+					   claimValue, [self getDiceTotal]];
 	
 	if ([stones count] > 0) {
 		NSString *stonesMsg = @"\nStones on card:\n";

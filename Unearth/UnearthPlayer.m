@@ -338,7 +338,7 @@
 	NSArray *dieWords = [DelverDie GetDieWords];
 	for (NSString *aWord in words) {
 		for (NSString *aDieWord in dieWords) {
-			if ([aWord compare:aDieWord] == NSOrderedSame) {
+			if ([aWord caseInsensitiveCompare:aDieWord] == NSOrderedSame) {
 				rval = [DelverDie DelverDieStringToNumber:aDieWord];
 				break;
 				

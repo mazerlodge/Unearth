@@ -112,7 +112,7 @@
 	// Get integer portion of string (e.g. d4 = 4)
 	NSArray *dieWords = [DelverDie GetDieWords];
 	for (NSString *dieWord in dieWords) {
-		if ([dieWord compare:dieString] == NSEqualToComparison) {
+		if ([dieWord caseInsensitiveCompare:dieString] == NSEqualToComparison) {
 			rval = [[dieString substringFromIndex:1] integerValue];
 			break;
 
@@ -133,7 +133,7 @@
 	bool bDieStringValid = false;
 	NSArray *dieWords = [DelverDie GetDieWords];
 	for (NSString *dieWord in dieWords) {
-		if ([dieWord compare:dieString] == NSEqualToComparison) {
+		if ([dieWord caseInsensitiveCompare:dieString] == NSEqualToComparison) {
 			dieNumber = [[dieString substringFromIndex:1] integerValue];
 			bDieStringValid = true;
 			break;
