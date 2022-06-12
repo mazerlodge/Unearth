@@ -313,7 +313,7 @@ S1 POA - Unearth
 	- Added Ruins as target for 'examine' command 
 	- Added show ruin 113 shows only ruin 113
 	- After roll at card show the ruin
-
+	- Made command 'show die in hand' work same as 'show dice in hand'
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
@@ -324,8 +324,6 @@ S1 POA - Unearth
 	- In UGE.doActionRoll:player() method (~ln 582), see TODO
 		N-- ruin claimed, return dice to owning players.
 	
-	- Clean up roll at card sequence
-		.-- 'show die in hand' should work same as 'show dice in hand'
 
 > Next: (Note: UC=Use Case)
 	

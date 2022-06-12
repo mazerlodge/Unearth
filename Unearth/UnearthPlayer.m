@@ -424,7 +424,7 @@
 	
 	PlayerActionTarget rval = PlayerActionTargetNotSet;
 
-	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"delver", @"dice",
+	NSArray *keywords = [[NSArray alloc] initWithObjects:@"help", @"delver", @"dice", @"die",
 														 @"map", @"ruin", @"wonder", @"board", nil];
 	int keyIdxFound = 999;
 	int i=0;
@@ -453,22 +453,23 @@
 			break;
 
 		case 2:
+		case 3:
 			rval = PlayerActionTargetDice;
 			break;
 
-		case 3:
+		case 4:
 			rval = PlayerActionTargetMap;
 			break;
 
-		case 4:
+		case 5:
 			rval = PlayerActionTargetRuin;
 			break;
 
-		case 5:
+		case 6:
 			rval = PlayerActionTargetWonder;
 			break;
 
-		case 6:
+		case 7:
 			rval = PlayerActionTargetBoard;
 			break;
 
