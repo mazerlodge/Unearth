@@ -35,7 +35,9 @@ typedef enum RuinCardColor : NSUInteger {
 - (id) initWithColor: (RuinCardColor) color claimValue: (int) claimVal stoneValue: (int) stoneVal cardIdentifier: (int) cardIdentifier;
 
 - (NSUInteger) addDieToCard: (DelverDie *) dieToAdd;
+- (DelverDie *) removeDieFromCard;
 - (NSUInteger) addStoneToCard: (Stone *) stoneToAdd;
+- (Stone *) removeStoneFromCard;
 - (int) getRuinID;
 - (int) getDiceTotal;
 - (int) stoneValue;

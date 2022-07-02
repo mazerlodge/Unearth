@@ -45,6 +45,7 @@ typedef enum DelverDieSize : NSUInteger {
 
 - (int) getDieID;
 - (DelverDieSize) getDieSize;
+- (DelverDieColor) getDieColor;
 - (int) getDieValue;
 - (int) roll;
 - (int) setDieValue: (int) value;

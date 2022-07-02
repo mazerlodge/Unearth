@@ -98,6 +98,30 @@
 	return claimValue;
 }
 
+- (DelverDie *) removeDieFromCard {
+	
+	DelverDie *die;
+	
+	if ([delverDice count] > 0) {
+		die = [delverDice lastObject];
+		[delverDice removeLastObject];
+	}
+	
+	return die;
+}
+
+- (Stone *) removeStoneFromCard {
+	
+	Stone *stone;
+	
+	if ([stones count] >0) {
+		stone = [stones lastObject];
+		[stones removeLastObject];
+	}
+	
+	return stone;
+}
+
 - (NSString *) toString {
 	// Supports diagnostic and debug printing
 

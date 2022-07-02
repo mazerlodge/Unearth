@@ -187,6 +187,12 @@
 	
 }
 
+- (DelverDieColor) getDieColor {
+	
+	return color;
+	
+}
+
 - (int) getDieValue {
 	
 	return dieValue;

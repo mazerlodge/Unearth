@@ -274,6 +274,12 @@
 	return rval;
 }
 
+- (DelverDieColor) getDelverDieColor {
+	
+	return dieColor;
+	
+}
+
 
 - (NSString *) showPlayerActionHelp {
 	

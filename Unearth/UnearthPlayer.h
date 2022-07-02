@@ -92,6 +92,7 @@ struct PlayerAction {
 - (Wonder *) getWonderByID: (NSUInteger) objectID;
 - (RuinCard *) getRuinByID: (NSUInteger) objectID;
 - (DelverDie *) getDieOfSize: (DelverDieSize) dieSize;
+- (DelverDieColor) getDelverDieColor;
 
 - (DelverCard *) playDelverCard: (int) cardID;
 

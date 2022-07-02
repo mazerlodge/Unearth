@@ -201,6 +201,12 @@
 	
 }
 
+- (void) addStoneToBag: (Stone *) stone {
+	
+	// TODO: Add code here after changing Stone Bag class to use mutable array
+
+}
+
 - (void) doInitialGameSetup {
 	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
 	
@@ -580,15 +586,15 @@
 						 action.objectID];
 		[cli put:msg withNewline:true];
 
-		// TODO: ruin claimed, return dice to owning players.
+		// Ruin claimed, return dice to owning players.
+		[self returnDiceFromCard:theCard];
 		
-		// TODO: ruin claimed, return any remaining stones to the bag
+		// Ruin claimed, return any remaining stones to the bag
+		[self returnStonesFromCard:theCard];
 		
 		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 
 	}
-	
-	
 
 	if(bShowUnderConstruction) {
 		msg = [[NSString alloc] initWithFormat:@"UGE.doActionRoll:player(): Recieved Target=%@ with Location=%@, not yet (fully) implemented",
@@ -823,6 +829,30 @@
 
 - (GameState) gameState {
 	return gameState;
+	
+}
+
+- (void) returnDiceFromCard: (RuinCard *) card {
+	
+	DelverDie *die = [card removeDieFromCard];
+	DelverDieColor color = [die getDieColor];
+	
+	while (die != nil) {
+		for (UnearthPlayer *player in players)
+			if ([player getDelverDieColor] == color) {
+				[player addDie:die];
+				break;
+			}
+		die = [card removeDieFromCard];
+		color = [die getDieColor];
+		
+	}
+
+}
+
+- (void) returnStonesFromCard: (RuinCard *) card {
+
+	// TODO: Implement after StoneBag converted to use mutable array.
 	
 }
 

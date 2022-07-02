@@ -314,16 +314,18 @@ S1 POA - Unearth
 	- Added show ruin 113 shows only ruin 113
 	- After roll at card show the ruin
 	- Made command 'show die in hand' work same as 'show dice in hand'
+	
+07/02
+	- Added return of dice to players after ruin is claimed
+	- Added stub of UGE.returnStonesFromCard()
 
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
-        N-- Next, working in case PlayerActionShow, flesh out UGE.doActionShow:player() method
-		N-- Working up enough code to role dice at a target
-		
-	- In UGE.doActionRoll:player() method (~ln 582), see TODO
-		N-- ruin claimed, return dice to owning players.
-	
+		/-- In UGE.doActionRoll:player() method (~ln 593), see TODO
+			X-- ruin claimed, return dice to owning players.
+			N-- Working up enough code to claim a card
+
 
 > Next: (Note: UC=Use Case)
 	
