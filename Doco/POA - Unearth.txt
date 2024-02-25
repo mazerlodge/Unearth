@@ -319,6 +319,11 @@ S1 POA - Unearth
 	- Added return of dice to players after ruin is claimed
 	- Added stub of UGE.returnStonesFromCard()
 
+== 2024 ==
+02/25
+	- Test run and reviewed progress/next steps
+	- Proposal: delver cards be handled by putting all moves on a 'stack', execute from stack
+	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
 		N-- Core of game run is at UGE.go()
