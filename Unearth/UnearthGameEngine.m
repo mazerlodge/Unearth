@@ -592,6 +592,12 @@
 		// Ruin claimed, return any remaining stones to the bag
 		[self returnStonesFromCard:theCard];
 		
+		// TODO: Put the card in the player's hand
+		// TODO: The card must be removed from the board
+		// TODO: Add a method to UGE to moveCardToPlayer: *player
+		[player addRuinCard:theCard];
+
+		
 		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 
 	}

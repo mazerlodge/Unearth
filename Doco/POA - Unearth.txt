@@ -331,9 +331,13 @@ S1 POA - Unearth
 			X-- ruin claimed, return dice to owning players.
 			N-- Working up enough code to claim a card
 
+		- Issue/WIP, Message "has been claimed by the player" shows, but card stays on the board.
+			N-- Continue at UGE ln595
 
 > Next: (Note: UC=Use Case)
-	
+	- Enhancement, should be able to 'show card(s)  in hand' same as 'show ruin in hand'
+		N-- Only show ruin in hand works ATM.
+		
 	- Roll at target
 		N-- Set target, current output from sample run:
 				Enter command (or 'help') roll d6 at 106
