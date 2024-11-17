@@ -70,6 +70,8 @@ typedef enum GameStateEnum : NSInteger {
 - (Wonder *) getWonderByID: (NSUInteger) objectID;
 - (RuinCard *) getRuinByID: (NSUInteger) objectID;
 
+- (NSUInteger) removeRuinFromTableByID: (NSUInteger) ruinID;
+
 - (void) addStoneToBag: (Stone *) stone;
 
 

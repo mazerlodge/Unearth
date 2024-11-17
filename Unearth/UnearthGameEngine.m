@@ -207,6 +207,21 @@
 
 }
 
+- (NSUInteger) removeRuinFromTableByID: (NSUInteger) ruinID {
+	
+	NSUInteger rval = [ruinsOnTable count];
+
+	for (RuinCard *aCard in ruinsOnTable) {
+		if ([aCard getRuinID] == ruinID) {
+			// TODO: Array ruinsOnTable needs to mutable or rewritten
+			//[ruinsOnTable rem]
+			break;
+		}
+	}
+
+	return rval;
+}
+
 - (void) doInitialGameSetup {
 	// do initial setup (e.g. 2 delver cards to each player, one ruin card to each player, etc)
 	
@@ -592,11 +607,13 @@
 		// Ruin claimed, return any remaining stones to the bag
 		[self returnStonesFromCard:theCard];
 		
-		// TODO: Put the card in the player's hand
+		// Put the card in the player's hand
 		// TODO: The card must be removed from the board
 		// TODO: Add a method to UGE to moveCardToPlayer: *player
-		[player addRuinCard:theCard];
-
+		NSUInteger cardCount = [player addRuinCard:theCard];
+		msg = [[NSString alloc] initWithFormat:@"Player now has (%lu) cards.",
+			   (unsigned long)cardCount];
+		[cli put:msg withNewline:true];
 		
 		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 
