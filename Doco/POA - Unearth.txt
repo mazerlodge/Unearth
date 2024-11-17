@@ -327,6 +327,9 @@ S1 POA - Unearth
 11/16
 	- Init class diagram using Draw.IO
 	
+11/17
+	- Expanded class diagram w/ RandomENgine, CLI, DelverDie and assoc. enums, DelverCard
+
 	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
