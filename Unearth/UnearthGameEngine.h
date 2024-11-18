@@ -38,7 +38,7 @@ typedef enum GameStateEnum : NSInteger {
 	NSArray *greaterWondersDeck;
 	NSArray *namedWondersDeck;
 	NSArray *ruinsInBox; // Top 5 cards are put in box at game start.
-	NSArray *ruinsOnTable;
+	NSMutableArray *ruinsOnTable;
 	NSArray *namedWondersOnTable;
     NSArray *players;
     StoneBag *stoneBag;

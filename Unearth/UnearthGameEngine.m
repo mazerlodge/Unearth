@@ -213,8 +213,7 @@
 
 	for (RuinCard *aCard in ruinsOnTable) {
 		if ([aCard getRuinID] == ruinID) {
-			// TODO: Array ruinsOnTable needs to mutable or rewritten
-			//[ruinsOnTable rem]
+			[ruinsOnTable removeObject:aCard];
 			break;
 		}
 	}
@@ -241,9 +240,9 @@
 	
 	// Put next five ruin cards on the table (four for two player)
 	int maxNumCards = ([players count] > 2) ? 5 : 4;
-	ruinsOnTable = [[NSArray alloc] init];
+	ruinsOnTable = [[NSMutableArray alloc] init];
 	for (int x=0; x<maxNumCards; x++)
-		ruinsOnTable = [ruinsOnTable arrayByAddingObject:[ruinsDeck getNextCard]];
+		[ruinsOnTable addObject:[ruinsDeck getNextCard]];
 
 	// For the cards on the table, put appropriate stone count on each card.
 	RuinCard *currentCard;
@@ -594,7 +593,7 @@
 		[cli put:[[self getRuinByID:action.objectID] toString] withNewline:true];
 	}
 	
-	// TODO: Check the ruin to see if it has been claimed, if so give it to the appropriate player
+	// Check the ruin to see if it has been claimed, if so give it to the appropriate player
 	if (cardNewDieTotal >= theCard.claimValue) {
 		// Card has been claimed
 		NSString *msg = [[NSString alloc] initWithFormat:@"Ruin Card with ID (%ld) has been claimed by the player.",
@@ -608,12 +607,13 @@
 		[self returnStonesFromCard:theCard];
 		
 		// Put the card in the player's hand
-		// TODO: The card must be removed from the board
-		// TODO: Add a method to UGE to moveCardToPlayer: *player
 		NSUInteger cardCount = [player addRuinCard:theCard];
 		msg = [[NSString alloc] initWithFormat:@"Player now has (%lu) cards.",
 			   (unsigned long)cardCount];
 		[cli put:msg withNewline:true];
+		
+		// The card must be removed from the board
+		[self removeRuinFromTableByID:[theCard getRuinID]];
 		
 		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 
