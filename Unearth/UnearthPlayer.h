@@ -66,6 +66,7 @@ struct PlayerAction {
 	NSMutableArray *delverCards;
 	NSMutableArray *ruinCards;
 	NSMutableArray *dice;
+	NSMutableArray *stones;
 	
 }
 
@@ -88,6 +89,7 @@ struct PlayerAction {
 - (NSUInteger) addDelverCard: (DelverCard *) card;
 - (NSUInteger) addDie: (DelverDie *) die;
 - (NSUInteger) addRuinCard: (RuinCard *) card;
+- (NSUInteger) addStone: (Stone *) stone;
 
 - (Wonder *) getWonderByID: (NSUInteger) objectID;
 - (RuinCard *) getRuinByID: (NSUInteger) objectID;

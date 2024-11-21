@@ -332,6 +332,10 @@ S1 POA - Unearth
 	- Started code to move card from table to player's hand when claimed.
 	- Added code to remove ruin card from the table when claimed by a player
 	- Converted ruinsOnTable array to be Mutable Array (allowing add/remove) 
+
+11/20
+	- Expanded Player to have a 'stones' array
+	- Expanded UGE.doActionRoll() to give player a stone from bag when rolling a 1, 2, or 3
 	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
@@ -340,7 +344,7 @@ S1 POA - Unearth
 			N-- Working up enough code to claim a card
 			X-- ruin claimed, return dice to owning players.
 			X-- Cont. UGE.removeRuinFromTableByID()
-			.-- Remove stones from claimed card, check the rules to see if stones go back in bag.
+			.-- Remove stones from claimed card, stones go back in bag
 
 		- Issue/WIP, Message "has been claimed by the player" shows, but card stays on the board.
 			N-- Continue at UGE ln595

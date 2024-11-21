@@ -551,7 +551,7 @@
 	// TODO: UGE.doActionRoll:player() Not yet (fully) implemented.
 	bShowUnderConstruction = true;
 	
-	// TODO: Take a die from the player of the size specified and put it on the target ruin specified.
+	// Take a die from the player of the size specified and put it on the target ruin specified.
 	// Convert the die size number (e.g. 6) to a die size, then get one of that size from the player's dice.
 	NSString *dieSizeString = [[NSString alloc] initWithFormat:@"d%ld", action.subject];
 	DelverDieSize dieSize = [DelverDie DelverDieStringToSize:dieSizeString];
@@ -568,11 +568,21 @@
 		[cli put:msg withNewline:true];
 		return;
 	}
-	[theDie roll];
 
+	[theDie roll];
 	msg = [[NSString alloc] initWithFormat:@"Die roll = %d  (%@).",
 		   [theDie getDieValue], [theDie toString] ];
 	[cli put:msg withNewline:true];
+
+	// Player gets a stone from the bag when rolling a 1, 2, or 3
+	if ([theDie getDieValue] <= 3) {
+		NSUInteger stoneCount = [player addStone: [stoneBag getNextStone]];
+		[cli put:@"" withNewline:true];
+		NSString *msg = [[NSString alloc] initWithFormat:@"Player gets a stone from the bag when rolling a 1, 2, or 3."
+														  " Player now has %ld stones.",
+														  stoneCount];
+		[cli put:msg withNewline:true];
+	}
 
 	// TODO: Evaluate if delver cards in play manipulate die, allow reroll or altering target.
 	

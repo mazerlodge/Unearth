@@ -158,8 +158,8 @@
 	
 	delverCards = [[NSMutableArray alloc] initWithCapacity:2];
 	ruinCards = [[NSMutableArray alloc] initWithCapacity:1];
+	stones = [[NSMutableArray alloc] initWithCapacity:5];
 	dice = playerDice;
-
 
     return self;
     
@@ -206,6 +206,17 @@
 	ruinCardCount = [ruinCards count];
 	
 	return ruinCardCount;
+
+}
+
+- (NSUInteger) addStone: (Stone *) stone {
+
+	NSUInteger stoneCount = 0;
+	
+	[stones addObject:stone];
+	stoneCount = [stones count];
+	
+	return stoneCount;
 
 }
 
