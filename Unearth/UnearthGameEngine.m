@@ -540,7 +540,8 @@
 	action.target = PlayerActionTargetRuin;
 	action.targetLocation = PlayerActionTargetLocationBoard;
 	
-	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionRoll:player() with verb=%@ subject=%ld target=%@ location=%@ objectID=%ld\n",
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionRoll:player() with "
+													  "verb=%@ subject=%ld target=%@ location=%@ objectID=%ld\n",
 					 [UnearthPlayer PlayerActionVerbToString:action.verb],
 					 action.subject,
 					 [UnearthPlayer PlayerActionTargetToString:action.target],
@@ -551,7 +552,7 @@
 	// TODO: UGE.doActionRoll:player() Not yet (fully) implemented.
 	bShowUnderConstruction = true;
 	
-	// Take a die from the player of the size specified and put it on the target ruin specified.
+	// Take a die from the player of the size specified, roll it, and put it on the target ruin specified.
 	// Convert the die size number (e.g. 6) to a die size, then get one of that size from the player's dice.
 	NSString *dieSizeString = [[NSString alloc] initWithFormat:@"d%ld", action.subject];
 	DelverDieSize dieSize = [DelverDie DelverDieStringToSize:dieSizeString];
@@ -574,20 +575,38 @@
 		   [theDie getDieValue], [theDie toString] ];
 	[cli put:msg withNewline:true];
 
-	// Player gets a stone from the bag when rolling a 1, 2, or 3
+	// Player gets a stone from the ruin when rolling a 1, 2, or 3, or from the bag if none on the ruin
+	RuinCard *theCard = [self getRuinByID: action.objectID];
 	if ([theDie getDieValue] <= 3) {
-		NSUInteger stoneCount = [player addStone: [stoneBag getNextStone]];
-		[cli put:@"" withNewline:true];
-		NSString *msg = [[NSString alloc] initWithFormat:@"Player gets a stone from the bag when rolling a 1, 2, or 3."
-														  " Player now has %ld stones.",
-														  stoneCount];
+		Stone *selectedStone;
+		if ([theCard getStoneCount] > 0) {
+			// Show the card to the player and ask which stone to they want
+			[cli put:[theCard toString] withNewline:true];
+			do {
+				int selectedStoneID = [cli getInt:@"On roll of 1, 2, or 3 take a stone. Select stone ID: "];
+				selectedStone = [theCard getStoneByID:selectedStoneID];
+			} while (selectedStone == nil);
+			
+		} else {
+			// Get a stone from the bag when there are none on the card.
+			msg = [[NSString alloc] initWithFormat:@"Player gets a stone when rolling a 1, 2, or 3. "
+													"Card has no stones so taking one from the bag."];
+			[cli put:msg withNewline:true];
+			selectedStone =  [stoneBag getNextStone];
+			
+		}
+		
+		NSUInteger stoneCount = [player addStone: selectedStone];
+		msg = [[NSString alloc] initWithFormat:@"Player now has %ld stones.",
+						 stoneCount];
+
 		[cli put:msg withNewline:true];
-	}
+		
+	} // dieVal < 3
 
 	// TODO: Evaluate if delver cards in play manipulate die, allow reroll or altering target.
 	
 	// Get the ruin card specified and put the die on the ruin
-	RuinCard *theCard = [self getRuinByID: action.objectID];
 	NSUInteger cardNewDieTotal = 0;
 	if (theCard == nil) {
 		NSString *msg = [[NSString alloc] initWithFormat:@"Ruin Card with ID specified (%ld) not found on table.",
@@ -643,7 +662,8 @@
 
 	bool bShowNotYetImplementedMsg = false;
 	
-	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionExamine:player() with verb=%@ target=%@ location=%@ objectID=%ld\n",
+	NSString *msg = [[NSString alloc] initWithFormat:@"In UGE.doActionExamine:player() with "
+													  "verb=%@ target=%@ location=%@ objectID=%ld\n",
 					 [UnearthPlayer PlayerActionVerbToString:action.verb],
 					 [UnearthPlayer PlayerActionTargetToString:action.target],
 					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],

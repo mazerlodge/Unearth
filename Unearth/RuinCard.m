@@ -88,6 +88,12 @@
 	return rval;
 }
 
+- (int) getStoneCount {
+	return (int)[stones count];
+	
+}
+
+
 
 - (int) stoneValue {
 	return cardStoneValue;
@@ -117,6 +123,24 @@
 	if ([stones count] >0) {
 		stone = [stones lastObject];
 		[stones removeLastObject];
+	}
+	
+	return stone;
+}
+
+- (Stone *) getStoneByID: (int)stoneID {
+	
+	Stone *stone;
+	
+	if ([stones count] >0) {
+		for (int x=0; x<[stones count]; x++) {
+			Stone *currentStone = [stones objectAtIndex:x];
+			if ([currentStone getStoneID] == stoneID) {
+				stone = currentStone;
+				[stones removeObject:stone];
+				break;
+			}			
+		}
 	}
 	
 	return stone;

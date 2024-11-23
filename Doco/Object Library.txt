@@ -103,9 +103,9 @@ X> RandomEngine
 /> Stone : HexTile
 	- color 			// black, blue, red, yellow
 
-.> StoneBag 
+/> StoneBag 
 	- stones 			// array of stones 
-	- pullStone() 		// retrieves next stone from bag
+	- getNextStone() 		// retrieves next stone from bag
 
 /> DelverDie
 	- color				// indicates which player gets stones or die back when ruin claimed.

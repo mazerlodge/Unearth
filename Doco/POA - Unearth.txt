@@ -335,7 +335,13 @@ S1 POA - Unearth
 
 11/20
 	- Expanded Player to have a 'stones' array
-	- Expanded UGE.doActionRoll() to give player a stone from bag when rolling a 1, 2, or 3
+	- Expanded UGE.doActionRoll() to give player a stone from ruin when rolling a 1, 2, or 3 (or bag if no stones on ruin)
+
+11/23
+	- Corrected handling of roll values 1, 2, 3, now getting stone from card & if none avail, get from bag.
+	- Corrected [Object Library.txt], method name getNextStone() on class StoneBag
+	- Expanded RuinCard, added getStoneByID() and getStoneCount() methods
+	
 	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)
