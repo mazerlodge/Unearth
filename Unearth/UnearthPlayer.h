@@ -66,7 +66,6 @@ struct PlayerAction {
 	NSMutableArray *delverCards;
 	NSMutableArray *ruinCards;
 	NSMutableArray *dice;
-	NSMutableArray *stones;
 	
 }
 

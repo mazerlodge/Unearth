@@ -49,6 +49,58 @@
 	
 }
 
++ (NSArray *) GetDirectionWords {
+	
+	NSArray *directionWords = [[NSArray alloc] initWithObjects:@"NOT_SET", @"NE", @"E", @"SE", @"SW", @"W", @"NW",nil];
+
+	return directionWords;
+	
+}
+
+
++ (HexDirection) HexDirectionFromString: (NSString *) dirAsString {
+	
+	HexDirection rval = HexDirectionNotSet;
+	
+	NSArray *dirWords = [HexMap GetDirectionWords];
+	
+	NSUInteger idx = [dirWords indexOfObject: dirAsString];
+	
+	switch(idx) {
+		case 0:
+			rval = HexDirectionNotSet;
+			break;
+			
+		case 1:
+			rval = HexDirectionNE;
+			break;
+
+		case 2:
+			rval = HexDirectionE;
+			break;
+
+		case 3:
+			rval = HexDirectionSE;
+			break;
+
+		case 4:
+			rval = HexDirectionSW;
+			break;
+
+		case 5:
+			rval = HexDirectionW;
+			break;
+
+		case 6:
+			rval = HexDirectionNW;
+			break;
+
+	}
+	
+	return rval;
+	
+}
+
 - (id) init {
 	
 	cli = [[CommandLineInterface alloc] init];
@@ -357,6 +409,42 @@
 	}
 	
 	return bRval;
+	
+}
+
+- (int) addStone: (Stone *) s {
+	int stoneCount = 0;
+	
+	// if this is the first stone, put it at the origin
+	if (occupiedCells == 0) {
+		[self addStone:s atHexCell:[self getOriginHexCell]];
+		[cli put:@"First stone placed at map origin" withNewline:true];
+		[self drawMap];
+	}
+	else {
+		// TODO: showMap and prompt user where to put the stone
+		[self drawMap];
+
+		// Get the related cell and direction from it where the new stone should be placed
+		HexCell *relatedCell = [self getOriginHexCell];
+		if (occupiedCells > 1) {
+			// Ask which cell the placed stone should touch
+			int relStoneID = [cli getInt:@"Which stone should the added stone touch?: "];
+			relatedCell = [self getHexCellHoldingTileBaseID:relStoneID];
+		}
+		
+		HexDirection targetDir = HexDirectionNotSet;
+		while (targetDir == HexDirectionNotSet) {
+			NSString *dirAsString = [cli getStr:@"Which direction (NE, E, SE, SW W, NW)?: "];
+			targetDir = [HexMap HexDirectionFromString:[dirAsString uppercaseString]];
+		}
+		// Place stone at the target cell
+		[self addStone:s touchingHexCell:relatedCell onSide:targetDir];
+		
+	}
+	stoneCount = occupiedCells;
+
+	return stoneCount;
 	
 }
 

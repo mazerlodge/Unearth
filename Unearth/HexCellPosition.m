@@ -54,7 +54,10 @@
 		case HexDirectionW:
 			c -= 2;
 			break;
-	
+
+		case HexDirectionNotSet:
+			break;
+
 	}
 	
 	[pos setRow:r Column:c];

@@ -596,6 +596,7 @@
 			
 		}
 		
+		// Put the stone on the player's hexmap
 		NSUInteger stoneCount = [player addStone: selectedStone];
 		msg = [[NSString alloc] initWithFormat:@"Player now has %ld stones.",
 						 stoneCount];
@@ -619,7 +620,7 @@
 	}
 	else {
 		cardNewDieTotal = [theCard addDieToCard:theDie];
-		[cli put:[[self getRuinByID:action.objectID] toString] withNewline:true];
+
 	}
 	
 	// Check the ruin to see if it has been claimed, if so give it to the appropriate player
@@ -645,6 +646,8 @@
 		[self removeRuinFromTableByID:[theCard getRuinID]];
 		
 		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
+		
+		[self showRuinsOnTable];
 
 	}
 

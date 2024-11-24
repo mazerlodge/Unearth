@@ -14,6 +14,7 @@
 
 
 typedef enum HexDirection : NSUInteger {
+	HexDirectionNotSet = 0,
 	HexDirectionNE = 1,
 	HexDirectionE = 2,
 	HexDirectionSE = 3,

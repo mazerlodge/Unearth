@@ -341,7 +341,7 @@ S1 POA - Unearth
 	- Corrected handling of roll values 1, 2, 3, now getting stone from card & if none avail, get from bag.
 	- Corrected [Object Library.txt], method name getNextStone() on class StoneBag
 	- Expanded RuinCard, added getStoneByID() and getStoneCount() methods
-	
+	- Added putting stones on player's hex map
 	
 > In-Progress:
     - Fleshing out UGE.doAction:player() method (Use case F0)

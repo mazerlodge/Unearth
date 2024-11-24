@@ -38,6 +38,8 @@
     
 }
 
++ (NSArray *) GetDirectionWords;
++ (HexDirection) HexDirectionFromString: (NSString *) dirAsString;
 + (NSString *) HexDirectionToString: (HexDirection) direction;
 
 - (id) init;
@@ -53,6 +55,7 @@
 
 - (bool) isPositionValid: (HexCellPosition *) position;
 
+- (int) addStone: (Stone *) s;
 - (bool) addStone: (Stone *) s atHexCell: (HexCell *) c;
 - (bool) addWonder: (Wonder *) w atHexCell: (HexCell *) c;
 
