@@ -645,7 +645,7 @@
 		// The card must be removed from the board
 		[self removeRuinFromTableByID:[theCard getRuinID]];
 		
-		// TODO: Get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
+		// TODO: When card claimed, get the next ruin from the deck, prep it (add stones), and place it on the table.
 		
 		[self showRuinsOnTable];
 

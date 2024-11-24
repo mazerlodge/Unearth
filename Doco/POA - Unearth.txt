@@ -344,40 +344,21 @@ S1 POA - Unearth
 	- Added putting stones on player's hex map
 	
 > In-Progress:
-    - Fleshing out UGE.doAction:player() method (Use case F0)
-		N-- Core of game run is at UGE.go()
-		/-- In UGE.doActionRoll:player() method (~ln 593), see TODO
-			N-- Working up enough code to claim a card
-			X-- ruin claimed, return dice to owning players.
-			X-- Cont. UGE.removeRuinFromTableByID()
-			.-- Remove stones from claimed card, stones go back in bag
-
-		- Issue/WIP, Message "has been claimed by the player" shows, but card stays on the board.
-			N-- Continue at UGE ln595
+	.-- Issue, drawing of map renders wrong.
+		N-- But works perfectly when ran from command line ~/bin/unearth -action dotest -test 12
+	
+	- Roll at target
+		/-- Flesh out UGE.doActionRoll:player()
+			X-- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
+			X-- Check the ruin to see if it has been claimed, if so give it to the appropriate player
+			X-- If ruin claimed, retun dice to owning players.
+			X-- If ruin claimed, return any remaining stones to the bag
+			.-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
+			.-- Expand w/ handling delver card influence on roll
 
 > Next: (Note: UC=Use Case)
 	- Enhancement, should be able to 'show card(s)  in hand' same as 'show ruin in hand'
 		N-- Only show ruin in hand works ATM.
-		
-	- Roll at target
-		N-- Set target, current output from sample run:
-				Enter command (or 'help') roll d6 at 106
-				In UGE.doActionRoll:player() with verb=Roll target=NOT_SET location=NOT_SET objectID=106
-
-		.-- Flesh out UGE.doActionRoll:player()
-			X-- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
-			.-- Check the ruin to see if it has been claimed, if so give it to the appropriate player
-			.-- If ruin claimed, retun dice to owning players.
-			.-- If ruin claimed, return any remaining stones to the bag
-			.-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
-			.-- Expand w/ handling delver card influence on roll
-
-	- Bug Fix
-		.-- command "roll d6 at 105"  (with d6 in either upper or lowercase yeilds msg below)
-				In UGE.doActionRoll:player() with verb=Roll subject=999 target=Ruin location=Board objectID=105
-				(Severity: 5)
-				Die of size specified is not valid.
-			N-- Happened once, hasn't happened again (5/27/22)
 
 	- Light stuff
 		.-- Clean up order of methods in UGE, alphabetical.
