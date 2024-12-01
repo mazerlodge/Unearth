@@ -50,6 +50,9 @@
 - (HexCell *) getHexCellHoldingTileBaseID: (int) baseID;
 - (HexCell *) getHexCellAtPosition: (HexCellPosition *) position;
 
+- (int) getMinOccupiedCellColumn;
+- (int) getMinOccupiedCellRow;
+
 - (NSArray *) getAvailableHexCells;
 - (Wonder *) getWonderByID: (NSUInteger) objectID;
 

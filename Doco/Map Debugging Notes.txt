@@ -1,0 +1,195 @@
+
+=== START Output when running game ===
+
+On roll of 1, 2, or 3 take a stone. Select stone ID: 65
+First stone placed at map origin
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 7 cells in the map (1 used, 6 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=52, Ym=49, Ymax=51.(Severity: 5)
+
+   / \   / \
+ /   \ /   \
+|     |     |
+|     |     |
+ \  / \   / \   / \   /
+  \ /   \ /   \ /   \ /
+   |     | Blk |     |
+   |     |  65 |     |
+   / \   / \
+ /   \ /   \
+|     |     |
+|     |     |
+ \   / \   /
+  \ /   \ /
+
+Player now has 1 stones.
+Enter command (or 'help') 
+
+
+=== END Output when running game ===
+
+
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 23 cells in the map (7 used, 16 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52.(Severity: 5)
+
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Blu | Blk |     |
+   |     |  49 |  62 |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     | Red | LES | Yel |     |
+|     |  10 |  71 |  35 |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Blk | Red |     |
+   |     |  55 |  15 |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+mazerlodge@TheoVI bin % 
+
+
+=== START Output with empty cell column positions ===
+
+In drawMap with 21 cells in the map (7 used, 14 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52.(Severity: 5)
+
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| --- | --- | --- | --- | --- |
+|  48 |  50 |  52 |  54 |  56 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   | --- | Blu | Red | --- |
+   |  49 |  48 |  15 |  55 |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| --- | Yel | LES | Blu | --- |
+|  48 |  38 |  80 |  54 |  56 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   | --- | Yel | Yel | --- |
+   |  49 |  27 |  31 |  55 |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| --- | --- | --- | --- || --- |
+|  48 |  50 |  52 |  54 ||  56 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+Program ended with exit code: 0
+
+=== START Output with  empty cell roll positions ===
+
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 21 cells in the map (7 used, 14 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52.(Severity: 5)
+
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| --- | --- | --- | --- | --- |
+|  48 |  48 |  48 |  48 |  48 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   | --- | Red | Yel | --- |
+   |  49 |  21 |  36 |  49 |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| --- | Red | LES | Blu | --- |
+|  50 |  14 |  76 |  46 |  50 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   | --- | Red | Blu | --- |
+   |  51 |  12 |  43 |  51 |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+| --- | --- | --- | --- || --- |
+|  52 |  52 |  52 |  52 ||  52 |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+Program ended with exit code: 0
+
+=== In code execution with one stone placed === 
+
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 7 cells in the map (1 used, 6 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=52, Ym=49, Ymax=51.(Severity: 5)
+
+   / \   / \
+ /   \ /   \
+| --- | --- |
+|     |     |
+ \  / \   / \   / \   /
+  \ /   \ /   \ /   \ /
+   | --- | Blu | --- |
+   |     |  50 |     |
+   / \   / \
+ /   \ /   \
+| --- | --- |
+|     |     |
+ \   / \   /
+  \ /   \ /
+
+Player now has 1 stones.
+
+
+=== START output columns in empty cells, note shift, empty cell put at first position in row, not above stone
+
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 7 cells in the map (1 used, 6 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=52, Ym=49, Ymax=51.(Severity: 5)
+
+StartMap
+   / \   / \
+ /   \ /   \
+| --- | --- |
+|  49 |  51 |
+ \  / \   / \   / \   /
+  \ /   \ /   \ /   \ /
+   | --- | Yel | --- |
+   |  48 |  25 |  52 |
+   / \   / \
+ /   \ /   \
+| --- | --- |
+|  49 |  51 |
+ \   / \   /
+  \ /   \ /
+
+Player now has 1 stones.
+
+=== START output rows, note this is fine 
+
+In HexMap.drawMap()(Severity: 5)
+In drawMap with 7 cells in the map (1 used, 6 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=52, Ym=49, Ymax=51.(Severity: 5)
+
+StartMap
+   / \   / \
+ /   \ /   \
+| --- | --- |
+|  49 |  49 |
+ \  / \   / \   / \   /
+  \ /   \ /   \ /   \ /
+   | --- | Blu | --- |
+   |  50 |  42 |  50 |
+   / \   / \
+ /   \ /   \
+| --- | --- |
+|  51 |  51 |
+ \   / \   /
+  \ /   \ /
+
+Player now has 1 stones.
+
+===

@@ -144,7 +144,7 @@
 	if (rval == nil) {
 		rval = [[HexCell alloc] initWithRow:row Column:column];
 		hexCells = [hexCells arrayByAddingObject:rval];
-
+		[self updateStats];
 	}
 	
 	return rval;
@@ -168,9 +168,12 @@
 	
 	// if the cell wasn't found above, create it and add it to the hexCells array.
 	if (rval == nil) {
-		rval = [[HexCell alloc] initWithRow:row Column:column];
-		hexCells = [hexCells arrayByAddingObject:rval];
-		
+		HexCellPosition *pos = [[HexCellPosition alloc] initWithRow:row Column:column];
+		if ([self isPositionValid:pos]) {
+			rval = [[HexCell alloc] initWithRow:row Column:column];
+			hexCells = [hexCells arrayByAddingObject:rval];
+			[self updateStats];
+		}
 	}
 	
 	return rval;
@@ -408,6 +411,22 @@
 			[self getHexCellAtRow:[nCell getRowPosition] Column:[nCell getColumnPosition]];
 	}
 	
+	[self updateStats];
+	// if the min occupied colum is even, min to check for adds is -3, otherwise -2
+	int addColMin = [self getMinOccupiedCellColumn] - 3;
+	int addRowMin = [self getMinOccupiedCellRow] - 1;
+	
+	// add all cells missing from any row or column between min and max
+	for (int y=addRowMin; y<=maxRow; y++)
+		for (int x=addColMin; x<=maxCol; x++) {
+			HexCellPosition *pos = [[HexCellPosition alloc] initWithRow:y Column:x];
+			if ([self isPositionValid:pos])
+				// Note: getting the cell creates it if it didn't exist before
+				[self getHexCellAtPosition:pos];
+		}
+
+	[self updateStats];
+
 	return bRval;
 	
 }
@@ -534,6 +553,36 @@
     
 }
 
+- (int) getMinOccupiedCellColumn {
+	
+	int rval = 999;
+	
+	for (HexCell *aCell in hexCells) {
+		if (([aCell isOccupied]) && [aCell getColumnPosition] < rval)
+			rval = [aCell getColumnPosition];
+		
+	}
+	
+	return rval;
+	
+}
+
+
+- (int) getMinOccupiedCellRow {
+
+	int rval = 999;
+	
+	for (HexCell *aCell in hexCells) {
+		if (([aCell isOccupied]) && [aCell getRowPosition] < rval)
+			rval = [aCell getRowPosition];
+		
+	}
+
+	return rval;
+
+}
+
+
 - (void) updateStats {
 	
 	occupiedCells = 0;
@@ -581,6 +630,7 @@
 	[cli debugMsg:@"In HexMap.drawMap()" level:5];
 	
 	[self updateStats];
+	
 	// before rendering cells, touch every cell, min to max, to make sure they are in the array
 	for (int y=minRow; y<=maxRow; y++) {
 		for (int x=minCol; x<=maxCol; x++) {
@@ -599,7 +649,7 @@
 		[cli debugMsg:[aCell toString] level:4];
 	
 	// Output a blank line before the map content.
-	[cli put:@"\n"];
+	[cli put:@"\nStartMap\n"];
 	
 	// output the cell's positions in order by position.
 	[self updateStats];
@@ -700,7 +750,7 @@
 	// The e1 & e2 segments are only added for last column or last in row segments
 	NSString *e1 = @"";
 	NSString *e2 = @"";
-	if (bInLastColumn || bInLastCellInRow) {
+	if (bInLastColumn || bInLastCellInRow){
 		e1 = @"|";
 		e2 = @"|";
 	}
@@ -739,6 +789,11 @@
 
 		}
 		
+	}
+	else {
+		// debugging support
+		occupiedMarker = @"---";
+		stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getColumnPosition]];
 	}
 	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %@ ", stoneID];

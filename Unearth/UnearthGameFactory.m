@@ -255,6 +255,7 @@
 		[map addStone:theStone touchingHexCell:relativeCell onSide:nextPlacement[x]];
 		// Call map get cell where tile was just placed and move relativeCell there before placing next stone.
 		relativeCell = [map getHexCellHoldingTileBaseID:[theStone getStoneID]];
+
 	}
 	
 	NSString *finalCellMsg = [[NSString alloc] initWithFormat:@"Final cell=%@\n", [relativeCell toString]];

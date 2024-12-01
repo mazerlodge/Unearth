@@ -343,10 +343,15 @@ S1 POA - Unearth
 	- Expanded RuinCard, added getStoneByID() and getStoneCount() methods
 	- Added putting stones on player's hex map
 	
+11/30
+	- Improved map rendering (still needs work)
+	
 > In-Progress:
 	.-- Issue, drawing of map renders wrong.
 		N-- But works perfectly when ran from command line ~/bin/unearth -action dotest -test 12
-	
+		.-- Add a debug action that allows adding stones to the map to speed up rendering
+			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
+			
 	- Roll at target
 		/-- Flesh out UGE.doActionRoll:player()
 			X-- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
