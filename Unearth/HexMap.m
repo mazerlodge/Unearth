@@ -415,10 +415,12 @@
 	// if the min occupied colum is even, min to check for adds is -3, otherwise -2
 	int addColMin = [self getMinOccupiedCellColumn] - 3;
 	int addRowMin = [self getMinOccupiedCellRow] - 1;
+	int addColMax = [cell getColumnPosition] + 3;
+	int addRowMax = [cell getRowPosition] + 1;
 	
 	// add all cells missing from any row or column between min and max
-	for (int y=addRowMin; y<=maxRow; y++)
-		for (int x=addColMin; x<=maxCol; x++) {
+	for (int y=addRowMin; y<=addRowMax; y++)
+		for (int x=addColMin; x<=addColMax; x++) {
 			HexCellPosition *pos = [[HexCellPosition alloc] initWithRow:y Column:x];
 			if ([self isPositionValid:pos])
 				// Note: getting the cell creates it if it didn't exist before
@@ -441,7 +443,7 @@
 		[self drawMap];
 	}
 	else {
-		// TODO: showMap and prompt user where to put the stone
+		// ShowMap and prompt user where to put the stone
 		[self drawMap];
 
 		// Get the related cell and direction from it where the new stone should be placed
@@ -792,8 +794,8 @@
 	}
 	else {
 		// debugging support
-		occupiedMarker = @"---";
-		stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getColumnPosition]];
+		//occupiedMarker = [[NSString alloc] initWithFormat:@"x%2d", [cell getColumnPosition]];
+		//stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getRowPosition]];
 	}
 	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %@ ", stoneID];
