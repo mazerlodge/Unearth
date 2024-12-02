@@ -108,7 +108,7 @@
 	// If debug mode is turned on output the specified message via the command line interface.
 	
 	// Add the message level to the message
-	msg = [msg stringByAppendingFormat:@"(Severity: %d)\n", msgLevel];
+	msg = [msg stringByAppendingFormat:@" (S: %d)\n", msgLevel];
 	
 	if (bInDebug && (msgLevel >= minDebugMsgLevel))
 		[self put:msg];

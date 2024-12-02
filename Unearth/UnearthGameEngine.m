@@ -343,7 +343,7 @@
 	struct PlayerAction currentAction = [player makePlayerActionNotSet];
 	bool bTurnDone = false;
 	while (!bTurnDone){
-		NSString *commandMsg = [cli getStr:@"Enter command (or 'help') "];
+		NSString *commandMsg = [cli getStr:@"\nEnter command (or 'help') "];
 		currentAction = [player parsePlayerActionFromString:commandMsg];
 		[self doAction:currentAction player:player];
 		
@@ -547,7 +547,7 @@
 					 [UnearthPlayer PlayerActionTargetToString:action.target],
 					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],
 					 action.objectID];
-	[cli debugMsg:msg level:5];
+	[cli debugMsg:msg level:4];
 
 	// TODO: UGE.doActionRoll:player() Not yet (fully) implemented.
 	bShowUnderConstruction = true;
@@ -571,8 +571,7 @@
 	}
 
 	[theDie roll];
-	msg = [[NSString alloc] initWithFormat:@"Die roll = %d  (%@).",
-		   [theDie getDieValue], [theDie toString] ];
+	msg = [[NSString alloc] initWithFormat:@"Die roll = %d", [theDie getDieValue]];
 	[cli put:msg withNewline:true];
 
 	// Player gets a stone from the ruin when rolling a 1, 2, or 3, or from the bag if none on the ruin

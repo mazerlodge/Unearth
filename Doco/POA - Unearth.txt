@@ -346,9 +346,16 @@ S1 POA - Unearth
 11/30
 	- Improved map rendering (still needs work)
 	
+12/01
+	- More map clean up, still an issue w/ sequence of adding neighboring empty cells.
+	
 > In-Progress:
 	.-- Issue, drawing of map renders wrong.
 		N-- But works perfectly when ran from command line ~/bin/unearth -action dotest -test 12
+		.-- After adding the origin cell, row 49 is missing a buffer cell
+			N-- c/b sequence; adding cell to W after NW causes padded cells to be missing
+		.-- Issue, Add second stone nw failed, stone appears in ne cell and rendering messed up.
+			N-- Unless first stone wasn't placed at 50,50
 		.-- Add a debug action that allows adding stones to the map to speed up rendering
 			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
 			

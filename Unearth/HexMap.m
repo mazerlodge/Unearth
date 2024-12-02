@@ -118,6 +118,15 @@
 	HexCell *aCell = [[HexCell alloc] initWithRow:50 Column:50];
 	hexCells = [[NSArray alloc] initWithObjects:aCell, nil];
 	
+	// TODO: Remove this to clean up map, just a test  y=48 to 53 worked,
+	//        but y 49 to 52 failed, m/b b/c top row must be even.
+	for (int x=48; x<57; x++)
+		for (int y=48; y<53; y++) {
+			if ([self isPositionValid:[[HexCellPosition alloc] initWithRow:y Column:x]]) {
+				HexCell *emptyCell = [[HexCell alloc] initWithRow:y Column:x];
+				[self addAHexCell:emptyCell];
+			}
+		}
 	return self;
 	
 }
@@ -142,9 +151,18 @@
 	
 	// if the cell wasn't found above, create it and add it to the hexCells array.
 	if (rval == nil) {
-		rval = [[HexCell alloc] initWithRow:row Column:column];
-		hexCells = [hexCells arrayByAddingObject:rval];
-		[self updateStats];
+		if ([self isPositionValid:[[HexCellPosition alloc] initWithRow:row Column:column]]) {
+			rval = [[HexCell alloc] initWithRow:row Column:column];
+			[self addAHexCell:rval];
+			
+		}
+		else {
+			NSString *errMsg = [[NSString alloc]
+								initWithFormat:@"getHexCellAtRow(): Asked to create invalid cell at %2d, %2d",
+								row, column];
+			[cli debugMsg:errMsg level:4];
+			
+		}
 	}
 	
 	return rval;
@@ -171,10 +189,51 @@
 		HexCellPosition *pos = [[HexCellPosition alloc] initWithRow:row Column:column];
 		if ([self isPositionValid:pos]) {
 			rval = [[HexCell alloc] initWithRow:row Column:column];
-			hexCells = [hexCells arrayByAddingObject:rval];
-			[self updateStats];
+			[self addAHexCell:rval];
+
 		}
 	}
+	
+	return rval;
+	
+}
+
+- (int) addAHexCell: (HexCell *) theCell {
+	// add the specified hexcell to the map's hexCell array
+	// Pad out the row where the cell is going if it isn't the first cell in the row
+	
+	int rval = (int)[hexCells count];
+	
+	if ([self isPositionValid:[theCell getPosition]]) {
+		hexCells = [hexCells arrayByAddingObject:theCell];
+		[self updateStats];
+	}
+	
+	// check existing hexcells to see if the position added is the leftmost in the row
+	int targetRow = [theCell getRowPosition];
+	int targetCol = [theCell getColumnPosition];
+	
+	// get the min col position used by cells in the target row
+	int minColUsedInRow = 999;
+	for (HexCell *aCell in hexCells) {
+		if (([aCell getRowPosition] == targetRow)
+			&&([aCell getColumnPosition] < minColUsedInRow))
+			minColUsedInRow = [aCell getColumnPosition];
+	}
+	
+	// Calculate the map's min col position
+	int minColUsedInMap = 999;
+	for (HexCell *aCell in hexCells) {
+		if ([aCell getColumnPosition] < minColUsedInMap)
+			minColUsedInMap = [aCell getColumnPosition];
+	}
+	
+	// Touch every cell from the min used in the map already to the target cell
+	for (int x=minColUsedInMap; x<targetCol; x++)
+		if ([self isPositionValid:[[HexCellPosition alloc] initWithRow:targetRow Column:x]]) {
+			[self getHexCellAtRow:targetRow Column:x];
+		}
+	[self updateStats];
 	
 	return rval;
 	
@@ -237,8 +296,8 @@
 	NSArray *rval = [[NSArray alloc] init];
 	
 	// Based on "x-in, y-down" (columnX and rowY, respectively)
-	const int NEIGHBOR_X_OFFSETS[] = {-1,  1, -2, 2, -1, 1};
-	const int NEIGHBOR_Y_OFFSETS[] = {-1, -1,  0, 0,  1, 1};
+	const int NEIGHBOR_X_OFFSETS[] = {-2, -1, -1,  1, 2, 1};
+	const int NEIGHBOR_Y_OFFSETS[] = {0,  -1,  1, -1, 0, 1};
 	const int NEIGHBOR_SIZE = 6;
 
 	int originX = [hexCell getColumnPosition];
@@ -407,12 +466,14 @@
 	for (HexCell *nCell in neighborCells) {
 		// Note: A bit obtuse, but getHexCellAtRow_Column creates the cell if it didn't exist
 		// Only create the cell if it isn't already in the map.
-		if (![self isCellInMap:nCell])
+		if (![self isCellInMap:nCell]) 
 			[self getHexCellAtRow:[nCell getRowPosition] Column:[nCell getColumnPosition]];
+		
 	}
 	
 	[self updateStats];
 	// if the min occupied colum is even, min to check for adds is -3, otherwise -2
+	/*  TODO: kill this, adding extra cells doesn't help clean up the display
 	int addColMin = [self getMinOccupiedCellColumn] - 3;
 	int addRowMin = [self getMinOccupiedCellRow] - 1;
 	int addColMax = [cell getColumnPosition] + 3;
@@ -428,7 +489,8 @@
 		}
 
 	[self updateStats];
-
+	*/
+	
 	return bRval;
 	
 }
@@ -449,9 +511,11 @@
 		// Get the related cell and direction from it where the new stone should be placed
 		HexCell *relatedCell = [self getOriginHexCell];
 		if (occupiedCells > 1) {
+			// TODO: Add error checking wrapping this input
 			// Ask which cell the placed stone should touch
 			int relStoneID = [cli getInt:@"Which stone should the added stone touch?: "];
 			relatedCell = [self getHexCellHoldingTileBaseID:relStoneID];
+			
 		}
 		
 		HexDirection targetDir = HexDirectionNotSet;
@@ -665,11 +729,11 @@
 		r6 = @"";
 
 		for (int x=minCol; x<=maxCol; x++) {
-			
 			// Only proceed if the position is valid
 			HexCellPosition *cellPos = [[HexCellPosition alloc] initWithRow:y Column:x];
 			if ([self isPositionValid:cellPos]) {
-				// just because a position is b/n min & max doesn't mean it exists in array
+				// Note: invalid positions happen b/c column numbers alternate on each even/odd row
+				// Just because a position is b/n min & max doesn't mean it exists in array
 				// but getting it will add it.
 				HexCell *currentCell = [self getHexCellAtRow:y Column:x];
 				[self drawACell:currentCell];
@@ -691,11 +755,12 @@
 
 		}
 		
+		// This is where the map row (6 lines of text) are output
 		for (NSString *r in rArray)
 			[cli put:r withNewline:true];
 
 		// Diag output, remove when above tests out ok.
-		//[cli put:currentRow withNewline:true];
+		[cli debugMsg:currentRow level:4];
 		
 	} // y
 

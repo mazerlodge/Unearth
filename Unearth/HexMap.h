@@ -49,6 +49,7 @@
 - (HexCell *) getHexCellAtRow: (int) row Column: (int) column;
 - (HexCell *) getHexCellHoldingTileBaseID: (int) baseID;
 - (HexCell *) getHexCellAtPosition: (HexCellPosition *) position;
+- (int) addAHexCell: (HexCell *) theCell;
 
 - (int) getMinOccupiedCellColumn;
 - (int) getMinOccupiedCellRow;
