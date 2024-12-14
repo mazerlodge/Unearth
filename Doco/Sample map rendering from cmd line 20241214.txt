@@ -1,0 +1,219 @@
+Sample map rendering from cmd line 20241214.txt
+
+Below are renderings when running from the command line.  
+No issues detected. 
+
+====
+
+From run w/ params: -action dotest -test 12 -debug -debuglevel 5 
+
+In drawMap with 24 cells in the map (7 used, 17 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52. (S: 5)
+
+StartMap
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Yel | Blk |     |
+   |     |  38 |  62 |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     | Blu | LES | Red |     |
+|     |  45 |  76 |  13 |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Blu | Blu |     |
+   |     |  40 |  47 |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+====
+
+From run w/ params: -action playgame -debug -debuglevel 5 
+
+After first stone placed during playgame 
+
+First stone placed at map origin
+In HexMap.drawMap() (S: 5)
+In drawMap with 24 cells in the map (1 used, 23 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52. (S: 5)
+
+StartMap
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     |     |     |     |
+   |     |     |     |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     | Yel |     |     |     |
+|     |  39 |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     |     |     |     |
+   |     |     |     |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+Player now has 1 stones.
+
+====
+
+after placing black stone 'ne'
+Which direction (NE, E, SE, SW W, NW)?: ne
+Player now has 2 stones.
+
+Enter command (or 'help') show map
+In UGE.doActionShow with verb=Show target=Map location=NOT_SET objectID=999
+ (S: 5)
+In HexMap.drawMap() (S: 5)
+In drawMap with 24 cells in the map (2 used, 22 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52. (S: 5)
+
+StartMap
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Blk |     |     |
+   |     |  59 |     |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     | Yel |     |     |     |
+|     |  39 |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     |     |     |     |
+   |     |     |     |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+
+Enter command (or 'help') 
+
+====
+
+After adding stone to the 'e' of 59
+Which stone should the added stone touch?: 59
+Which direction (NE, E, SE, SW W, NW)?: e
+Player now has 3 stones.
+
+In HexMap.drawMap() (S: 5)
+In drawMap with 24 cells in the map (3 used, 21 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52. (S: 5)
+
+StartMap
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Blk | Yel |     |
+   |     |  59 |  37 |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     | Yel |     |     |     |
+|     |  39 |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     |     |     |     |
+   |     |     |     |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+
+Enter command (or 'help') 
+
+====
+
+Which stone should the added stone touch?: 37
+Which direction (NE, E, SE, SW W, NW)?: se
+Player now has 4 stones.
+
+In drawMap with 24 cells in the map (4 used, 20 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=56, Ym=48, Ymax=52. (S: 5)
+
+StartMap
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     | Blk | Yel |     |
+   |     |  59 |  37 |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     | Yel |     | Red |     |
+|     |  39 |     |  10 |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+   |     |     |     |     |
+   |     |     |     |     |
+  / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |
+|     |     |     |     |     |
+ \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /
+
+
+====
+
+Which stone should the added stone touch?: 10
+Which direction (NE, E, SE, SW W, NW)?: e
+Player now has 5 stones.
+
+In drawMap with 29 cells in the map (5 used, 24 empty).
+min/max used columnsX & rowsY are Xm=48, Xmax=58, Ym=48, Ymax=52. (S: 5)
+
+StartMap
+  / \   / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |     |
+|     |     |     |     |     |     |
+ \   / \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /   \ /
+   |     | Blk | Yel |     |     |
+   |     |  59 |  37 |     |     |
+  / \   / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \ /   \
+|     | Yel |     | Red | Blu |     |
+|     |  39 |     |  10 |  54 |     |
+ \   / \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /   \ /
+   |     |     |     |     |     |
+   |     |     |     |     |     |
+  / \   / \   / \   / \   / \   / \
+ /   \ /   \ /   \ /   \ /   \ /   \
+|     |     |     |     |     |     |
+|     |     |     |     |     |     |
+ \   / \   / \   / \   / \   / \   /
+  \ /   \ /   \ /   \ /   \ /   \ /
+
+====

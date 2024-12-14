@@ -152,6 +152,10 @@
 		case 13:
 			rval = [self testUnshuffledDecks];
 			break;
+			
+		case 14:
+			rval = [self testPlayerMapNWStonePlacement];
+			break;
             
     }
     
@@ -278,6 +282,43 @@
 	[map addWonder:aTestLesserWonder touchingHexCell:originCell onSide:HexDirectionE];
 	
 	[map drawMap];
+
+	return rval;
+	
+}
+
+- (int) testPlayerMapNWStonePlacement {
+	// Test placing a loop of stones then a lesser wonder in the middle
+	
+	int rval = -1;
+	
+	[cli debugMsg:@"In test playermap NW Stone Placement." level:4];
+	
+	// Validate stone bag has stones
+	NSInteger stoneCount = [stoneBag getCount];
+	NSString *msg = [NSString stringWithFormat:@"Got stone bag with %ld stones.", stoneCount];
+	[cli debugMsg:msg level:3];
+	
+	// pull a stone, place it at the origin, draw the map
+	Stone *theStone = [stoneBag getNextStone];
+	HexMap *map = [[HexMap alloc] initWithCLI: cli];
+	HexCell *originCell = [map getOriginHexCell];
+	[map addStone:theStone atHexCell:originCell];
+	[map drawMap];
+	
+	// Add a stone NW of origin
+	theStone = [stoneBag getNextStone];
+	[map addStone:theStone touchingHexCell:originCell onSide:HexDirectionNW];
+	[map drawMap];
+
+	
+	// Subtest, as long as we're here, test getting available hex cells.
+	NSArray *availCells = [map getAvailableHexCells];
+	for (HexCell *aCell in availCells)
+		[cli debugMsg:[aCell toString] level:3];
+	
+	NSString *originCellMsg = [[NSString alloc] initWithFormat:@"Origin cell=%@\n", [originCell toString]];
+	[cli debugMsg:originCellMsg level:4];
 
 	return rval;
 	

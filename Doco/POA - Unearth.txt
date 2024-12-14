@@ -349,13 +349,22 @@ S1 POA - Unearth
 12/01
 	- More map clean up, still an issue w/ sequence of adding neighboring empty cells.
 	
+12/14
+	- Diagnostics on map rendering error when 2nd stone is placed NW of origin
+	- Cleaned up formatting of 'stones on card' and 'dice on card' messages
+	- Added test #14, testPlayerMapNWStonePlacement
+	
+	
 > In-Progress:
 	.-- Issue, drawing of map renders wrong.
 		N-- But works perfectly when ran from command line ~/bin/unearth -action dotest -test 12
-		.-- After adding the origin cell, row 49 is missing a buffer cell
+		X-- After adding the origin cell, row 49 is missing a buffer cell
 			N-- c/b sequence; adding cell to W after NW causes padded cells to be missing
 		.-- Issue, Add second stone nw failed, stone appears in ne cell and rendering messed up.
-			N-- Unless first stone wasn't placed at 50,50
+			N-- To test, run with params: -action dotest -test 14 -debug -debuglevel 4
+			N-- Maybe make a fn() that returns min/max occupied cells then create a window around them
+			N-- Mod c/b in (or triggered from) HexMap:addAHexCell()
+			
 		.-- Add a debug action that allows adding stones to the map to speed up rendering
 			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
 			

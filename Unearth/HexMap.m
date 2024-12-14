@@ -368,6 +368,18 @@
 	
 }
 
+
+- (bool) isColumnEven: (HexCellPosition *) position {
+	// if the specified cell position's column is even return true
+	bool bRval = false;
+	
+	if ([position getColumn] % 2 == 0)
+		bRval = true;
+	
+	return bRval;
+	
+}
+
 - (bool) isInLastRow: (HexCellPosition *) position {
 	// if the specified cell position's row is in the last row relative to the max row in the map, return true
 	bool bRval = false;
@@ -760,7 +772,7 @@
 			[cli put:r withNewline:true];
 
 		// Diag output, remove when above tests out ok.
-		[cli debugMsg:currentRow level:4];
+		[cli debugMsg:currentRow level:3];
 		
 	} // y
 

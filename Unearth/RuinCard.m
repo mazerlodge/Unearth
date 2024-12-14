@@ -154,7 +154,7 @@
 					   claimValue, [self getDiceTotal]];
 	
 	if ([stones count] > 0) {
-		NSString *stonesMsg = @"\nStones on card:\n";
+		NSString *stonesMsg = @"\n\tStones on card:\n";
 		for (int x=0; x<[stones count]; x++) {
 			Stone *currentStone = [stones objectAtIndex:x];
 			stonesMsg = [stonesMsg stringByAppendingFormat:@"\t%@\n", [currentStone toString]];
@@ -164,7 +164,7 @@
 	}
 
 	if ([delverDice count] > 0) {
-		NSString *diceMsg = @"\nDice on card:\n";
+		NSString *diceMsg = @"\n\tDice on card:\n";
 		for (DelverDie *aDie in delverDice) {
 			diceMsg = [diceMsg stringByAppendingFormat:@"\t%@\n", [aDie toString]];
 		}
