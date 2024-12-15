@@ -367,6 +367,7 @@ S1 POA - Unearth
 			N-- Mod c/b in (or triggered from) HexMap:addAHexCell()
 			/-- Changed to window rendering approach
 				/-- Render fails on adding second stone, WinXmax decreases, unknown reason
+				.-- Cont. debugging window printing, even relative row issue.
 			
 		.-- Add a debug action that allows adding stones to the map to speed up rendering
 			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
