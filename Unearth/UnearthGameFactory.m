@@ -292,7 +292,7 @@
 	
 	int rval = -1;
 	
-	[cli debugMsg:@"In test playermap NW Stone Placement." level:4];
+	[cli debugMsg:@"In test playermap NW Stone Placement." level:5];
 	
 	// Validate stone bag has stones
 	NSInteger stoneCount = [stoneBag getCount];

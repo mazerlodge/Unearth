@@ -24,6 +24,14 @@
 	int maxRow;
 	int minCol;
 	int maxCol;
+	int minOccupiedRow;
+	int maxOccupiedRow;
+	int minOccupiedCol;
+	int maxOccupiedCol;
+	int drawWindowMinRow;
+	int drawWindowMaxRow;
+	int drawWindowMinCol;
+	int drawWindowMaxCol;
 
 	// Strings used to print cells.
 	NSString *r1;

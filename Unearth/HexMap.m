@@ -551,7 +551,7 @@
 	NSString *msg = [NSString stringWithFormat:@"In map.addStone_atHexCell with Stone=(%@) at HexCell=(%@)\n",
 					 							[stone toString],
 					 							[cell toString]];
-	[cli debugMsg:msg level:4];
+	[cli debugMsg:msg level:5];
 	
 	[cell setTile:stone];
 	
@@ -665,14 +665,32 @@
 	
 	occupiedCells = 0;
 	emptyCells = 0;
+	
+	// min/max Row/Col covers both occupied and empty cells
 	minRow = 999;
 	maxRow = -1;
 	minCol = 999;
 	maxCol = -1;
 	
+	minOccupiedRow = 999;
+	maxOccupiedRow = -1;
+	minOccupiedCol = 999;
+	maxOccupiedCol = -1;
+	
+	drawWindowMinRow = 999;
+	drawWindowMaxRow = -1;
+	drawWindowMinCol = 999;
+	drawWindowMaxCol = -1;
+
+	// Capture min/max vals
 	for (HexCell *aCell in hexCells) {
-		if ([aCell isOccupied])
+		if ([aCell isOccupied]) {
 			occupiedCells++;
+			minOccupiedRow = ([aCell getRowPosition] < minOccupiedRow) ? [aCell getRowPosition] : minOccupiedRow;
+			maxOccupiedRow = ([aCell getRowPosition] > maxOccupiedRow) ? [aCell getRowPosition] : maxOccupiedRow;
+			minOccupiedCol = ([aCell getColumnPosition] < minOccupiedCol) ? [aCell getColumnPosition] : minOccupiedCol;
+			maxOccupiedCol = ([aCell getColumnPosition] > maxOccupiedCol) ? [aCell getColumnPosition] : maxOccupiedCol;
+		}
 		else
 			emptyCells++;
 		
@@ -682,6 +700,17 @@
 		maxCol = ([aCell getColumnPosition] > maxCol) ? [aCell getColumnPosition] : maxCol;
 		
 	}
+	
+	// Reset drawing window min/max values
+	//   Draw 1 less than the min occupied row if odd, 2 if even
+	//   Draw 2 less than the min occupied col if even, 1 if odd
+	drawWindowMinRow = (minOccupiedRow % 2 == 0) ? minOccupiedRow - 2 : minOccupiedRow - 1;
+	drawWindowMaxRow = (minOccupiedRow % 2 == 0) ? minOccupiedRow + 2 : minOccupiedRow + 1;
+	drawWindowMinCol = (minOccupiedCol % 2 == 0) ? minOccupiedCol - 2 : minOccupiedCol - 1;
+	drawWindowMaxCol = (minOccupiedCol % 2 == 0) ? minOccupiedCol + 2 : minOccupiedCol + 1;
+
+	
+	
 }
 
 - (NSString *) generateStatsMessage {
@@ -693,11 +722,16 @@
 					 occupiedCells,
 					 emptyCells];
 
-	msg = [msg stringByAppendingFormat:@"min/max used columnsX & rowsY are Xm=%d, Xmax=%d, Ym=%d, Ymax=%d.",
+	msg = [msg stringByAppendingFormat:@"min/max are Xm=%d, Xmax=%d, Ym=%d, Ymax=%d, "
+										   "WinXm=%d, WinXmax=%d, WinYm=%d, WinYmax=%d.",
 					 minCol,
 					 maxCol,
 					 minRow,
-					 maxRow];
+					 maxRow,
+					 drawWindowMinRow,
+					 drawWindowMaxRow,
+					 drawWindowMinCol,
+					 drawWindowMaxCol];
 
 	return msg;
 	
@@ -709,9 +743,9 @@
 	
 	[self updateStats];
 	
-	// before rendering cells, touch every cell, min to max, to make sure they are in the array
-	for (int y=minRow; y<=maxRow; y++) {
-		for (int x=minCol; x<=maxCol; x++) {
+	// Touch every cell within window around occupied cells to make sure they are in the array
+	for (int y=drawWindowMinRow; y<=drawWindowMaxRow; y++) {
+		for (int x=drawWindowMinCol; x<=drawWindowMaxCol; x++) {
 			HexCellPosition *cellPos = [[HexCellPosition alloc] initWithRow:y Column:x];
 			if ([self isPositionValid:cellPos]) {
 				// don't need to keep it, just asking for it will generate it if it didn't exist.
@@ -731,7 +765,7 @@
 	
 	// output the cell's positions in order by position.
 	[self updateStats];
-	for (int y=minRow; y<=maxRow; y++) {
+	for (int y=drawWindowMinRow; y<=drawWindowMaxRow; y++) {
 		NSString *currentRow = @"";
 		r1 = @"";
 		r2 = @"";
@@ -740,7 +774,7 @@
 		r5 = @"";
 		r6 = @"";
 
-		for (int x=minCol; x<=maxCol; x++) {
+		for (int x=drawWindowMinCol; x<=drawWindowMaxCol; x++) {
 			// Only proceed if the position is valid
 			HexCellPosition *cellPos = [[HexCellPosition alloc] initWithRow:y Column:x];
 			if ([self isPositionValid:cellPos]) {
@@ -761,7 +795,7 @@
 		NSArray *rArray = [[NSArray alloc] initWithObjects:r1, r2, r3, r4, nil];
 		
 		// if in last row output row 5 and 6 (bottoms, SW and SE segments).
-		if (y == maxRow) {
+		if (y == drawWindowMaxRow) {
 			rArray = [rArray arrayByAddingObject:r5];
 			rArray = [rArray arrayByAddingObject:r6];
 
@@ -776,9 +810,10 @@
 		
 	} // y
 
-	[self drawACell:hexCells[0]];
+	// TODO: Why is this here?
+	//[self drawACell:hexCells[0]];
 	
-	// Output a blank line before the map content.
+	// Output a blank line after the map content.
 	[cli put:@"\n"];
 
 }
@@ -813,7 +848,7 @@
 	}
 	else {
 		// in non-first columns the nw1 segment has three spaces before border
-		nw1 = [nw1 stringByAppendingString:@" /"];
+		nw1 = [nw1 stringByAppendingString:@"./"];
 	}
 	
 	// The ne1 segment (upper part of NE border) always has one space before it.
@@ -871,8 +906,8 @@
 	}
 	else {
 		// debugging support
-		//occupiedMarker = [[NSString alloc] initWithFormat:@"x%2d", [cell getColumnPosition]];
-		//stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getRowPosition]];
+		occupiedMarker = [[NSString alloc] initWithFormat:@"x%2d", [cell getColumnPosition]];
+		stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getRowPosition]];
 	}
 	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %@ ", stoneID];
