@@ -354,13 +354,13 @@
 }
 
 - (bool) isRelativeRowEven: (HexCellPosition *) position {
-	// if the specified cell position's row is even relative to the min row in the map, return true
+	// Returns true if the specified position's row is even relative to the min row in the drawing window
 	bool bRval = false;
 	
 	// Update stats to make sure min and max are current.
 	[self updateStats];
 	
-	int relativeRow = minRow - 1 - [position getRow];
+	int relativeRow = [position getRow] - drawWindowMinRow ;
 	if (relativeRow % 2 == 0)
 		bRval = true;
 	
@@ -394,28 +394,28 @@
 	
 }
 
-- (bool) isInFirstColumn: (HexCellPosition *) position {
+- (bool) isInFirstWindowColumn: (HexCellPosition *) position {
 	// if the specified cell position's column is in the first column relative to the min col in the map, return true
 	bool bRval = false;
 	
 	// Update stats to make sure min and max are current.
 	[self updateStats];
 	
-	if ([position getColumn] == minCol)
+	if ([position getColumn] == drawWindowMinCol)
 		bRval = true;
 	
 	return bRval;
 	
 }
 
-- (bool) isInLastColumn: (HexCellPosition *) position {
+- (bool) isInLastWindowColumn: (HexCellPosition *) position {
 	// if the specified cell position's column is in the last column relative to the max col in the map, return true
 	bool bRval = false;
 	
 	// Update stats to make sure min and max are current.
 	[self updateStats];
 	
-	if ([position getColumn] == maxCol)
+	if ([position getColumn] == drawWindowMaxCol)
 		bRval = true;
 	
 	return bRval;
@@ -705,9 +705,9 @@
 	//   Draw 1 less than the min occupied row if odd, 2 if even
 	//   Draw 2 less than the min occupied col if even, 1 if odd
 	drawWindowMinRow = (minOccupiedRow % 2 == 0) ? minOccupiedRow - 2 : minOccupiedRow - 1;
-	drawWindowMaxRow = (minOccupiedRow % 2 == 0) ? minOccupiedRow + 2 : minOccupiedRow + 1;
+	drawWindowMaxRow = (maxOccupiedRow % 2 == 0) ? maxOccupiedRow + 2 : maxOccupiedRow + 1;
 	drawWindowMinCol = (minOccupiedCol % 2 == 0) ? minOccupiedCol - 2 : minOccupiedCol - 1;
-	drawWindowMaxCol = (minOccupiedCol % 2 == 0) ? minOccupiedCol + 2 : minOccupiedCol + 1;
+	drawWindowMaxCol = (maxOccupiedCol % 2 == 0) ? maxOccupiedCol + 2 : maxOccupiedCol + 1;
 
 	
 	
@@ -766,7 +766,7 @@
 	// output the cell's positions in order by position.
 	[self updateStats];
 	for (int y=drawWindowMinRow; y<=drawWindowMaxRow; y++) {
-		NSString *currentRow = @"";
+		NSString *currentRowDebugMsg = @"";
 		r1 = @"";
 		r2 = @"";
 		r3 = @"";
@@ -776,17 +776,15 @@
 
 		for (int x=drawWindowMinCol; x<=drawWindowMaxCol; x++) {
 			// Only proceed if the position is valid
+			// Note: Invalid positions happen b/c column numbers alternate on each even/odd row
 			HexCellPosition *cellPos = [[HexCellPosition alloc] initWithRow:y Column:x];
 			if ([self isPositionValid:cellPos]) {
-				// Note: invalid positions happen b/c column numbers alternate on each even/odd row
-				// Just because a position is b/n min & max doesn't mean it exists in array
-				// but getting it will add it.
 				HexCell *currentCell = [self getHexCellAtRow:y Column:x];
 				[self drawACell:currentCell];
 				
-				// add this cell to the current row
-				currentRow = [currentRow stringByAppendingFormat:@" %@ ",
-							  [[currentCell getPosition] toString]];
+				// add this cell to the current row debug msg
+				currentRowDebugMsg = [currentRowDebugMsg stringByAppendingFormat:@" %@ ",
+										[[currentCell getPosition] toString]];
 			
 			} // if cellPos valid
 			
@@ -806,7 +804,7 @@
 			[cli put:r withNewline:true];
 
 		// Diag output, remove when above tests out ok.
-		[cli debugMsg:currentRow level:3];
+		[cli debugMsg:currentRowDebugMsg level:3];
 		
 	} // y
 
@@ -833,8 +831,8 @@
 	
 	bool bInEvenRelativeRow = [self isRelativeRowEven:[cell getPosition]];
 	bool bInLastRow = [self isInLastRow:[cell getPosition]];
-	bool bInFirstColumn = [self isInFirstColumn:[cell getPosition]];
-	bool bInLastColumn = [self isInLastColumn:[cell getPosition]];
+	bool bInFirstColumn = [self isInFirstWindowColumn:[cell getPosition]];
+	bool bInLastColumn = [self isInLastWindowColumn:[cell getPosition]];
 	bool bInLastCellInRow = [self isInLastCellInRow:[cell getPosition]];
 	bool bInFirstCellInRow = [self isInFirstCellInRow:[cell getPosition]];
 	
@@ -860,6 +858,10 @@
 	//   have no leading spaces unless they are in an even relative row.
 	NSString *w1 = @"|";
 	NSString *w2 = @"|";
+	if (bInEvenRelativeRow) {
+		w1 = @" e|";
+		w2 = @" e|";
+	}
 	
 	// The e1 & e2 segments are only added for last column or last in row segments
 	NSString *e1 = @"";
@@ -912,7 +914,7 @@
 	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %@ ", stoneID];
 	
-	if (bInEvenRelativeRow) {
+	if (!bInEvenRelativeRow) {
 		// add SW to top two rows if in first column of the row (when only printing tops)
 		if (bInFirstCellInRow) {
 			r1 = [r1 stringByAppendingFormat:@"%@", sw1];
