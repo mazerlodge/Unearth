@@ -366,9 +366,10 @@ S1 POA - Unearth
 			N-- Maybe make a fn() that returns min/max occupied cells then create a window around them
 			N-- Mod c/b in (or triggered from) HexMap:addAHexCell()
 			/-- Changed to window rendering approach
-				/-- Render fails on adding second stone, WinXmax decreases, unknown reason
-				.-- Cont. debugging window printing, even relative row issue.
-			
+				X-- Render fails on adding second stone, WinXmax decreases, unknown reason
+				X-- Fixed detection of first cell in row (added relative to window check)
+				.-- Fix 'odd' rows not rendering 'east' pipe wall
+			 
 		.-- Add a debug action that allows adding stones to the map to speed up rendering
 			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
 			

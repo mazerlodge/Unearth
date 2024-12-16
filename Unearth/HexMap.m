@@ -155,6 +155,7 @@
 			rval = [[HexCell alloc] initWithRow:row Column:column];
 			[self addAHexCell:rval];
 			
+			[self updateStats];
 		}
 		else {
 			NSString *errMsg = [[NSString alloc]
@@ -433,7 +434,8 @@
 	// check each cell to see if it is in this row and is get minColumn for this row.
 	for (HexCell *aCell in hexCells) {
 		if (([aCell getRowPosition] == currentCellRow)
-			&& ([aCell getColumnPosition] < minColumnInRow))
+			&& ([aCell getColumnPosition] < minColumnInRow)
+			&& ([aCell getColumnPosition] >= drawWindowMinCol))
 			minColumnInRow = [aCell getColumnPosition];
 		
 	}
@@ -774,6 +776,7 @@
 		r5 = @"";
 		r6 = @"";
 
+		// draw each cell into the r1 through r6 strings
 		for (int x=drawWindowMinCol; x<=drawWindowMaxCol; x++) {
 			// Only proceed if the position is valid
 			// Note: Invalid positions happen b/c column numbers alternate on each even/odd row
@@ -858,10 +861,6 @@
 	//   have no leading spaces unless they are in an even relative row.
 	NSString *w1 = @"|";
 	NSString *w2 = @"|";
-	if (bInEvenRelativeRow) {
-		w1 = @" e|";
-		w2 = @" e|";
-	}
 	
 	// The e1 & e2 segments are only added for last column or last in row segments
 	NSString *e1 = @"";
