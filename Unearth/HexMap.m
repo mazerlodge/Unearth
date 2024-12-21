@@ -416,15 +416,16 @@
 	// Update stats to make sure min and max are current.
 	[self updateStats];
 	
-	if ([position getColumn] == drawWindowMaxCol)
+	if (([position getColumn] == drawWindowMaxCol)
+		|| (![self isRelativeRowEven:position] && [position getColumn] == drawWindowMaxCol - 1))
 		bRval = true;
 	
 	return bRval;
 	
 }
 
-- (bool) isInFirstCellInRow: (HexCellPosition *) position {
-	// if the specified cell position's column is in the first column in its row, return true
+- (bool) isInFirstCellInWindowRow: (HexCellPosition *) position {
+	// if the specified cell is the first column of the row (and within the window), return true
 	bool bRval = false;
 	
 	int currentCellColumn = [position getColumn];
@@ -448,8 +449,8 @@
 }
 
 
-- (bool) isInLastCellInRow: (HexCellPosition *) position {
-	// if the specified cell position's column is in the last column in its row, return true
+- (bool) isInLastCellInWindowRow: (HexCellPosition *) position {
+	// if the specified cell is the last column of the row (and within the window), return true
 	bool bRval = false;
 
 	int currentCellColumn = [position getColumn];
@@ -459,7 +460,8 @@
 	// check each cell to see if it is in this row and is get maxColumn for this row.
 	for (HexCell *aCell in hexCells) {
 		if (([aCell getRowPosition] == currentCellRow)
-			&& ([aCell getColumnPosition] > maxColumnInRow))
+			&& ([aCell getColumnPosition] > maxColumnInRow)
+			&& ([aCell getColumnPosition] <= drawWindowMaxCol))
 			maxColumnInRow = [aCell getColumnPosition];
 		
 	}
@@ -836,8 +838,8 @@
 	bool bInLastRow = [self isInLastRow:[cell getPosition]];
 	bool bInFirstColumn = [self isInFirstWindowColumn:[cell getPosition]];
 	bool bInLastColumn = [self isInLastWindowColumn:[cell getPosition]];
-	bool bInLastCellInRow = [self isInLastCellInRow:[cell getPosition]];
-	bool bInFirstCellInRow = [self isInFirstCellInRow:[cell getPosition]];
+	bool bInLastCellInRow = [self isInLastCellInWindowRow:[cell getPosition]];
+	bool bInFirstCellInRow = [self isInFirstCellInWindowRow:[cell getPosition]];
 	
 	// The nw1 segment (upper part of NW border) always starts with at least two spaces.
 	// THe nw2 segment (lower part of NW border) always has one space before the border.
@@ -907,8 +909,8 @@
 	}
 	else {
 		// debugging support
-		occupiedMarker = [[NSString alloc] initWithFormat:@"x%2d", [cell getColumnPosition]];
-		stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getRowPosition]];
+		//occupiedMarker = [[NSString alloc] initWithFormat:@"x%2d", [cell getColumnPosition]];
+		//stoneID = [[NSString alloc] initWithFormat:@"%2d", [cell getRowPosition]];
 	}
 	NSString *body1 = [[NSString alloc] initWithFormat:@" %@ ", occupiedMarker];
 	NSString *body2 = [[NSString alloc] initWithFormat:@"  %@ ", stoneID];
@@ -938,7 +940,7 @@
 	r4 = [r4 stringByAppendingFormat:@"%@%@%@", w2, body2, e2];
 	
 	// if in even row and last cell in row, tack on a SW segment set.
-	if (bInEvenRelativeRow && bInLastCellInRow) {
+	if (!bInEvenRelativeRow && bInLastCellInRow) {
 		// add se segment
 		r1 = [r1 stringByAppendingFormat:@"%@", se1];
 		r2 = [r2 stringByAppendingFormat:@"%@", se2];

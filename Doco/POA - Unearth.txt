@@ -355,23 +355,13 @@ S1 POA - Unearth
 	- Added test #14, testPlayerMapNWStonePlacement
 	- Added 'Occupied min/max' and 'Window min/max' member vars to HexMap
 	- Changed drawMap to use window Min/Max Row/Col
+
+12/21
+	- Fix odd window rows not rendering east pipe wall
+	- Fix even window rows not rendering southeast cell wall
+	- Expanded Up Next list
 	
 > In-Progress:
-	.-- Issue, drawing of map renders wrong.
-		N-- But works perfectly when ran from command line ~/bin/unearth -action dotest -test 12
-		X-- After adding the origin cell, row 49 is missing a buffer cell
-			N-- c/b sequence; adding cell to W after NW causes padded cells to be missing
-		/-- Issue, Add second stone nw failed, stone appears in ne cell and rendering messed up.
-			N-- To test, run with params: -action dotest -test 14 -debug -debuglevel 4
-			N-- Maybe make a fn() that returns min/max occupied cells then create a window around them
-			N-- Mod c/b in (or triggered from) HexMap:addAHexCell()
-			/-- Changed to window rendering approach
-				X-- Render fails on adding second stone, WinXmax decreases, unknown reason
-				X-- Fixed detection of first cell in row (added relative to window check)
-				.-- Fix 'odd' rows not rendering 'east' pipe wall
-			 
-		.-- Add a debug action that allows adding stones to the map to speed up rendering
-			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
 			
 	- Roll at target
 		/-- Flesh out UGE.doActionRoll:player()
@@ -382,7 +372,14 @@ S1 POA - Unearth
 			.-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 			.-- Expand w/ handling delver card influence on roll
 
-> Next: (Note: UC=Use Case)
+> Up Next: (Note: UC=Use Case)
+	- (Low priority) When showing dice in hand, show list of sizes across screen instead of one die per row
+	
+	- (Low priority) When taking stone from cards
+		-- When taking stones from a card pick by color not by ID
+			N-- Handles when there's two of the same color don't make the person pick which of the two to take
+		-- When all the stones are one color, take it and say it was taken instead of asking
+
 	- Enhancement, should be able to 'show card(s)  in hand' same as 'show ruin in hand'
 		N-- Only show ruin in hand works ATM.
 
@@ -490,4 +487,21 @@ ln577
     - Add -debug levels, if debug message is less than or equal to the level specified it prints. 0620
 	- Should HexDirection.h be integrated into another header (e.g. consumer class's header)
 
+
+Completed Tasks:
+	X-- Issue, drawing of map renders wrong.
+		N-- But works perfectly when ran from command line ~/bin/unearth -action dotest -test 12
+		C-- Add a debug action that allows adding stones to the map to speed up rendering
+			N-- Use random stones drawn from the bag; e.g. Action: debug (when -debug enabled) then go to add stone
+			N-- Cancelled, added a test 14 that adds two stones instead.
+		X-- After adding the origin cell, row 49 is missing a buffer cell
+			N-- c/b sequence; adding cell to W after NW causes padded cells to be missing
+		X-- Issue, Add second stone nw failed, stone appears in ne cell and rendering messed up.
+			N-- To test, run with params: -action dotest -test 14 -debug -debuglevel 4
+			N-- Maybe make a fn() that returns min/max occupied cells then create a window around them
+			N-- Mod c/b in (or triggered from) HexMap:addAHexCell()
+			X-- Changed to window rendering approach
+				X-- Render fails on adding second stone, WinXmax decreases, unknown reason
+				X-- Fixed detection of first cell in row (added relative to window check)
+				X-- Fix 'odd' rows not rendering 'east' pipe wall
 
