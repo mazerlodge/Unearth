@@ -361,6 +361,10 @@ S1 POA - Unearth
 	- Fix even window rows not rendering southeast cell wall
 	- Expanded Up Next list
 	
+== 2026 ==
+02/14
+	- Clean up code warnings from most recent XCode build.
+	
 > In-Progress:
 	- Testing merges with a simple change to this file.
 			

@@ -962,7 +962,7 @@
     */
 
     const int buildStepCount = 5;
-    bool buildResults[buildStepCount] =  {false};
+	bool buildResults[5] =  {false};
     buildResults[0] = [self populateDelverDeck];
     buildResults[1] = [self populateEndOfAgeDeck];
     buildResults[2] = [self populateRuinDeck];
