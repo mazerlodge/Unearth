@@ -364,6 +364,9 @@ S1 POA - Unearth
 == 2026 ==
 02/14
 	- Clean up code warnings from most recent XCode build.
+
+03/21
+	- Testing git integration w/ TheoVI
 	
 > In-Progress:
 	- Testing merges with a simple change to this file.
