@@ -385,8 +385,6 @@ S1 POA - Unearth
 			.-- Expand w/ handling delver card influence on roll
 
 > Up Next: (Note: UC=Use Case)			
-			
-
 	- (Low priority) When taking stone from cards
 		-- When taking stones from a card pick by color not by ID
 			N-- Handles when there's two of the same color don't make the person pick which of the two to take
