@@ -102,4 +102,13 @@
 	
 }
 
+
+- (NSString *) toStringBrief {
+	// Supports diagnostic and debug printing
+	NSString *rval = [Stone StoneColorToString:color];
+	
+	return rval;
+	
+}
+
 @end

@@ -51,6 +51,7 @@ typedef enum DelverDieSize : NSUInteger {
 - (int) setDieValue: (int) value;
 
 - (NSString *) toString;
+- (NSString *) toStringBrief;
 
 @property (readwrite, assign) int dieID;
 @property (readwrite, assign) DelverDieColor dieColor;

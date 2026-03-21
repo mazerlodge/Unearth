@@ -461,7 +461,7 @@
 	NSString *rval = @"Ruins on Table:\n";
 	
 	for (RuinCard *r in ruinsOnTable)
-		rval = [rval stringByAppendingFormat:@"%@\n", [r toString]];
+		rval = [rval stringByAppendingFormat:@"%@\n", [r toStringBrief]];
 	
 	return rval;
 	
@@ -571,7 +571,8 @@
 	}
 
 	[theDie roll];
-	msg = [[NSString alloc] initWithFormat:@"Die roll = %d", [theDie getDieValue]];
+	msg = [[NSString alloc] initWithFormat:@"%@ Die roll = %d",
+			[DelverDie DelverDieSizeToString:dieSize], [theDie getDieValue]];
 	[cli put:msg withNewline:true];
 
 	// Player gets a stone from the ruin when rolling a 1, 2, or 3, or from the bag if none on the ruin
@@ -749,7 +750,7 @@
 					 [UnearthPlayer PlayerActionTargetToString:action.target],
 					 [UnearthPlayer PlayerActionTargetLocationToString:action.targetLocation],
 					 action.objectID];
-	[cli debugMsg:msg level:5];
+	[cli debugMsg:msg level:4];
 		
 	// If Show action target location was not specified, assume hand for delver cards and dice
 	if (((action.target == PlayerActionTargetDelver) || (action.target == PlayerActionTargetDice))
@@ -825,7 +826,7 @@
 					if (action.objectID == 999)
 						[cli put:[self showRuinsOnTable]];
 					else
-						[cli put:[[self getRuinByID:action.objectID] toString] withNewline:true];
+						[cli put:[[self getRuinByID:action.objectID] toStringBrief] withNewline:true];
 					break;
 					
 				default:

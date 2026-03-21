@@ -46,6 +46,7 @@ typedef enum RuinCardColor : NSUInteger {
 - (int) claimValue;
 
 - (NSString *) toString;
+- (NSString *) toStringBrief;
 
 /*
  Method list from [Object Library.txt]

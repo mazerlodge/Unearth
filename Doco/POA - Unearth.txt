@@ -260,7 +260,7 @@ S1 POA - Unearth
 	- Cleaned up POA & updated raw TODO marker list.
 
 12/19
-	- Implement command "show dice in hand"
+	- Implemented command "show dice in hand"
 	- Added toString class methods for all enums (that didn't have them yet).
 	- Expanded UGE.doAction() to include default action locations for show wonder, ruins, delver, and dice
 	- Modified includes referencing HexDirection.h to include check for ndef
@@ -368,10 +368,13 @@ S1 POA - Unearth
 03/21
 	- Testing git integration w/ TheoVI
 	- Attempting mod to clear "1 commit ahead" message
+	- Suppressed debug message on show command (set it's debug level to 4, scheme set to debug min = 5)
+	- Changed Ruin Card on table display to shorter form (new method RuinCard.toStringBrief)
+	- When showing dice in hand, show list of sizes across screen instead of one die per row
+	- When rolling at a card, show the die size in roll output message	
 	
+:D0
 > In-Progress:
-	- Testing merges with a simple change to this file.
-			
 	- Roll at target
 		/-- Flesh out UGE.doActionRoll:player()
 			X-- Take a die from the player of the size specified and put it on the target ruin specified. (3h)
@@ -381,9 +384,9 @@ S1 POA - Unearth
 			.-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 			.-- Expand w/ handling delver card influence on roll
 
-> Up Next: (Note: UC=Use Case)
-	- (Low priority) When showing dice in hand, show list of sizes across screen instead of one die per row
-	
+> Up Next: (Note: UC=Use Case)			
+			
+
 	- (Low priority) When taking stone from cards
 		-- When taking stones from a card pick by color not by ID
 			N-- Handles when there's two of the same color don't make the person pick which of the two to take
@@ -400,55 +403,7 @@ S1 POA - Unearth
 		
 	- Enhancement 'maybe' stuff
 		.-- UP.parsePlayerActionVerbFromString always returns first verb occurrence, e.g. show delver help = help.
-
-	- Change Ruin Card on table display to shorter 'icon' form
-		Current output when issuing $show ruins on table
-		In UGE.doActionShow with verb=Show target=Ruin location=Board objectID=999
-		(Severity: 5)
-		Ruins on Table:
-		Ruin Card id=112 color=Blue claimValue=13 cardStoneValue=2
-		Stones on card:
-			Stone id=35 color=Yellow
-			Stone id=44 color=Blue
-
-		Ruin Card id=119 color=Purple claimValue=17 cardStoneValue=3
-		Stones on card:
-			Stone id=17 color=Red
-			Stone id=47 color=Blue
-			Stone id=28 color=Yellow
-
-		Ruin Card id=110 color=Blue claimValue=9 cardStoneValue=2
-		Stones on card:
-			Stone id=59 color=Black
-			Stone id=37 color=Yellow
-
-		Ruin Card id=118 color=Purple claimValue=15 cardStoneValue=3
-		Stones on card:
-			Stone id=65 color=Black
-			Stone id=16 color=Red
-			Stone id=46 color=Blue
-
-		> Desired output
-		Ruins on Table:
-		Ruin Card id=112 color=Blue claimValue=13 cardStoneValue=2
-		Stones on card: (Yel) (Blu)
-
-		Ruin Card id=119 color=Purple claimValue=17 cardStoneValue=3
-		Stones on card: (Red) (Blu) (Yel)
-
-		Ruin Card id=110 color=Blue claimValue=9 cardStoneValue=2
-		Stones on card: (Bla) (Yel)
-
-		Ruin Card id=118 color=Purple claimValue=15 cardStoneValue=3
-		Stones on card: (Bla) (Red) (Blu)
-
-		
-
-ln577
 	
-	- Show command w/ no options should list targets possible 0213
-	- Roll should output some sort of message (even 'not yet implemented') 0213 
-
 	- Add [cli getStr] like method that is getYN, validates y or n response and returns boolean.
 
     - Add ability to output ruins on table as rectangles with claim value, stone count, stones count by color 
@@ -460,34 +415,46 @@ ln577
     Administrivia; List make Game with args, what is already passed, what is needed. 0622
 
 
-
+:TODO
 > Raw TODO markers:
-	ArgParser.m: // TODO: Add check for arg (and assoc val) already in array
-	ArgParser.m: // TODO: Make AP.isInArgs method case insensitive and add a ver w/ caseSensitive: true/false param.
+ArgParser.m
+	// TODO: Add check for arg (and assoc val) already in array
+	// TODO: Make AP.isInArgs method case insensitive and add a version with a caseSensitive: true/false param.
 
-	UnearthGameFactory.m: // TODO: This may need to get it's CLI from the one set up in the factory (UGF).
-	UnearthGameFactory.m: // TODO: Expand gameDataDict dictionary used to pass info into game engine.
+UnearthGameFactory.m
+	// TODO: This may need to get it's CLI from the one set up in the factory (UGF).
+	// TODO: Expand gameDataDict dictionary used to pass info into game engine.
 
-	UnearthGameEngine.m: // TODO: Add more dictionary parsing
-	UnearthGameEngine.m: // TODO: Add some validation of the above, for now assume it worked
-	UnearthGameEngine.m: // TODO: AI Considers playing delver card(s).
-	UnearthGameEngine.m: // TODO: AI Considers wonders and ruin cards currently on the table
-	UnearthGameEngine.m: // TODO: AI compute player action verb, target, and location.
-	UnearthGameEngine.m: // TODO: Add any clean up with player action done (e.g. replace ruins taken in this turn)
-	UnearthGameEngine.m: // TODO: Add method to handle rolling of dice.
-	UnearthGameEngine.m: // TODO: add handling for showing more targets
+UnearthGameEngine.m
+    // TODO: Add more dictionary parsing
+    // TODO: Add some validation of the above, for now assume it worked
+	// TODO: Add code here after changing Stone Bag class to use mutable array
+	// TODO: AI Considers playing delver card(s).
+	// TODO: AI Considers wonders and ruin cards currently on the table
+	// TODO: AI compute player action verb, target, and location.
+	// TODO: Add any clean up with player action done (e.g. replace ruins taken in this turn)
+	// TODO: UGE.doActionRoll:player() Not yet (fully) implemented.
+	// TODO: Evaluate if delver cards in play manipulate die, allow reroll or altering target.
+	// TODO: When card claimed, get the next ruin from the deck, prep it (add stones), and place it on the table.
+	// TODO: Show wonder details for ID specified
+	// TODO: Show wonder details for ID specified
+	// TODO: Implement after StoneBag converted to use mutable array.
 
-	HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
-	HexMap.m:	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
+UnearthPlayer.m
+	//TODO: Refactor this to get keywords into a single location
+	//TODO: Refactor this to get keywords into a single location
+	//TODO: Refactor this to get keywords into a single location
 
-	EndOfAgeCard.m:	// TODO: Add Delver Dice to output string.
+HexMap.m
+	// TODO: Remove this to clean up map, just a test  y=48 to 53 worked,
+	/*  TODO: kill this, adding extra cells doesn't help clean up the display
+	// TODO: Add error checking wrapping this input
+	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
+	// TODO: Valiate the 'loop' meets the criteria for the wonder being placed.
+	// TODO: Why is this here?
 
-	UnearthPlayer.m:	//TODO: Refactor this to get keywords into a single location
-	UnearthPlayer.m:	//TODO: Refactor this to get keywords into a single location
-	UnearthPlayer.m:	//TODO: Refactor this to get keywords into a single location
-
-	RuinCard.m:	// TODO: Add Delver Dice to output string.
-
+EndOfAgeCard.m
+	// TODO: Add Delver Dice to output string.
 
 > Archived/Postponed/Cancelled Tasks:
     - Replace test numbers within UGF with enumeration 0902

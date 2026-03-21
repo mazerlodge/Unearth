@@ -242,5 +242,18 @@
 	
 }
 
+- (NSString *) toStringBrief {
+	// Supports diagnostic and debug printing
+	
+	NSString *dieColor = [DelverDie DelverDieColorToString:color];
+	NSString *dieSize = [DelverDie DelverDieSizeToString:size];
+
+	NSString *rval = [[NSString alloc] initWithFormat:@"%@ %@ = %d",
+					    dieColor, dieSize, dieValue];
+	
+	return rval;
+	
+}
+
 @end
 

@@ -176,4 +176,36 @@
 	return rval;
 	
 }
+
+- (NSString *) toStringBrief {
+	// Supports diagnostic and debug printing
+
+	NSString *rval = [[NSString alloc] initWithFormat:@"Ruin Card id=%d color=%@ startStones=%d Claim=%d diceTotal=%d",
+					  cardID, [RuinCard RuinCardColorToString:cardColor], cardStoneValue,
+					   claimValue, [self getDiceTotal]];
+	
+	if ([stones count] > 0) {
+		NSString *stonesMsg = @"\n\tStones on card: ";
+		for (int x=0; x<[stones count]; x++) {
+			Stone *currentStone = [stones objectAtIndex:x];
+			stonesMsg = [stonesMsg stringByAppendingFormat:@"%@ ", [currentStone toStringBrief]];
+		}
+		stonesMsg = [stonesMsg stringByAppendingString:@"\n"];
+
+		rval = [rval stringByAppendingFormat:@"%@", stonesMsg];
+	}
+
+	if ([delverDice count] > 0) {
+		NSString *diceMsg = @"\n\tDice on card:\n";
+		for (DelverDie *aDie in delverDice) {
+			diceMsg = [diceMsg stringByAppendingFormat:@"\t%@\n", [aDie toStringBrief]];
+		}
+
+		rval = [rval stringByAppendingFormat:@"%@", diceMsg];
+	}
+
+	
+	return rval;
+	
+}
 @end

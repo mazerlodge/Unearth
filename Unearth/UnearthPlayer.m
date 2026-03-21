@@ -585,7 +585,9 @@
 	NSString *rval = @"Dice in player's hand:\n";
 	
 	for (DelverDie *die in dice)
-		rval = [rval stringByAppendingFormat:@"%@\n", [die toString]];
+		rval = [rval stringByAppendingFormat:@"%@ ",
+				[DelverDie DelverDieSizeToString:[die getDieSize]]];
+	rval = [rval stringByAppendingString:@"\n"];
 	
 	return rval;
 	

@@ -31,6 +31,7 @@ typedef enum StoneColor : NSUInteger {
 - (NSString *) getStoneColorAsShortString;
 
 - (NSString *) toString;
+- (NSString *) toStringBrief;
 
 /*
  Method list from [Object Library.txt]
