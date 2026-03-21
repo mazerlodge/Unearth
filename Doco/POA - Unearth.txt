@@ -367,6 +367,7 @@ S1 POA - Unearth
 
 03/21
 	- Testing git integration w/ TheoVI
+	- Attempting mod to clear "1 commit ahead" message
 	
 > In-Progress:
 	- Testing merges with a simple change to this file.
