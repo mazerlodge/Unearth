@@ -412,6 +412,72 @@ S1 POA - Unearth
 
     Administrivia; List make Game with args, what is already passed, what is needed. 0622
 
+-- Start AI "What can you help with" answers --
+
+Great question! I can help across your project’s full lifecycle — from planning and architecture to implementation, testing, and maintenance. Since you’re working on a command-line Objective-C game (“Unearth”) with a clear POA and activity log, here are concrete ways I can assist tailored to your codebase.
+
+What I can help with
+
+• Planning and backlog grooming
+   • Turn your “In-Progress”, “Up Next”, and “Raw TODO” sections into actionable tasks with priorities and dependencies.
+   • Propose milestones to finish the roll/claim loop (UGE.doActionRoll and follow-ups) and the map rendering work.
+
+• Code navigation and explanations
+   • Explain how specific subsystems interact (e.g., UGF → UGE → CLI, deck population flow, stone bag, player map).
+   • Walk through command parsing (player actions, verbs/targets/locations, subject handling) and show where to extend it safely.
+
+• Make targeted code changes
+   • Implement specific TODOs you call out (e.g., “Add method to random engine to set seed to current ms time”, “getYN on CLI”, “alphabetize methods in UGE”).
+   • Add small features like “show card(s) in hand” parity with ruins, or brief/verbose output modes.
+   • Improve error handling and validation (argument parsing, CLI inputs, null checks).
+
+• Refactoring and cleanup
+   • Centralize keyword parsing to avoid duplication in UnearthPlayer (you’ve noted this 3x).
+   • Organize enum toString methods consistently; keep files free of circular dependencies.
+   • Alphabetize or logically group methods in UnearthGameEngine as noted.
+
+• Testing and diagnostics
+   • Add test hooks similar to your existing numbered tests (e.g., expand test 14 or add targeted map-render cases).
+   • Improve debug messaging consistency (levels and formatting) and help you add a seedable RNG for reproducible tests.
+
+• Data handling
+   • Extend your plist-driven deck population with better validation and failure messages (you already added “return false if 0 cards in deck” — we can surface this user-facing).
+   • Help with stone selection “by color not ID” when multiple of the same color exist.
+
+• Gameplay features
+   • Finish the roll-at-target flow:
+      • Place die on ruin
+      • Check claim threshold and ownership
+      • Return dice to owners
+      • Return stones to bag
+      • Replenish ruin from deck and seed stones
+      • Respect delver card effects (stack/execution order)
+   • Add examine/show parity across ruins, wonders, delver cards, and dice.
+
+• Map rendering support
+   • Continue cleanup of window rendering, neighbor sequencing, and border conditions you’ve been improving.
+   • Add small rendering utilities for “ruins on table as rectangles” with counts — for use during the excavation phase.
+
+• Documentation and developer ergonomics
+   • Keep “Doco/Startup Flow” aligned with actual code paths.
+   • Clarify “Administrivia” (what is passed to game engine vs. what’s needed) and propose a stable contract for gameDataDict.
+
+Quick wins I can implement fast
+• CLI.getYN() that validates y/n and returns a boolean.
+• RandomEngine.setSeedToCurrentTimeMillis() for reproducible tests vs. live randomness.
+• “Show card(s) in hand” parity with “show ruin in hand”.
+• Alphabetize UGE methods and add section markers.
+• Add brief/verbose switches to show commands (you already added RuinCard.toStringBrief — we can extend this pattern).
+
+Deeper tasks I can help drive
+• Finish UGE.doActionRoll:player() including replenishment and delver-card influence.
+• Centralize parsing keywords to avoid drift across UnearthPlayer, UGE, and CLI.
+• Improve stone selection UX (by color, with smart prompts and auto-pick when only one color exists).
+• Strengthen deck/stone-bag lifecycle and error handling so the game loop never gets into a bad state.
+
+If you want, tell me a specific item from your “In-Progress” or “Up Next” list, and I’ll make the code changes directly. For example, I can implement the CLI getYN helper, add the RNG seeding method, or extend “show cards in hand” right away.
+
+-- End AI "What can you help with" answers --
 
 :TODO
 > Raw TODO markers:
