@@ -645,9 +645,12 @@
 		// The card must be removed from the board
 		[self removeRuinFromTableByID:[theCard getRuinID]];
 		
-		// TODO: When card claimed, get the next ruin from the deck, prep it (add stones), and place it on the table.
-		// Note: Lookup how cards got on the table originally to determine how to do this (wrap same logic).
-		
+		// When card claimed, get the next ruin from the deck, prep it (add stones), and place it on the table.
+		RuinCard *currentCard = [ruinsDeck getNextCard];
+		for (int s=0; s<[currentCard stoneValue]; s++)
+			[currentCard addStoneToCard:[stoneBag getNextStone]];
+		[ruinsOnTable addObject:currentCard];
+
 		[self showRuinsOnTable];
 
 	}

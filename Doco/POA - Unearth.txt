@@ -371,7 +371,10 @@ S1 POA - Unearth
 	- Suppressed debug message on show command (set it's debug level to 4, scheme set to debug min = 5)
 	- Changed Ruin Card on table display to shorter form (new method RuinCard.toStringBrief)
 	- When showing dice in hand, show list of sizes across screen instead of one die per row
-	- When rolling at a card, show the die size in roll output message	
+	- When rolling at a card, show the die size in roll output message
+	
+09/12
+	- When ruin card claimed, get the next ruin from the deck, prep it (add stones), and place it on the table.
 	
 :D0
 > In-Progress:
