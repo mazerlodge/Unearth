@@ -384,7 +384,7 @@ S1 POA - Unearth
 			X-- Check the ruin to see if it has been claimed, if so give it to the appropriate player
 			X-- If ruin claimed, retun dice to owning players.
 			X-- If ruin claimed, return any remaining stones to the bag
-			.-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
+			X-- If claimed, get the next ruin from the deck/stack, prep it (add stones), and place it on the table.
 			.-- Expand w/ handling delver card influence on roll
 
 > Up Next: (Note: UC=Use Case)			
